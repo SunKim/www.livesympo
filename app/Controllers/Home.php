@@ -1,15 +1,7 @@
 <?php namespace App\Controllers;
 
-class Home extends BaseController
-{
-	public function index ()
-	{
-		return $this->enter_form();
+class Home extends BaseController {
+	public function index () {
+		return view('home.php');
 	}
-
-	public function enter_form () {
-		$data['session'] = $this->session->get('reqr');
-		return view('stream/enter_form', $data);
-	}
-
 }

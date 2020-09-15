@@ -50,30 +50,16 @@
 
 <body>
 
-<!-- 세션체크 -->
-<!-- <?php include_once APPPATH.'/views/template/check_session.php'; ?> -->
+<div class="container tc mt100">
+	<img class="exclamation" src="/images/icon/icon-exclamation-circle.png" />
+	<h2 class="mt40">오류 - <?php echo $errTitle; ?></h2>
 
-<?php
-	$reqrSeq =  $session['reqrSeq'];
-	$reqrNm =  $session['reqrNm'];
-?>
-
-<div class="container">
-	<h1>hi this is enter form</h1>
-
-	<section class="main-img">
+	<section class="mt40">
 		<div>
-
+			<?php echo $errHtml; ?>
 		</div>
 	</section>
 </div>
-
-subject(주제) 예시 : AutoFit
-title(타이틀) 예시 : AutoFit 트림 찾기
-description(설명) 예시 : 자동차 등록증상 기본 정보 및 눈으로 확인 가능한 간단한 정보들로 트림을 유추
-keywords(키워드) 예시 : AutoFit,차량 비교,차량 제원,차량 모델,차량 트림,시세,중고차 매입,중고차 판매,중고차 시세
-
-검색엔진에서 검색 안되도록 설정 OK?
 
 <!-- 공통모달 -->
 <?php include_once APPPATH.'/views/template/common_modal.php'; ?>
