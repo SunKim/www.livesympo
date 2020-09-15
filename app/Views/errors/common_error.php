@@ -43,6 +43,8 @@
 
 <!-- START) 메인 css -->
 <style type="text/css">
+.title { color: #353766; }
+.msg { color: #7A7DEA; font-size: 15px; }
 </style>
 <!-- END) 메인 css -->
 
@@ -52,10 +54,10 @@
 
 <div class="container tc mt100">
 	<img class="exclamation" src="/images/icon/icon-exclamation-circle.png" />
-	<h2 class="mt40">오류 - <?php echo $errTitle; ?></h2>
+	<h2 class="title mt40">오류 - <?php echo $errTitle; ?></h2>
 
 	<section class="mt40">
-		<div>
+		<div class="msg">
 			<?php echo $errHtml; ?>
 		</div>
 	</section>
@@ -85,8 +87,6 @@
 // 초기화
 function fnInit () {
 	showSpinner(1000);
-
-	// modal1('타이틀', '메세지랑께');
 }
 
 $(document).ready(function () {

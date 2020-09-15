@@ -39,7 +39,9 @@ class BaseController extends Controller
 		//--------------------------------------------------------------------
 		// Preload any models, libraries, etc, here.
 		//--------------------------------------------------------------------
+		// 세션 기본 load.
 		$this->session = \Config\Services::session();
+		$this->request = $request;
 	}
 
 }

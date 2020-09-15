@@ -43,6 +43,23 @@
 
 <!-- START) 메인 css -->
 <style type="text/css">
+div.main-img-container { position: relative; }
+img.main-img { display: block; width: 100%; }
+button.btn-apply { display: inline-block; font-weight: 700; color: #FFF; }
+
+/* 768px 이하 -> 모바일 */
+@media (max-width: 768px) {
+	/* button.btn-apply { bottom: 0px; left: calc(100vw - 240px / 2 - 0.1em); width: 240px; font-size: 16px; } */
+	button.btn-apply { left: calc((100% - 60%) / 2); width: 60%; font-size: 16px; padding: 0.2em; }
+}
+/* 768~1140 -> 태블릿 */
+@media (min-width: 769px) {
+	button.btn-apply { bottom: 20px; right: 100px; width: 280px; font-size: 20px; }
+}
+/* 1140px 이상 -> PC */
+@media (min-width: 1200px) {
+	button.btn-apply { float: right; width: 330px; height: 70px; font-size: 24px; letter-spacing : 0.2em; }
+}
 </style>
 <!-- END) 메인 css -->
 
@@ -59,21 +76,15 @@
 ?>
 
 <div class="container">
-	<h1>hi this is enter form</h1>
-
 	<section class="main-img">
-		<div>
-
+		<div class="main-img-container">
+			<img class="main-img" src="<?php echo $project['MAIN_IMG_URI']; ?>" />
+		</div>
+		<div class="apply-btn-container">
+			<button class="btn-apply" style="background: <?php echo $project['APPL_BTN_COLOR']; ?>">사전등록</button>
 		</div>
 	</section>
 </div>
-
-subject(주제) 예시 : AutoFit
-title(타이틀) 예시 : AutoFit 트림 찾기
-description(설명) 예시 : 자동차 등록증상 기본 정보 및 눈으로 확인 가능한 간단한 정보들로 트림을 유추
-keywords(키워드) 예시 : AutoFit,차량 비교,차량 제원,차량 모델,차량 트림,시세,중고차 매입,중고차 판매,중고차 시세
-
-검색엔진에서 검색 안되도록 설정 OK?
 
 <!-- 공통모달 -->
 <?php include_once APPPATH.'/views/template/common_modal.php'; ?>

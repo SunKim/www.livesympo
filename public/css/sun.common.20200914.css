@@ -153,9 +153,6 @@ input[type="password"] { font-family: '나눔고딕', 'Nanum Gothic', "Malgun Go
 /* 버튼 관련 설정 */
 button { cursor: pointer; }
 button:hover { opacity: 0.8; }
-button.btn-main { width: 110px; height: 46px; }
-button.btn-sub { height:30px; padding: 0 10px; font-size: 12px; font-weight: 500;}
-button.btn-dialog { height:40px; width: 80px; font-size: 12px; font-weight: 500;}
 
 button.btn-indigo { background: #3E50B4; color: #fff; border: 1px solid #3E50B4; }
 button.btn-light-indigo { background: #5B76E2; color: #fff; border: 1px solid #5B76E2; }
