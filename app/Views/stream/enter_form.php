@@ -49,15 +49,20 @@ button.btn-apply { display: inline-block; font-weight: 700; color: #FFF; }
 
 /* 768px 이하 -> 모바일 */
 @media (max-width: 768px) {
+	header { padding: 10px 0; }
+	img.logo { width: 40%; }
 	/* button.btn-apply { bottom: 0px; left: calc(100vw - 240px / 2 - 0.1em); width: 240px; font-size: 16px; } */
+	div.apply-btn-container { text-align: center; }
 	button.btn-apply { left: calc((100% - 60%) / 2); width: 60%; font-size: 16px; padding: 0.2em; }
 }
 /* 768~1140 -> 태블릿 */
 @media (min-width: 769px) {
+	div.apply-btn-container {}
 	button.btn-apply { bottom: 20px; right: 100px; width: 280px; font-size: 20px; }
 }
 /* 1140px 이상 -> PC */
 @media (min-width: 1200px) {
+	div.apply-btn-container {}
 	button.btn-apply { float: right; width: 330px; height: 70px; font-size: 24px; letter-spacing : 0.2em; }
 }
 </style>
@@ -78,7 +83,7 @@ button.btn-apply { display: inline-block; font-weight: 700; color: #FFF; }
 <div class="container">
 	<header>
 		<div class="logo-container">
-			<img class="logo" src="images/logo/logo_type1.png" />
+			<img class="logo" src="/images/logo/logo_type1.png" />
 		</div>
 	</header>
 	<section class="main-img">
