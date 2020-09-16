@@ -68,7 +68,7 @@ button.btn-apply { display: inline-block; font-weight: 700; color: #FFF; }
 <body>
 
 <!-- 세션체크 -->
-<!-- <?php include_once APPPATH.'views/template/check_session.php'; ?> -->
+<!-- <?php include_once APPPATH.'Views/template/check_session.php'; ?> -->
 
 <?php
 	$reqrSeq =  $session['reqrSeq'];
@@ -87,10 +87,10 @@ button.btn-apply { display: inline-block; font-weight: 700; color: #FFF; }
 </div>
 
 <!-- 공통모달 -->
-<?php include_once APPPATH.'/views/template/common_modal.php'; ?>
+<?php include_once APPPATH.'Views/template/common_modal.php'; ?>
 
 <!-- 토스트 -->
-<?php include_once APPPATH.'/views/template/common_toast.php'; ?>
+<?php include_once APPPATH.'Views/template/common_toast.php'; ?>
 
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
