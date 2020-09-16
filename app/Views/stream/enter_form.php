@@ -68,7 +68,7 @@ button.btn-apply { display: inline-block; font-weight: 700; color: #FFF; }
 <body>
 
 <!-- 세션체크 -->
-<!-- <?php include_once APPPATH.'/views/template/check_session.php'; ?> -->
+<!-- <?php include_once APPPATH.'views/template/check_session.php'; ?> -->
 
 <?php
 	$reqrSeq =  $session['reqrSeq'];
