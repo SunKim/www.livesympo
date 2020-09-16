@@ -52,7 +52,7 @@ class Stream extends BaseController {
 				$data['project'] = $project;
 				$data['session'] = $this->session->get('reqr');
 
-				return view('stream/enter_form.php', $data);
+				return view('stream/apply_form.php', $data);
 			} else {
 				return $this->wrongAccess();
 			}
