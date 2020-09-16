@@ -76,6 +76,11 @@ button.btn-apply { display: inline-block; font-weight: 700; color: #FFF; }
 ?>
 
 <div class="container">
+	<header>
+		<div class="logo-container">
+			<img class="logo" src="images/logo/logo_type1.png" />
+		</div>
+	</header>
 	<section class="main-img">
 		<div class="main-img-container">
 			<img class="main-img" src="<?php echo $project['MAIN_IMG_URI']; ?>" />
