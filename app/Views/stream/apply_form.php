@@ -46,7 +46,10 @@
 
 header { padding: 1rem 0; }
 div { text-align: center; }
-form { display: inline-block; }
+form { display: inline-block; width: 100%; max-width: 100%;}
+
+/* 로고 영역 */
+div.logo-container { text-align: left; }
 
 /* 메인이미지 영역 */
 div.main-img-container { padding: 10px; }
@@ -68,6 +71,7 @@ form.enter-form td.td-btn { width: 30%; }
 button.btn-enter { width: 100%; height: 100%; font-size: 1rem; }
 div.chrome-guide { padding: 0.6rem; }
 ul.enter-guide li::before { content: "-"; margin-right: 0.5rem; }
+div.chrome-guide p { text-align: left; }
 
 /* 하단 footer 영역 */
 img.footer-img { width: 100%; }
@@ -81,8 +85,6 @@ img.footer-img { width: 100%; }
     div.agenda-container { display: block; }
     div.form-container { display: block; }
     div.form-container form.enter-form { margin: 0 auto; }
-
-    div.chrome-guide { text-align: left; }
 }
 
 /* 768~1200 -> 태블릿 */
@@ -138,8 +140,8 @@ img.footer-img { width: 100%; }
             <button class="btn-apply" style="background: <?= $project['APPL_BTN_COLOR'] ?>">사전등록</button>
         </div>
     </section>
-</div>
-<div style="width: 100%;">
+<!-- </div>
+<div style="width: 100%;"> -->
     <section class="form">
         <div class="agenda-container">
             <img class="agenda-img" src="<?= $project['AGENDA_IMG_URI'] ?>" />
@@ -192,8 +194,10 @@ img.footer-img { width: 100%; }
                 <hr />
 
                 <div class="chrome-guide">
-                    <p>윈도우7 이용시 인터넷익스플로러에서는 동영상재생이 원활치 않을 수 있습니다. 가급적 Chrome을 이용하여 시청하여주세요.</p>
-                    <p>설치링크</p>
+                    <p>인터넷 익스플로러에서는 동영상재생이 원활하지 않을 수 있습니다. 가급적 Chrome을 이용하여 시청해주세요.</p>
+                    <p>
+                        <a href="https://www.google.co.kr/chrome" target="_chrome">[크롬 설치]</a>
+                    </p>
                 </div>
             </form>
         </div>
