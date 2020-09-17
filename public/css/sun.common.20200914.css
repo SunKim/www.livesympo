@@ -1,7 +1,7 @@
 @charset "utf-8";
 
-/* 티저 나눔스퀘어 폰트 설정 */
-/*@font-face {
+/* 나눔스퀘어 폰트 설정 */
+@font-face {
   font-family: 'NanumSquare';
   font-weight: 400;
   font-display: swap;
@@ -37,7 +37,7 @@
       url(./fonts/NanumSquare/NanumSquareL.woff) format('woff'),
       url(./fonts/NanumSquare/NanumSquareL.ttf) format('truetype');
 }
-*/
+
 /* 셀러포탈 Noto Sans KR 폰트 설정 */
 /*
 @font-face {
@@ -128,10 +128,11 @@ html{
   -webkit-font-smoothing: antialiased !important;
 }
 
-body { font-family: 'Apple SD Gothic', "Malgun Gothic", "맑은 고딕", "Dotum", "돋움", "굴림", Sans-serif; }
-/* body { font-family: 'NanumSquare', '나눔고딕', 'Nanum Gothic', "Malgun Gothic", "맑은 고딕", "Dotum", "돋움", "굴림", Sans-serif; } */
-/* body { font-family: 'Noto Sans KR', '나눔고딕', 'Nanum Gothic', "Malgun Gothic", "맑은 고딕", "Dotum", "돋움", "굴림", Sans-serif; } */
-/* body { font-family: 'Nanum Gothic', "Malgun Gothic", "맑은 고딕", "Dotum", "돋움", "굴림", Sans-serif; } */
+body { font-family: "Apple SD Gothic", "NanumSquare", "Malgun Gothic", "맑은 고딕", "Dotum", "돋움", "굴림", Sans-serif; }
+/* body { font-family: "Apple SD Gothic", "Malgun Gothic", "맑은 고딕", "Dotum", "돋움", "굴림", Sans-serif; } */
+/* body { font-family: "NanumSquare", "나눔고딕", "Nanum Gothic", "Malgun Gothic", "맑은 고딕", "Dotum", "돋움", "굴림", Sans-serif; } */
+/* body { font-family: "Noto Sans KR", "나눔고딕", "Nanum Gothic", "Malgun Gothic", "맑은 고딕", "Dotum", "돋움", "굴림", Sans-serif; } */
+/* body { font-family: "Nanum Gothic", "Malgun Gothic", "맑은 고딕", "Dotum", "돋움", "굴림", Sans-serif; } */
 
 
 h1, h2, h3, h4, h5, h6, p { margin-top: 0; margin-bottom: 0; }
@@ -144,28 +145,29 @@ ul li { list-style-type: none; }
 i { margin-left: 0.25rem; margin-right: 0.25rem;}
 
 /* 나눔스퀘어(NanumSquare) 크롬 버그로 password에서 패스워드용 disc가 안보이는 현상 해결용 */
-input[type="password"] { font-family: '나눔고딕', 'Nanum Gothic', "Malgun Gothic", "맑은 고딕", "Dotum", "돋움", "굴림", Sans-serif; }
+input[type="password"] { font-family: "나눔고딕", "Nanum Gothic", "Malgun Gothic", "맑은 고딕", "Dotum", "돋움", "굴림", Sans-serif; }
 
 .clear:after{ content: ''; display: block; clear: both; }
 /* END) 기본 */
 
 
 /* 버튼 관련 설정 */
-button { cursor: pointer; }
+button { padding: 0.5rem 2rem; cursor: pointer; }
 button:hover { opacity: 0.8; }
 
-button.btn-indigo { background: #3E50B4; color: #fff; border: 1px solid #3E50B4; }
-button.btn-light-indigo { background: #5B76E2; color: #fff; border: 1px solid #5B76E2; }
-button.btn-blue { background: #0274C3; color: #fff; border: 1px solid #0274C3; }
-button.btn-cyon { background: #02C3B0; color: #fff; border: 1px solid #02C3B0; }
-button.btn-white-cyon { background: #FFFFFF; color: #02C3B0; border: 1px solid #02C3B0; }
-button.btn-sky { background: #8CCBF6; color: #fff; border: 1px solid #8CCBF6; }
-button.btn-black { background: #212642; color: #fff; border: 1px solid #212642; }
-button.btn-red { background: #e12222; color: #fff; border: 1px solid #e12222; }
-button.btn-white { background: #FFFFFF; color: #212642; border: 1px solid #D8D8D8; font-weight: 500; }
-button.btn-white:hover { background: #F5F5F5; color: #333; }
-button.btn-kakao { background: #FFCD00; color: #fff; border: 1px solid #FFCD00; }
-button.btn-naver { background: #03CF5D; color: #fff; border: 1px solid #03CF5D; }
+.btn { padding: 0.5rem 2rem; }
+.btn-indigo { background: #3E50B4; color: #fff; border: 1px solid #3E50B4; }
+.btn-light-indigo { background: #5B76E2; color: #fff; border: 1px solid #5B76E2; }
+.btn-blue { background: #0274C3; color: #fff; border: 1px solid #0274C3; }
+.btn-cyon { background: #02C3B0; color: #fff; border: 1px solid #02C3B0; }
+.btn-white-cyon { background: #FFFFFF; color: #02C3B0; border: 1px solid #02C3B0; }
+.btn-sky { background: #8CCBF6; color: #fff; border: 1px solid #8CCBF6; }
+.btn-black { background: #212642; color: #fff; border: 1px solid #212642; }
+.btn-red { background: #e12222; color: #fff; border: 1px solid #e12222; }
+.btn-white { background: #FFFFFF; color: #212642; border: 1px solid #D8D8D8; font-weight: 500; }
+.btn-white:hover { background: #F5F5F5; color: #333; }
+.btn-kakao { background: #FFCD00; color: #fff; border: 1px solid #FFCD00; }
+.btn-naver { background: #03CF5D; color: #fff; border: 1px solid #03CF5D; }
 
 /* description 관련 title 및 내용 */
 p.desc { font-size: 14px; color: #999; }

@@ -3,6 +3,8 @@
 <head>
 <meta charset="euc-kr">
 <link rel="stylesheet" type="text/css" href="https://domain.gabia.com/assets/css/parking_skin_v2.css" />
+<link href="/css/sun.common.20200914.css" rel="stylesheet">
+
 <title></title>
 </head>
 
@@ -23,6 +25,9 @@
 						<a href="mailto:nabdo@naver.com">이메일 : nabdo@naver.com</a>
 					</li>
 				</ul>
+				<p class="mt30">
+					<a class="btn btn-blue" href="/stream/apply/test1-200915" target="_blank">테스트용 입장</a>
+				</p>
 			</td>
 		</tr>
 	</table>
