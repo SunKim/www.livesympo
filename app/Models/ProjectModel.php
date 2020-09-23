@@ -42,4 +42,22 @@ class ProjectModel extends Model {
 
 		return $this->db->query($strQry)->getRowArray();
 	}
+
+	// 프로젝트 사전신청 등록정보 목록
+    public function entInfoList ($prjSeq) {
+        $strQry    = "";
+
+        $strQry .= "SELECT 	\n";
+        $strQry .= "	PRJ_ENT_INFO_SEQ, SERL_NO	\n";
+        $strQry .= "	, ENT_INFO_TITLE, ENT_INFO_PHOLDR, REQUIRED_YN	\n";
+        $strQry .= "FROM TB_PRJ_ENT_INFO_M	\n";
+        $strQry .= "WHERE 1=1	\n";
+        $strQry .= "	AND DEL_YN = 0	\n";
+        $strQry .= "	AND PRJ_SEQ = ".$this->db->escape($prjSeq)."	\n";
+        $strQry .= "ORDER BY SERL_NO ASC	\n";
+
+        $strQry .= ";";
+
+        return $this->db->query($strQry)->getResultArray();
+    }
 }

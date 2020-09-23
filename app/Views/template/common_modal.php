@@ -17,7 +17,7 @@ FontAwesome
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="commonModal1Title">알림</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 			</div>
 			<div class="modal-body">
 				<div id="commonModal1Content">메세지</div>
@@ -36,7 +36,7 @@ FontAwesome
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="commonModalWide1Title">알림</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 			</div>
 			<div class="modal-body">
 				<div id="commonModalWide1Content">메세지</div>
@@ -55,7 +55,7 @@ FontAwesome
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="commonModalExwide1Title">알림</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 			</div>
 			<div class="modal-body">
 				<div id="commonModalExwide1Content">메세지</div>
@@ -75,7 +75,7 @@ FontAwesome
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title" id="centerModal1Title">알림</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 				</div>
 				<div class="modal-body">
 					<div id="centerModal1Content">메세지</div>
@@ -96,7 +96,7 @@ FontAwesome
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title" id="centerModalConfirm1Title">알림</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 				</div>
 				<div class="modal-body">
 					<div id="centerModalConfirm1Content">메세지</div>
@@ -117,7 +117,7 @@ FontAwesome
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title" id="centerModalConfirm2Title">알림</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 				</div>
 				<div class="modal-body">
 					<div id="centerModalConfirm2Content">메세지</div>
@@ -143,7 +143,7 @@ FontAwesome
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="excelModalExwide1Title">알림</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 			</div>
 			<div class="modal-body">
 				<div id="excelModalExwide1Content">메세지</div>

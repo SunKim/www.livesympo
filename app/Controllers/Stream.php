@@ -46,10 +46,12 @@ class Stream extends BaseController {
 		if ($this->request->getMethod() == 'get') {
 			// 프로젝트 정보 가져오기
 			$project = $this->projectModel->detail($prjUri);
+			$entInfoList = $this->projectModel->entInfoList($project['PRJ_SEQ']);
 
 			// 정상 URI면 신청화면 불러오기. 비정상이면 wrongAccess
 			if (isset($project)) {
 				$data['project'] = $project;
+				$data['entInfoList'] = $entInfoList;
 				$data['session'] = $this->session->get('reqr');
 
 				return view('stream/apply_form.php', $data);

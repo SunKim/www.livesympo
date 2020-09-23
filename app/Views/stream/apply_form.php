@@ -43,21 +43,22 @@
 
 <!-- START) 메인 css -->
 <style type="text/css">
-
 header { padding: 1rem 0; }
 div { text-align: center; }
 form { display: inline-block; width: 100%; max-width: 100%;}
+
+div.container { padding-left: 0 !important; padding-right: 0 !important;}
 
 /* 로고 영역 */
 div.logo-container { text-align: left; }
 
 /* 메인이미지 영역 */
-div.main-img-container { padding: 10px; }
+div.main-img-container { }
 img.main-img { display: block; width: 100%; }
 button.btn-apply { display: inline-block; font-weight: 700; color: #FFF; border: 0; }
 button.btn-enter { border: 0; font-size: 1.2rem; font-weight: 600; }
 
-/* 입력폼 및 어젠다 영역 */
+/* 입장폼 및 어젠다 영역 */
 img.agenda-img { width: 100%; }
 section.form { margin-top: 0.6rem; }
 div.form-container { color: #fff; padding: 0.6rem; }
@@ -76,10 +77,14 @@ div.chrome-guide p { text-align: left; }
 /* 하단 footer 영역 */
 img.footer-img { width: 100%; }
 
+/* 사전등록 입력 모달 영역 */
+table.table-apply th.required::after { content: '*'; display: inline-block; margin-left: 3px; font-size: 15px; color: #E12222; }
+
 /* 768px 이하 -> 모바일 */
 @media (max-width: 768px) {
+    div.logo-container { padding: 0 1rem; }
     img.logo { width: 30%; }
-    div.apply-btn-container { text-align: center; }
+    div.apply-btn-container { text-align: center; margin-top: 0.6rem; }
     button.btn-apply { width: 20rem; height: 2.4rem; font-size: 1.2rem; padding: 0.2rem; }
 
     div.agenda-container { display: block; }
@@ -91,7 +96,7 @@ img.footer-img { width: 100%; }
 @media (min-width: 769px) {
     img.logo { width: 20%; }
 
-    div.apply-btn-container { text-align: right; }
+    div.apply-btn-container { text-align: right; margin-top: 0.6rem; }
     button.btn-apply { width: 20rem; height: 3rem; font-size: 1.2rem; padding: 0.2rem; }
 
     div.agenda-container { display: block; }
@@ -103,11 +108,11 @@ img.footer-img { width: 100%; }
 @media (min-width: 1200px) {
     img.logo { width: 20%; }
 
-    div.apply-btn-container { text-align: right; }
+    div.apply-btn-container { text-align: right; margin-top: 10px; }
     /* button.btn-apply { float: right; width: 330px; height: 70px; font-size: 24px; letter-spacing : 0.2em; } */
     button.btn-apply { width: 28rem; height: 3.4rem; font-size: 1.2rem; padding: 0.2rem; }
 
-    section.form { display: flex; align-items: stretch; justify-content: space-between;; }
+    section.form { display: flex; align-items: stretch; justify-content: space-between; }
     div.agenda-container { display: inline-block; width: 50%; }
     div.form-container { display: inline-block; width: 50%; }
 }
@@ -137,7 +142,7 @@ img.footer-img { width: 100%; }
             <img class="main-img" src="<?= $project['MAIN_IMG_URL'] ?>" />
         </div>
         <div class="apply-btn-container">
-            <button class="btn-apply" style="background: <?= $project['APPL_BTN_COLOR'] ?>">사전등록</button>
+            <button class="btn-apply" style="background: <?= $project['APPL_BTN_COLOR'] ?>" onclick="openApply();">사전등록</button>
         </div>
     </section>
 <!-- </div>
@@ -148,23 +153,6 @@ img.footer-img { width: 100%; }
         </div>
         <div class="form-container" style="background: <?= $project['ENT_THME_COLOR'] ?>">
             <form class="enter-form" method="post">
-                <!-- <div>
-                    <p>
-                        <label for="reqrNm">
-                            성&nbsp;&nbsp;&nbsp;명
-                            <input type="text" id="reqrNm" placeholder="" />
-                        </label>
-                    </p>
-                    <p>
-                        <label for="reqrNm">
-                            휴대폰
-                            <input type="text" id="reqrMbilno" placeholder="- 없이 입력해주세요" />
-                        </label>
-                    </p>
-                </div>
-                <div>
-                    <button class="btn-enter">심포지엄 입장</button>
-                </div> -->
                 <table>
                     <tr>
                         <td class="td-input">
@@ -190,13 +178,12 @@ img.footer-img { width: 100%; }
                         </td>
                     </tr>
                 </table>
-
                 <hr />
 
                 <div class="chrome-guide">
-                    <p>인터넷 익스플로러에서는 동영상재생이 원활하지 않을 수 있습니다. 가급적 Chrome을 이용하여 시청해주세요.</p>
+                    <p>인터넷 익스플로러에서는 동영상재생이 원활하지 않을 수 있습니다. 가급적 크롬을 이용하여 시청해주세요.</p>
                     <p>
-                        <a href="https://www.google.co.kr/chrome" target="_chrome">[크롬 설치]</a>
+                        <a href="https://www.google.co.kr/chrome" target="_chrome">[크롬 브라우저 설치]</a>
                     </p>
                 </div>
             </form>
@@ -207,6 +194,38 @@ img.footer-img { width: 100%; }
     <footer>
         <img class="footer-img" src="<?= $project['FOOTER_IMG_URL'] ?>" />
     </footer>
+</div>
+
+<!-- 사전등록 Modal -->
+<div id="applyModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="applyModalTitle" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title tl" id="applyModalTitle">사전등록</h4>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+			</div>
+			<div class="modal-body">
+				<table class="table-apply">
+                    <tbody>
+<?php
+    foreach($entInfoList as $entInfoItem) {
+        echo '<tr>';
+        echo '	<th '.($entInfoItem['REQUIRED_YN'] == 1 ? 'class="required"' : '').'>'.$entInfoItem['ENT_INFO_TITLE'].'</th>';
+        echo '	<td '.($entInfoItem['REQUIRED_YN'] == 1 ? 'class="required"' : '').'>';
+        echo '		<input type="text" class="ent-info common-input w100" placeholder="'.$entInfoItem['ENT_INFO_PHOLDR'].'" value="" />';
+        echo '	</td>';
+        echo '</tr>';
+    }
+?>
+                    </tbody>
+                </table>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+				<button type="button" class="btn btn-primary" onclick="apply();">확인</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 <!-- 공통모달 -->
@@ -224,8 +243,7 @@ img.footer-img { width: 100%; }
 <!-- Bootstrap-select -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
 
-<!-- <script src="/js/sun.common.20190313.js"></script>
-<script src="/js/autofit.js"></script> -->
+<script src="/js/sum.common.20200914.js"></script>
 
 <!-- 메인 script -->
 <script language="javascript">
@@ -235,6 +253,35 @@ function fnInit () {
     showSpinner(300);
 
     // modal1('타이틀', '메세지랑께');
+}
+
+// 사전등록 창 열기
+function openApply () {
+    $('#applyModal').modal('show');
+}
+
+// 사전등록 신청
+function apply () {
+    // validation
+    let msg = '';
+    $('.table-apply tbody tr').each(function() {
+        // validation
+        const _th = $(this).find('th:first');
+        const _td = $(this).find('td:first');
+        const _input = $(_td).find('input:first');
+        const _val = $(_input).val();
+        // alert('val : ' + _val);
+
+        // 필수인데 비어있으면 alert
+        if ($(_td).hasClass('required') && isEmpty(_val)) {
+            msg = (`${$(_th).text()} 항목은 필수입니다.`);
+        }
+    });
+
+    if (msg !== '') {
+        alert(msg);
+        return;
+    }
 }
 
 $(document).ready(function () {
