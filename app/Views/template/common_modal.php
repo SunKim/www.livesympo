@@ -16,15 +16,15 @@ FontAwesome
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<h4 class="modal-title" id="commonModal1Title">알림</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			</div>
 			<div class="modal-body">
 				<div id="commonModal1Content">메세지</div>
 			</div>
 			<div class="modal-footer">
 				<!-- <button type="button" class="btn btn-primary">액션</button> -->
-				<button type="button" class="btn btn-default" data-dismiss="modal">확인</button>
+				<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
 			</div>
 		</div>
 	</div>
@@ -35,15 +35,15 @@ FontAwesome
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<h4 class="modal-title" id="commonModalWide1Title">알림</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			</div>
 			<div class="modal-body">
 				<div id="commonModalWide1Content">메세지</div>
 			</div>
 			<div class="modal-footer">
 				<!-- <button type="button" class="btn btn-primary">액션</button> -->
-				<button type="button" class="btn btn-default" data-dismiss="modal">확인</button>
+				<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
 			</div>
 		</div>
 	</div>
@@ -54,15 +54,15 @@ FontAwesome
 	<div class="modal-dialog modal-xl">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<h4 class="modal-title" id="commonModalExwide1Title">알림</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			</div>
 			<div class="modal-body">
 				<div id="commonModalExwide1Content">메세지</div>
 			</div>
 			<div class="modal-footer">
 				<!-- <button type="button" class="btn btn-primary">액션</button> -->
-				<button type="button" class="btn btn-default" data-dismiss="modal">확인</button>
+				<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
 			</div>
 		</div>
 	</div>
@@ -74,15 +74,15 @@ FontAwesome
 		<div class="modal-dialog vertical-align-center">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					<h4 class="modal-title" id="centerModal1Title">알림</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				</div>
 				<div class="modal-body">
 					<div id="centerModal1Content">메세지</div>
 				</div>
 				<div class="modal-footer">
 					<!-- <button type="button" class="btn btn-primary">액션</button> -->
-					<button type="button" class="btn btn-default" data-dismiss="modal">확인</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
 				</div>
 			</div>
 		</div>
@@ -95,14 +95,14 @@ FontAwesome
 		<div class="modal-dialog vertical-align-center">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					<h4 class="modal-title" id="centerModalConfirm1Title">알림</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				</div>
 				<div class="modal-body">
 					<div id="centerModalConfirm1Content">메세지</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default confirm-cancel" data-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-secondary confirm-cancel" data-dismiss="modal">취소</button>
 					<button type="button" class="btn btn-primary confirm-agree">확인</button>
 				</div>
 			</div>
@@ -116,8 +116,8 @@ FontAwesome
 		<div class="modal-dialog vertical-align-center">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					<h4 class="modal-title" id="centerModalConfirm2Title">알림</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				</div>
 				<div class="modal-body">
 					<div id="centerModalConfirm2Content">메세지</div>
@@ -142,8 +142,8 @@ FontAwesome
 	<div class="modal-dialog modal-xl">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<h4 class="modal-title" id="excelModalExwide1Title">알림</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			</div>
 			<div class="modal-body">
 				<div id="excelModalExwide1Content">메세지</div>
@@ -158,7 +158,7 @@ FontAwesome
 
 
 <!-- Loading Spinner Modal -->
-<div id="spinnerModal" class="modal fade spinner-modal" data-backdrop="static" data-keyboard="false" tabindex="-1">
+<div id="spinnerModal" class="modal spinner-modal" data-backdrop="static" data-keyboard="false" tabindex="-1">
 	<div class="modal-dialog modal-sm">
 		<div class="modal-content">
 			<i class="fa fa-spinner fa-spin fa-3x" style="color:#fff"></i>
@@ -285,6 +285,7 @@ FontAwesome
 
 	//스피너 모달 숨기기.
 	function hideSpinner() {
+		// alert('hideSpinner');
 		$('#spinnerModal').modal('hide');
 	}
 

@@ -22,10 +22,20 @@ class ProjectModel extends Model {
 	public function detail ($prjUri) {
 		$strQry  = "";
 
-		$strQry .= "SELECT *	\n";
-		$strQry .= "FROM TB_PRJ_M	\n";
+		$strQry .= "SELECT	\n";
+		$strQry .= "	P.PRJ_SEQ, P.PRJ_TITLE, P.PRJ_TITLE_URI	\n";
+		$strQry .= "	, P.STREAM_URL, P.MAIN_IMG_URI, P.AGENDA_IMG_URI, P.FOOTER_IMG_URI	\n";
+        $strQry .= "	, CONCAT('".$_ENV['app.baseURL']."', P.MAIN_IMG_URI) AS MAIN_IMG_URL	\n";
+        $strQry .= "	, CONCAT('".$_ENV['app.baseURL']."', P.AGENDA_IMG_URI) AS AGENDA_IMG_URL	\n";
+        $strQry .= "	, CONCAT('".$_ENV['app.baseURL']."', P.FOOTER_IMG_URI) AS FOOTER_IMG_URL	\n";
+		$strQry .= "	, P.APPL_BTN_COLOR, P.ENT_THME_COLOR, P.AGENDA_PAGE_YN	\n";
+		$strQry .= "	, DATE_FORMAT(P.ST_DTTM, '%Y-%m-%d') AS ST_DATE	\n";
+        $strQry .= "	, DATE_FORMAT(P.ST_DTTM, '%H:%i') AS ST_TIME	\n";
+		$strQry .= "	, DATE_FORMAT(P.ED_DTTM, '%Y-%m-%d') AS ED_DATE	\n";
+        $strQry .= "	, DATE_FORMAT(P.ED_DTTM, '%H:%i') AS ED_TIME	\n";
+		$strQry .= "FROM TB_PRJ_M AS P	\n";
 		$strQry .= "WHERE 1=1	\n";
-		$strQry .= "	AND PRJ_TITLE_URI = ".$this->db->escape($prjUri)."	\n";
+		$strQry .= "	AND P.PRJ_TITLE_URI = ".$this->db->escape($prjUri)."	\n";
 
 		$strQry .= ";";
 		// log_message('info', "projectModel - list. Qry - \n$strQry");

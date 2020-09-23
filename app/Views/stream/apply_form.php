@@ -134,7 +134,7 @@ img.footer-img { width: 100%; }
     </header>
     <section class="main">
         <div class="main-img-container">
-            <img class="main-img" src="<?= $project['MAIN_IMG_URI'] ?>" />
+            <img class="main-img" src="<?= $project['MAIN_IMG_URL'] ?>" />
         </div>
         <div class="apply-btn-container">
             <button class="btn-apply" style="background: <?= $project['APPL_BTN_COLOR'] ?>">사전등록</button>
@@ -144,7 +144,7 @@ img.footer-img { width: 100%; }
 <div style="width: 100%;"> -->
     <section class="form">
         <div class="agenda-container">
-            <img class="agenda-img" src="<?= $project['AGENDA_IMG_URI'] ?>" />
+            <img class="agenda-img" src="<?= $project['AGENDA_IMG_URL'] ?>" />
         </div>
         <div class="form-container" style="background: <?= $project['ENT_THME_COLOR'] ?>">
             <form class="enter-form" method="post">
@@ -205,7 +205,7 @@ img.footer-img { width: 100%; }
 </div>
 <div class="container">
     <footer>
-        <img class="footer-img" src="<?= $project['FOOTER_IMG_URI'] ?>" />
+        <img class="footer-img" src="<?= $project['FOOTER_IMG_URL'] ?>" />
     </footer>
 </div>
 
@@ -232,7 +232,7 @@ img.footer-img { width: 100%; }
 
 // 초기화
 function fnInit () {
-    showSpinner(1000);
+    showSpinner(300);
 
     // modal1('타이틀', '메세지랑께');
 }
