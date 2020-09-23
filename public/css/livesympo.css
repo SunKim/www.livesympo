@@ -20,7 +20,7 @@ hr { color: #fff; background: #fff; border: 0; height: 1px; margin: 0 0.4rem 0.6
 /* global components */
 img.exclamation { width: 100px; height: 100px; }
 input.common-input { min-width: 6rem; height: 2.4rem; padding: 0 1rem; border: 1px solid #D6D6D6; border-radius: 4px; vertical-align: middle; color: #333; }
-select.common-select { min-width: 6rem; height: 2.4rem; border: 1px solid #D6D6D6; border-radius: 4px; font-size: 1rem; padding: 0 1rem; }
+select.common-select { min-width: 6rem; height: 2.4rem; border: 1px solid #D6D6D6; border-radius: 4px; font-size: 1rem; padding: 0 1rem; } 
 
 /* 사전등록(입장정보) 신청양식 테이블 */
 table.table-apply th { width: 25%; padding: 10px; text-align: left; }
