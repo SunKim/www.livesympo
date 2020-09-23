@@ -15,7 +15,6 @@
 <meta name="mobile-web-app-capable" content="yes">
 
 <meta name="subject" content="Live Sympo">
-<!-- TODO title DB에서 -->
 <meta name="title" content="">
 <meta name="description" content="Live Sympo 입장" />
 <meta name="keywords" content="실시간, 심포지엄" />
@@ -27,7 +26,6 @@
 <meta name="robots" content="noindex,nofollow">
 <!-- meta name="robots" content="all" -->
 
-<!-- TODO title DB에서 -->
 <title>Live Sympo - <?= $project['PRJ_TITLE'] ?></title>
 
 <!-- stylesheets -->
@@ -166,7 +164,7 @@ table.table-apply th.required::after { content: '*'; display: inline-block; marg
                             </p>
                         </td>
                         <td class="td-btn">
-                            <button class="btn-enter">심포지엄<br />입장</button>
+                            <button class="btn-enter" onclick="enter();">심포지엄<br />입장</button>
                         </td>
                     </tr>
                     <tr>
@@ -209,7 +207,7 @@ table.table-apply th.required::after { content: '*'; display: inline-block; marg
                     <tbody>
 <?php
     foreach($entInfoList as $entInfoItem) {
-        echo '<tr>';
+        echo '<tr PRJ_ENT_INFO_SEQ="'.$entInfoItem['PRJ_ENT_INFO_SEQ'].'" SERL_NO="'.$entInfoItem['SERL_NO'].'">';
         echo '	<th '.($entInfoItem['REQUIRED_YN'] == 1 ? 'class="required"' : '').'>'.$entInfoItem['ENT_INFO_TITLE'].'</th>';
         echo '	<td '.($entInfoItem['REQUIRED_YN'] == 1 ? 'class="required"' : '').'>';
         echo '		<input type="text" class="ent-info common-input w100" placeholder="'.$entInfoItem['ENT_INFO_PHOLDR'].'" value="" />';
@@ -222,6 +220,7 @@ table.table-apply th.required::after { content: '*'; display: inline-block; marg
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-info" onclick="test();">테스트</button>
 				<button type="button" class="btn btn-primary" onclick="apply();">확인</button>
 			</div>
 		</div>
@@ -243,7 +242,7 @@ table.table-apply th.required::after { content: '*'; display: inline-block; marg
 <!-- Bootstrap-select -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
 
-<script src="/js/sum.common.20200914.js"></script>
+<script src="/js/sun.common.20200914.js"></script>
 
 <!-- 메인 script -->
 <script language="javascript">
@@ -252,7 +251,7 @@ table.table-apply th.required::after { content: '*'; display: inline-block; marg
 function fnInit () {
     showSpinner(300);
 
-    modal1('타이틀', '메세지람시롱');
+    // modal1('타이틀', '메세지람시롱');
 }
 
 // 사전등록 창 열기
@@ -260,10 +259,30 @@ function openApply () {
     $('#applyModal').modal('show');
 }
 
+// 사전등록 테스트용 데이터
+function test () {
+    $('.table-apply tbody tr').each(function() {
+        // validation
+        const _td = $(this).find('td:first');
+        const _input = $(_td).find('input:first');
+
+        if ($(this).attr('SERL_NO') == '1') {
+            $(_input).val('김성명');
+        } else if ($(this).attr('SERL_NO') == '2') {
+            $(_input).val('010-1111-2222');
+        } else if ($(this).attr('SERL_NO') == '3') {
+            $(_input).val('제주감귤대학병원');
+        } else if ($(this).attr('SERL_NO') == '4') {
+            $(_input).val('오징어감별과');
+        }
+    });
+}
+
 // 사전등록 신청
 function apply () {
     // validation
     let msg = '';
+    const entInfoList = [];
     $('.table-apply tbody tr').each(function() {
         // validation
         const _th = $(this).find('th:first');
@@ -276,12 +295,56 @@ function apply () {
         if ($(_td).hasClass('required') && isEmpty(_val)) {
             msg = (`${$(_th).text()} 항목은 필수입니다.`);
         }
-    });
 
+        // 2번은 연락처 고정이므로 숫자만 return
+        entInfoList.push({
+            PRJ_SEQ: <?= $project['PRJ_SEQ'] ?>,
+            PRJ_ENT_INFO_SEQ: $(this).attr('PRJ_ENT_INFO_SEQ'),
+            INPUT_VAL: parseInt($(this).attr('SERL_NO')) == 2 ? numberfy(_val) : _val
+        });
+    });
+    // console.log(`entInfoList - ${JSON.stringify(entInfoList)}`);
+
+    // validation에 걸린게 있으면
     if (msg !== '') {
         alert(msg);
         return;
     }
+
+    showSpinner();
+
+    $.ajax({
+    	type: 'POST',
+    	url: '/stream/save/<?= $project['PRJ_SEQ'] ?>',
+    	dataType: 'json',
+    	cache: false,
+    	data: {
+            entInfoList
+        },
+
+    	success: function(data) {
+    		console.log(data)
+    		if ( data.resCode == '0000' ) {
+                alert('사전등록 신청정보를 저장했습니다.');
+    		} else {
+    			// modal1('경고', '프로젝트 목록을 가져오는 도중 오류가 발생했습니다. 관리자에게 문의해주세요.<br><br>코드(resCode):'+data.resCode+'<br>메세지(resMsg):'+data.resMsg);
+    			// centerModal1('경고', '프로젝트 목록을 가져오는 도중 오류가 발생했습니다. 관리자에게 문의해주세요.<br><br>코드(resCode):'+data.resCode+'<br>메세지(resMsg):'+data.resMsg);
+    			alert('사전등록 신청 도중 오류가 발생했습니다.\n관리자에게 문의해주세요.\n\n코드(resCode):'+data.resCode+'\n메세지(resMsg):'+data.resMsg);
+    			// hideSpinner();
+    		}
+    	},
+    	error: function (xhr, ajaxOptions, thrownError) {
+    		console.error(xhr);
+    		// modal1('경고', '프로젝트 목록을 가져오는 도중 오류가 발생했습니다.\n관리자에게 문의해주세요.\n\n코드:'+xhr.status+'\n메세지:'+thrownError);
+    		// centerModal1('경고', '프로젝트 목록을 가져오는 도중 오류가 발생했습니다.\n관리자에게 문의해주세요.\n\n코드:'+xhr.status+'\n메세지:'+thrownError);
+    		alert('사전등록 신청 도중 오류가 발생했습니다.\n관리자에게 문의해주세요.\n\n코드:'+xhr.status+'\n메세지:'+thrownError);
+    		// hideSpinner();
+    	},
+    	complete : function () {
+    		hideSpinner();
+            $('#applyModal').modal('hide');
+    	}
+    });
 }
 
 $(document).ready(function () {
