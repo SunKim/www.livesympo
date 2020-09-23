@@ -252,7 +252,7 @@ table.table-apply th.required::after { content: '*'; display: inline-block; marg
 function fnInit () {
     showSpinner(300);
 
-    // modal1('타이틀', '메세지랑께');
+    modal1('타이틀', '메세지람시롱');
 }
 
 // 사전등록 창 열기
