@@ -131,11 +131,11 @@ table.table-apply th.required::after { content: '*'; display: inline-block; marg
 ?>
 
 <div class="container">
-    <div>
+    <header>
         <div class="logo-container">
             <img class="logo" src="/images/logo/logo_type1.png" />
         </div>
-    </div>
+    </header>
     <section class="main">
         <div class="main-img-container">
             <img class="main-img" src="<?= $project['MAIN_IMG_URL'] ?>" />
@@ -190,9 +190,9 @@ table.table-apply th.required::after { content: '*'; display: inline-block; marg
     </section>
 </div>
 <div class="container">
-    <div>
+    <footer>
         <img class="footer-img" src="<?= $project['FOOTER_IMG_URL'] ?>" />
-    </div>
+    </footer>
 </div>
 
 <!-- 사전등록 Modal -->
