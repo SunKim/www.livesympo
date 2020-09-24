@@ -80,6 +80,7 @@ table.table-apply th.required::after { content: '*'; display: inline-block; marg
 
 /* 768px 이하 -> 모바일 */
 @media (max-width: 768px) {
+
     div.logo-container { padding: 0 1rem; }
     img.logo { width: 30%; }
     div.apply-btn-container { text-align: center; margin-top: 0.6rem; }
@@ -130,11 +131,11 @@ table.table-apply th.required::after { content: '*'; display: inline-block; marg
 ?>
 
 <div class="container">
-    <header>
+    <div>
         <div class="logo-container">
             <img class="logo" src="/images/logo/logo_type1.png" />
         </div>
-    </header>
+    </div>
     <section class="main">
         <div class="main-img-container">
             <img class="main-img" src="<?= $project['MAIN_IMG_URL'] ?>" />
@@ -155,16 +156,16 @@ table.table-apply th.required::after { content: '*'; display: inline-block; marg
                     <tr>
                         <td class="td-input">
                             <p>
-                                <span>성&nbsp;&nbsp;&nbsp;명</span>
-                                <input type="text" id="reqrNm" class="ml10" placeholder="" />
+                                <span style="font-size: 1.1rem">성&nbsp;&nbsp;&nbsp;명</span>
+                                <input type="text" id="reqrNm" class="common-input ml10" placeholder="" />
                             </p>
                             <p class="mt6">
-                                <span>휴대폰</span>
-                                <input type="text" id="mbilno" class="ml10" placeholder="- 없이 입력해주세요" />
+                                <span style="font-size: 1.1rem">휴대폰</span>
+                                <input type="text" id="mbilno" class="common-input ml10" placeholder="- 없이 입력해주세요" />
                             </p>
                         </td>
                         <td class="td-btn">
-                            <button class="btn-enter btn-white" onclick="enter();">심포지엄<br />입장</button>
+                            <button type="button" class="btn-enter" style="font-size: 1.1rem; background: <?= $project['APPL_BTN_COLOR'] ?>" onclick="enter();">심포지엄<br />입장</button>
                         </td>
                     </tr>
                     <tr>
@@ -189,9 +190,9 @@ table.table-apply th.required::after { content: '*'; display: inline-block; marg
     </section>
 </div>
 <div class="container">
-    <footer>
+    <div>
         <img class="footer-img" src="<?= $project['FOOTER_IMG_URL'] ?>" />
-    </footer>
+    </div>
 </div>
 
 <!-- 사전등록 Modal -->
@@ -276,6 +277,9 @@ function test () {
             $(_input).val('오징어감별과');
         }
     });
+
+    $('#reqrNm').val('김성명');
+    $('#mbilno').val('010-1111-2222');
 }
 
 // 사전등록 신청
@@ -355,7 +359,7 @@ function enter () {
         $('#reqrNm').focus();
         return;
     }
-    if (!checkMobile($('#mbilno').val())) {
+    if (!checkMobile( simplifyMobile($('#mbilno').val()) )) {
         alert('연락처를 형식에 맞게 입력해주세요.(- 제외)');
         $('#mbilno').focus();
         return;
@@ -365,34 +369,28 @@ function enter () {
 
     $.ajax({
     	type: 'POST',
-    	url: '/stream/save/<?= $project['PRJ_SEQ'] ?>',
+    	url: '/stream/enter/<?= $project['PRJ_TITLE_URI'] ?>',
     	dataType: 'json',
     	cache: false,
     	data: {
-            entInfoList
+            reqrNm: $('#reqrNm').val(),
+            mbilno: simplifyMobile($('#mbilno').val())
         },
 
     	success: function(data) {
     		console.log(data)
     		if ( data.resCode == '0000' ) {
-                alert('사전등록 신청정보를 저장했습니다.');
+                location.href = '/stream/<?= $project['PRJ_TITLE_URI'] ?>';
     		} else {
-    			// modal1('경고', '프로젝트 목록을 가져오는 도중 오류가 발생했습니다. 관리자에게 문의해주세요.<br><br>코드(resCode):'+data.resCode+'<br>메세지(resMsg):'+data.resMsg);
-    			// centerModal1('경고', '프로젝트 목록을 가져오는 도중 오류가 발생했습니다. 관리자에게 문의해주세요.<br><br>코드(resCode):'+data.resCode+'<br>메세지(resMsg):'+data.resMsg);
-    			alert('사전등록 신청 도중 오류가 발생했습니다.\n관리자에게 문의해주세요.\n\n코드(resCode):'+data.resCode+'\n메세지(resMsg):'+data.resMsg);
-    			// hideSpinner();
+    			alert('심포지엄 입장 도중 오류가 발생했습니다.\n관리자에게 문의해주세요.\n\n코드(resCode) : '+data.resCode+'\n메세지(resMsg) : '+data.resMsg);
     		}
     	},
     	error: function (xhr, ajaxOptions, thrownError) {
     		console.error(xhr);
-    		// modal1('경고', '프로젝트 목록을 가져오는 도중 오류가 발생했습니다.\n관리자에게 문의해주세요.\n\n코드:'+xhr.status+'\n메세지:'+thrownError);
-    		// centerModal1('경고', '프로젝트 목록을 가져오는 도중 오류가 발생했습니다.\n관리자에게 문의해주세요.\n\n코드:'+xhr.status+'\n메세지:'+thrownError);
-    		alert('사전등록 신청 도중 오류가 발생했습니다.\n관리자에게 문의해주세요.\n\n코드:'+xhr.status+'\n메세지:'+thrownError);
-    		// hideSpinner();
+    		alert('심포지엄 입장 도중 오류가 발생했습니다.\n관리자에게 문의해주세요.\n\n코드 : '+xhr.status+'\n메세지 : '+thrownError);
     	},
     	complete : function () {
     		hideSpinner();
-            $('#applyModal').modal('hide');
     	}
     });
 }

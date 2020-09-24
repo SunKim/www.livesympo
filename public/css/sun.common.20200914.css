@@ -144,9 +144,6 @@ ul, ol { padding: 0px; margin: 0; }
 ul li { list-style-type: none; }
 i { margin-left: 0.25rem; margin-right: 0.25rem;}
 
-/* 모바일(iSO) input창의 그림자 제거 */
-input[type=text] { -webkit-appearance: none !important; -moz-appearance: none !important; appearance: none !important; }
-
 /* 나눔스퀘어(NanumSquare) 크롬 버그로 password에서 패스워드용 disc가 안보이는 현상 해결용 */
 input[type="password"] { font-family: "나눔고딕", "Nanum Gothic", "Malgun Gothic", "맑은 고딕", "Dotum", "돋움", "굴림", Sans-serif; }
 

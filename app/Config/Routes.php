@@ -37,8 +37,8 @@ $routes->get('/', 'Home::index');
 // 모든걸 다 stream/apply로 보내면 안되므로, 정상적으로 태워야 할 것들을 먼저 정의 후 나머지는 다 stream/apply로 보냄.
 $routes->add('home', 'Home');
 $routes->add('stream/save/(:segment)', 'Stream::save/$1');
-// livesympo.kr/agenda/xxxx => Stream controller의 agenda로 연결
-$routes->add('agenda/(:segment)', 'Stream::agenda/$1');
+// livesympo.kr/agenda/xxxx => Stream controller의 agenda로 연결 => agenda 별도페이지는 없애기로함.
+// $routes->add('agenda/(:segment)', 'Stream::agenda/$1');
 // livesympo.kr/stream/xxxx => Stream controller의 watch로 연결
 $routes->add('stream/(:segment)', 'Stream::watch/$1');
 // 그 외 livesympo.kr/xxxx 형태는 모두 => Stream controller의 apply로 연결
