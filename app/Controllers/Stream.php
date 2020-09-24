@@ -52,7 +52,6 @@ class Stream extends BaseController {
 		if (isset($prjItem)) {
 			$data['project'] = $prjItem;
 			$data['entInfoList'] = $entInfoList;
-			$data['session'] = $this->session->get('reqr');
 
 			return view('stream/apply_form.php', $data);
 		} else {
@@ -67,9 +66,20 @@ class Stream extends BaseController {
 			return false;
 		}
 
-		$data['session'] = $this->session->get('reqr');
-		echo "시청화면";
-		// return view('stream/enter_form', $data);
+		// 프로젝트 정보 가져오기
+		$prjItem = $this->projectModel->detail($prjUri);
+
+		// 정상 URI면 신청화면 불러오기. 비정상이면 wrongAccess
+		if (isset($prjItem)) {
+			$data['project'] = $prjItem;
+
+			// 세션정보 가져오기
+			$data['session'] = $this->session->get();
+
+			return view('stream/watch.php', $data);
+		} else {
+			return $this->wrongAccess();
+		}
 	}
 
 	// ajax - 신청 저장

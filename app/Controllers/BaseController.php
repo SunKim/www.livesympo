@@ -41,7 +41,7 @@ class BaseController extends Controller
 		//--------------------------------------------------------------------
 		// 세션 기본 load.
 		$this->session = \Config\Services::session();
-		$this->request = $request;
+		// $this->request = $request;
 	}
 
 }

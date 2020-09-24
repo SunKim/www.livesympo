@@ -21,6 +21,7 @@ hr { color: #fff; background: #fff; border: 0; height: 1px; margin: 0 0.4rem 0.6
 img.exclamation { width: 100px; height: 100px; }
 input.common-input { min-width: 6rem; height: 2.4rem; padding: 0 1rem; border: 1px solid #D6D6D6; border-radius: 4px; vertical-align: middle; color: #333; }
 select.common-select { min-width: 6rem; height: 2.4rem; border: 1px solid #D6D6D6; border-radius: 4px; font-size: 1rem; padding: 0 1rem; }
+textarea.common-textarea { padding: 10px 14px; border: 1px solid #D6D6D6; border-radius: 4px; color: #333; }
 
 /* 사전등록(입장정보) 신청양식 테이블 */
 table.table-apply th { width: 25%; padding: 10px; text-align: left; }
@@ -28,3 +29,78 @@ table.table-apply td { width: 75%; padding: 10px; text-align: left; }
 
 /* jQuery의 modal header를 flex로 */
 .modal-header { display: flex; align-items: center; justify-content: space-between; }
+
+header { padding: 1rem 0; }
+div { text-align: center; }
+form { display: inline-block; width: 100%; max-width: 100%;}
+
+div.container { padding-left: 0 !important; padding-right: 0 !important;}
+
+/* 로고 영역 */
+div.logo-container { text-align: left; }
+
+/* 메인이미지 영역 */
+div.main-img-container { }
+img.main-img { display: block; width: 100%; }
+button.btn-apply { display: inline-block; font-weight: 700; color: #FFF; border: 0; }
+button.btn-enter { border: 0; font-size: 1.2rem; font-weight: 600; }
+
+/* 입장폼 및 어젠다 영역 */
+img.agenda-img { width: 100%; }
+section.form { margin-top: 0.6rem; }
+div.form-container { color: #fff; padding: 0.6rem; }
+
+form.enter-form table { width: 100%; }
+form.enter-form td { padding: 0.6rem; }
+form.enter-form td.td-input { width: 70%; }
+form.enter-form td.td-input span { width: 5rem; }
+form.enter-form td.td-input input { width: calc(100% - 7rem); color: #333; }
+form.enter-form td.td-btn { width: 30%; }
+button.btn-enter { width: 100%; height: 100%; font-size: 1rem;  }
+div.chrome-guide { padding: 0.6rem; }
+ul.enter-guide li::before { content: "-"; margin-right: 0.5rem; }
+div.chrome-guide p { text-align: left; }
+
+/* 하단 footer 영역 */
+img.footer-img { width: 100%; }
+
+/* 사전등록 입력 모달 영역 */
+table.table-apply th.required::after { content: '*'; display: inline-block; margin-left: 3px; font-size: 15px; color: #E12222; }
+
+/* 768px 이하 -> 모바일 */
+@media (max-width: 768px) {
+
+    div.logo-container { padding: 0 1rem; }
+    img.logo { width: 30%; }
+    div.apply-btn-container { text-align: center; margin-top: 0.6rem; }
+    button.btn-apply { width: 20rem; height: 2.4rem; font-size: 1.2rem; padding: 0.2rem; }
+
+    div.agenda-container { display: block; }
+    div.form-container { display: block; }
+    div.form-container form.enter-form { margin: 0 auto; }
+}
+
+/* 768~1200 -> 태블릿 */
+@media (min-width: 769px) {
+    img.logo { width: 20%; }
+
+    div.apply-btn-container { text-align: right; margin-top: 0.6rem; }
+    button.btn-apply { width: 20rem; height: 3rem; font-size: 1.2rem; padding: 0.2rem; }
+
+    div.agenda-container { display: block; }
+    div.form-container { display: block; }
+    div.form-container .enter-form { width: 768px; }
+}
+
+/* 1200px 이상 -> PC */
+@media (min-width: 1200px) {
+    img.logo { width: 20%; }
+
+    div.apply-btn-container { text-align: right; margin-top: 10px; }
+    /* button.btn-apply { float: right; width: 330px; height: 70px; font-size: 24px; letter-spacing : 0.2em; } */
+    button.btn-apply { width: 28rem; height: 3.4rem; font-size: 1.2rem; padding: 0.2rem; }
+
+    section.form { display: flex; align-items: stretch; justify-content: space-between; }
+    div.agenda-container { display: inline-block; width: 50%; }
+    div.form-container { display: inline-block; width: 50%; }
+}
