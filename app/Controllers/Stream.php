@@ -45,12 +45,12 @@ class Stream extends BaseController {
 		}
 
 		// 프로젝트 정보 가져오기
-		$project = $this->projectModel->detail($prjUri);
-		$entInfoList = $this->projectModel->entInfoList($project['PRJ_SEQ']);
+		$prjItem = $this->projectModel->detail($prjUri);
+		$entInfoList = $this->projectModel->entInfoList($prjItem['PRJ_SEQ']);
 
 		// 정상 URI면 신청화면 불러오기. 비정상이면 wrongAccess
-		if (isset($project)) {
-			$data['project'] = $project;
+		if (isset($prjItem)) {
+			$data['project'] = $prjItem;
 			$data['entInfoList'] = $entInfoList;
 			$data['session'] = $this->session->get('reqr');
 
@@ -58,6 +58,29 @@ class Stream extends BaseController {
 		} else {
 			return $this->wrongAccess();
 		}
+	}
+
+	// 아젠다화면
+	public function agenda ($prjUri = '') {
+		if ($prjUri == '') {
+			return $this->wrongAccess();
+		}
+
+		$data['session'] = $this->session->get('reqr');
+		echo "agenda 화면";
+		// return view('stream/enter_form', $data);
+	}
+
+	// 스트림시청화면
+	public function watch ($prjUri = '') {
+		if ($prjUri == '') {
+			return $this->wrongAccess();
+			return false;
+		}
+
+		$data['session'] = $this->session->get('reqr');
+		echo "시청화면";
+		// return view('stream/enter_form', $data);
 	}
 
 	// ajax - 신청 저장
@@ -75,7 +98,7 @@ class Stream extends BaseController {
 		$reqrNm = $entInfoList[0]['INPUT_VAL'];
 		$mbilno = $entInfoList[1]['INPUT_VAL'];
 		$reqrSeq = $this->requestorModel->checkReqr($reqrNm, $mbilno);
-		log_message('info', "Stream.php - save. reqrNm: $reqrNm, mbilno: $mbilno, reqrSeq: $reqrSeq");
+		// log_message('info', "Stream.php - save. reqrNm: $reqrNm, mbilno: $mbilno, reqrSeq: $reqrSeq");
 
 		/************************************
 		* START) Transaction 처리
@@ -129,28 +152,68 @@ class Stream extends BaseController {
 		return $this->response->setJSON($res);
 	}
 
-	// 아젠다화면
-	public function agenda ($prjUri = '') {
-		if ($prjUri == '') {
-			return $this->wrongAccess();
+	// ajax - 입장 시도
+	public function enter ($prjUri = '') {
+		// 프로젝트 정보 가져오기
+		$prjItem = $this->projectModel->detail($prjUri);
+		$prjSeq = $prjItem['PRJ_SEQ'];
+
+		// 정상 URI면 신청화면 불러오기. 비정상이면 wrongAccess
+		if (!isset($prjItem)) {
+			$errRes['resCode'] = '9998';
+			$errRes['resMsg'] = '프로젝트 URI가 올바르지 않습니다.';
+			return $this->response->setJSON($errRes);
 		}
 
-		$data['session'] = $this->session->get('reqr');
-		echo "agenda 화면";
-		// return view('stream/enter_form', $data);
-	}
+		$reqrNm = $this->request->getPost('reqrNm');
+		$mbilno = $this->request->getPost('mbilno');
 
-	// 스트림시청화면
-	public function watch ($prjUri = '') {
-		if ($prjUri == '') {
-			return $this->wrongAccess();
-			return false;
+		// 신청자 정보 확인
+		$reqrSeq = $this->requestorModel->checkReqr($reqrNm, $mbilno);
+
+		// 신청자 정보가 없으면
+		if ($reqrSeq == 0) {
+			$errRes['resCode'] = '9996';
+			$errRes['resMsg'] = '사전등록 정보가 없습니다. 사전등록을 먼저 진행해주세요.';
+
+			return $this->response->setJSON($errRes);
 		}
 
-		$data['session'] = $this->session->get('reqr');
-		echo "시청화면";
-		// return view('stream/enter_form', $data);
+		// 신청자 정보가 있으면 해당 project에 사전등록 신청했는지 확인
+		$appliedYn = $this->requestorModel->checkApplied($prjSeq, $reqrSeq);
+		if ($appliedYn == 0) {
+			$errRes['resCode'] = '9996';
+			$errRes['resMsg'] = '사전등록 정보가 없습니다. 사전등록을 먼저 진행해주세요.';
+
+			return $this->response->setJSON($errRes);
+		}
+
+		// 프로젝트 시작/종료시간 맞는지 체크
+		$now = date('Y-m-d H:i:s');
+		// 아직 시작 안한 경우
+		if ($prjItem['ST_DTTM'] > $now) {
+			$res['resCode'] = '8001';
+			$res['resMsg'] = '스트리밍 상영시간은 '.$prjItem['ST_DTTM'].'부터 시작합니다.';
+		} else if ($prjItem['ED_DTTM'] < $now) {
+			$res['resCode'] = '8002';
+			$res['resMsg'] = '스트리밍 종료시간이 이미 지났습니다. ('.$prjItem['ED_DTTM'].')';
+		} else {
+			$res['resCode'] = '0000';
+			$res['resMsg'] = '정상적으로 처리되었습니다.';
+
+			// 세션 처리
+			$sessData = array(
+				'reqrSeq' => $reqrSeq
+				, 'reqrNm' => $reqrNm
+				, 'mbilno' => $mbilno
+				, 'entDttm' => $now
+			);
+
+			$this->session->set($sessData);
+		}
+		return $this->response->setJSON($res);
 	}
+
 
 	// 잘못된 접근
 	public function wrongAccess () {

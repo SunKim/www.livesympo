@@ -65,9 +65,9 @@ form.enter-form table { width: 100%; }
 form.enter-form td { padding: 0.6rem; }
 form.enter-form td.td-input { width: 70%; }
 form.enter-form td.td-input span { width: 5rem; }
-form.enter-form td.td-input input { width: calc(100% - 7rem); }
+form.enter-form td.td-input input { width: calc(100% - 7rem); color: #333; }
 form.enter-form td.td-btn { width: 30%; }
-button.btn-enter { width: 100%; height: 100%; font-size: 1rem; }
+button.btn-enter { width: 100%; height: 100%; font-size: 1rem;  }
 div.chrome-guide { padding: 0.6rem; }
 ul.enter-guide li::before { content: "-"; margin-right: 0.5rem; }
 div.chrome-guide p { text-align: left; }
@@ -160,11 +160,11 @@ table.table-apply th.required::after { content: '*'; display: inline-block; marg
                             </p>
                             <p class="mt6">
                                 <span>휴대폰</span>
-                                <input type="text" id="reqrMbilno" class="ml10" placeholder="- 없이 입력해주세요" />
+                                <input type="text" id="mbilno" class="ml10" placeholder="- 없이 입력해주세요" />
                             </p>
                         </td>
                         <td class="td-btn">
-                            <button class="btn-enter" onclick="enter();">심포지엄<br />입장</button>
+                            <button class="btn-enter btn-white" onclick="enter();">심포지엄<br />입장</button>
                         </td>
                     </tr>
                     <tr>
@@ -308,6 +308,56 @@ function apply () {
     // validation에 걸린게 있으면
     if (msg !== '') {
         alert(msg);
+        return;
+    }
+
+    showSpinner();
+
+    $.ajax({
+    	type: 'POST',
+    	url: '/stream/save/<?= $project['PRJ_SEQ'] ?>',
+    	dataType: 'json',
+    	cache: false,
+    	data: {
+            entInfoList
+        },
+
+    	success: function(data) {
+    		console.log(data)
+    		if ( data.resCode == '0000' ) {
+                alert('사전등록 신청정보를 저장했습니다.');
+    		} else {
+    			// modal1('경고', '프로젝트 목록을 가져오는 도중 오류가 발생했습니다. 관리자에게 문의해주세요.<br><br>코드(resCode):'+data.resCode+'<br>메세지(resMsg):'+data.resMsg);
+    			// centerModal1('경고', '프로젝트 목록을 가져오는 도중 오류가 발생했습니다. 관리자에게 문의해주세요.<br><br>코드(resCode):'+data.resCode+'<br>메세지(resMsg):'+data.resMsg);
+    			alert('사전등록 신청 도중 오류가 발생했습니다.\n관리자에게 문의해주세요.\n\n코드(resCode):'+data.resCode+'\n메세지(resMsg):'+data.resMsg);
+    			// hideSpinner();
+    		}
+    	},
+    	error: function (xhr, ajaxOptions, thrownError) {
+    		console.error(xhr);
+    		// modal1('경고', '프로젝트 목록을 가져오는 도중 오류가 발생했습니다.\n관리자에게 문의해주세요.\n\n코드:'+xhr.status+'\n메세지:'+thrownError);
+    		// centerModal1('경고', '프로젝트 목록을 가져오는 도중 오류가 발생했습니다.\n관리자에게 문의해주세요.\n\n코드:'+xhr.status+'\n메세지:'+thrownError);
+    		alert('사전등록 신청 도중 오류가 발생했습니다.\n관리자에게 문의해주세요.\n\n코드:'+xhr.status+'\n메세지:'+thrownError);
+    		// hideSpinner();
+    	},
+    	complete : function () {
+    		hideSpinner();
+            $('#applyModal').modal('hide');
+    	}
+    });
+}
+
+// 입장버튼 클릭
+function enter () {
+    // validation
+    if (isEmpty($('#reqrNm').val())) {
+        alert('성명을 입력해주세요.');
+        $('#reqrNm').focus();
+        return;
+    }
+    if (!checkMobile($('#mbilno').val())) {
+        alert('연락처를 형식에 맞게 입력해주세요.(- 제외)');
+        $('#mbilno').focus();
         return;
     }
 
