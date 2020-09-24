@@ -136,17 +136,19 @@ class Stream extends BaseController {
 		}
 
 		$data['session'] = $this->session->get('reqr');
+		echo "agenda 화면";
 		// return view('stream/enter_form', $data);
 	}
 
 	// 스트림시청화면
-	public function stream ($prjUri = '') {
+	public function watch ($prjUri = '') {
 		if ($prjUri == '') {
 			return $this->wrongAccess();
 			return false;
 		}
 
 		$data['session'] = $this->session->get('reqr');
+		echo "시청화면";
 		// return view('stream/enter_form', $data);
 	}
 
