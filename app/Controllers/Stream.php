@@ -18,12 +18,14 @@ namespace App\Controllers;
 
 use App\Models\ProjectModel;
 use App\Models\RequestorModel;
+use App\Models\QuestionModel;
 use App\Models\TestModel;
 
 class Stream extends BaseController {
 	public function __construct() {
     	$this->projectModel = new ProjectModel();
 		$this->requestorModel = new RequestorModel();
+		$this->questionModel = new QuestionModel();
 		$this->testModel = new TestModel();
   	}
 
@@ -216,6 +218,25 @@ class Stream extends BaseController {
 		return $this->response->setJSON($res);
 	}
 
+	// ajax - 질문저장
+	public function quest () {
+		$data['PRJ_SEQ'] = $this->request->getPost('prjSeq');
+		$data['REQR_SEQ'] = $this->request->getPost('reqrSeq');
+		$data['QST_DESC'] = $this->request->getPost('qstDesc');
+		// log_message('info', "Stream.php - enter. prjSeq: $prjSeq, reqrNm: $reqrNm, mbilno: $mbilno");
+
+		$qstSeq = $this->questionModel->insertQst($data);
+
+		// 신청자 정보가 없으면
+		if ($qstSeq > 0) {
+			$res['resCode'] = '0000';
+			$res['resMsg'] = '정상적으로 처리되었습니다.';
+		} else {
+			$res['resCode'] = '7001';
+			$res['resMsg'] = '질문 저장 도중 DB 에러가 발생했습니다.';
+		}
+		return $this->response->setJSON($res);
+	}
 
 	// 잘못된 접근
 	public function wrongAccess () {
