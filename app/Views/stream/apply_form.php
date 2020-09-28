@@ -139,8 +139,6 @@ table.table-apply th.required::after { content: '*'; display: inline-block; marg
             <button class="btn-apply" style="background: <?= $project['APPL_BTN_COLOR'] ?>" onclick="openApply();">사전등록</button>
         </div>
     </section>
-<!-- </div>
-<div style="width: 100%;"> -->
     <section class="form">
         <div class="agenda-container">
             <img class="agenda-img" src="<?= $project['AGENDA_IMG_URL'] ?>" />
@@ -299,6 +297,7 @@ function apply () {
         entInfoList.push({
             PRJ_SEQ: <?= $project['PRJ_SEQ'] ?>,
             PRJ_ENT_INFO_SEQ: $(this).attr('PRJ_ENT_INFO_SEQ'),
+            SERL_NO: $(this).attr('SERL_NO'),
             INPUT_VAL: parseInt($(this).attr('SERL_NO')) == 2 ? numberfy(_val) : _val
         });
     });
