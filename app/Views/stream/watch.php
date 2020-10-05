@@ -46,6 +46,7 @@ div { text-align: center; }
 form { display: inline-block; width: 100%; max-width: 100%;}
 
 video { width: 100%; }
+.fcplayer_wrapper { width: 100% !important; height: 100% !important; }
 
 div.container { padding-left: 0 !important; padding-right: 0 !important;}
 
@@ -106,9 +107,22 @@ img.agenda-img { width: 100%; }
         </div>
         <div>
             <!-- <p><?= $project['STREAM_URL'] ?></p> -->
-            <video controls="controls" class="video-stream" x-webkit-airplay="allow" src="<?= $project['STREAM_URL'] ?>" />
-
             <!-- <iframe width="1120" height="630" src="https://www.youtube.com/embed/JnQRRKp_X4U" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+            <!-- <video controls="controls" class="video-stream" x-webkit-airplay="allow" src="<?= $project['STREAM_URL'] ?>" /> -->
+
+            <!-- 와우자 플레이어 페이지 그대로 따라한거 -->
+            <!-- <video id="fcplayer_html5_api" class="vjs-tech" src="https://player.cloud.wowza.com/1e718f2e-6794-4ef9-a2ed-a7b15d34c06f" poster="">
+                <source src="//cdn3.wowza.com/1/VlY0ZzJlTXRtTStT/ZzFyN1V6/hls/live/playlist.m3u8" type="application/x-mpegURL">
+            </video> -->
+            <!-- 와우자 매뉴얼에서 wowza-ip-address, myStream을 대충 때려넣은거 -->
+            <!-- <video width="640" height="400" controls="controls" src="https://cdn3.wowza.com/1/VlY0ZzJlTXRtTStT/ZzFyN1V6/hls/live/VlY0ZzJlTXRtTStT/playlist.m3u8"></video> -->
+            <!-- <video width="640" height="400" controls="controls" src="http://cdn3.wowza.com/1/VlY0ZzJlTXRtTStT/ZzFyN1V6/hls/live/ZzFyN1V6/playlist.m3u8"></video> -->
+            <!-- <video width="640" height="400" controls="controls" src="http://34.64.234.243:1935/live/00b45ce3/playlist.m3u8"></video> -->
+
+            <!-- <div id='wowza_player' class="w100"></div>
+            <script id='player_embed' src='//player.cloud.wowza.com/hosted/ff7y5lbb/wowza.js' type='text/javascript'></script> -->
+            <div id='wowza_player'></div>
+            <script id='player_embed' src='//player.cloud.wowza.com/hosted/ff7y5lbb/wowza.js' type='text/javascript'></script>
         </div>
     </section>
     <hr class="mt20" style="background: #bbb;" />
