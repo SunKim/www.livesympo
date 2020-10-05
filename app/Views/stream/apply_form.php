@@ -126,11 +126,11 @@ table.table-apply th.required::after { content: '*'; display: inline-block; marg
 <!-- <?php include_once APPPATH.'Views/template/check_session.php'; ?> -->
 
 <div class="container">
-    <header>
+    <!-- <header>
         <div class="logo-container">
             <img class="logo" src="/images/logo/logo_type1.png" />
         </div>
-    </header>
+    </header> -->
     <section class="main">
         <div class="main-img-container">
             <img class="main-img" src="<?= $project['MAIN_IMG_URL'] ?>" />
