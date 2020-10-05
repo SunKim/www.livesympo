@@ -122,9 +122,6 @@ table.table-apply th.required::after { content: '*'; display: inline-block; marg
 
 <body>
 
-<!-- 세션체크 -->
-<!-- <?php include_once APPPATH.'Views/template/check_session.php'; ?> -->
-
 <div class="container">
     <!-- <header>
         <div class="logo-container">
