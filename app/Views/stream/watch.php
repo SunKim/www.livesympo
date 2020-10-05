@@ -44,6 +44,7 @@
 header { padding: 1rem 0; }
 div { text-align: center; }
 form { display: inline-block; width: 100%; max-width: 100%;}
+button { border: 0; color: #fff; }
 
 video { width: 100%; }
 .fcplayer_wrapper { width: 100% !important; height: 100% !important; }
@@ -99,7 +100,7 @@ img.agenda-img { width: 100%; }
             <!-- <img class="logo" src="/images/logo/logo_type1.png" /> -->
             <span>&nbsp;</span>
 
-            <button type="button" class="btn-main btn-blue agenda" onclick="toggleAgenda();">아젠다</button>
+            <button type="button" class="btn-main agenda" style="background: <?= $project['APPL_BTN_COLOR'] ?>" onclick="toggleAgenda();">아젠다</button>
         </div>
     </header>
     <section>
@@ -132,7 +133,7 @@ img.agenda-img { width: 100%; }
             <p class="tl">* Q&A - 질문을 남겨주시면 강의 후 답변드립니다.</p>
             <textarea id="qstDesc" maxlength="400" rows="4" class="common-textarea w100 mt10 mb10" style="padding: 4px;"></textarea>
             <div class="tr">
-                <button type="button" class="btn-main btn-indigo" onclick="saveQuest();">질문등록</button>
+                <button type="button" class="btn-main" style="background: <?= $project['APPL_BTN_COLOR'] ?>" onclick="saveQuest();">질문등록</button>
             </div>
         </div>
     </section>
