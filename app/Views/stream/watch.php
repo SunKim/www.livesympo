@@ -96,7 +96,8 @@ img.agenda-img { width: 100%; }
 <div class="container">
     <header>
         <div class="logo-container">
-            <img class="logo" src="/images/logo/logo_type1.png" />
+            <!-- <img class="logo" src="/images/logo/logo_type1.png" /> -->
+            <span>&nbsp;</span>
 
             <button type="button" class="btn-main btn-blue agenda" onclick="toggleAgenda();">아젠다</button>
         </div>
