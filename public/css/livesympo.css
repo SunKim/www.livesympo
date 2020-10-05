@@ -18,7 +18,7 @@ input, span { display: inline-block; }
 hr { color: #fff; background: #fff; border: 0; height: 1px; margin: 0 0.4rem 0.6rem 0.4rem; }
 
 /* 아이폰의 inner shadow 제거 */
-input { -webkit-appearance: none; -webkit-border-radius: 0; }
+input, textarea { -webkit-appearance: none; -webkit-border-radius: 0; }
 
 /* global components */
 img.exclamation { width: 100px; height: 100px; }
