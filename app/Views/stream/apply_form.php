@@ -394,7 +394,6 @@ $(document).ready(function () {
 
     //submit 되기 전 처리
     $('form').submit(function( event ) {
-
     });
 });
 
