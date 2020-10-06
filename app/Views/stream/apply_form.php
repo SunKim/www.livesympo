@@ -44,6 +44,7 @@
 header { padding: 1rem 0; }
 div { text-align: center; }
 form { display: inline-block; width: 100%; max-width: 100%;}
+input[type=checkbox] { margin-right: 0.3rem; border: 1px solid #cacece; -ms-transform: scale(1.2); -moz-transform: scale(1.2); -webkit-transform: scale(1.2); transform: scale(1.2); }
 
 div.container { padding-left: 0 !important; padding-right: 0 !important;}
 
@@ -76,7 +77,9 @@ div.chrome-guide p { text-align: left; }
 img.footer-img { width: 100%; }
 
 /* 사전등록 입력 모달 영역 */
+table.table-apply th { text-align: center; }
 table.table-apply th.required::after { content: '*'; display: inline-block; margin-left: 3px; font-size: 15px; color: #E12222; }
+label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
 
 /* 768px 이하 -> 모바일 */
 @media (max-width: 768px) {
@@ -89,6 +92,8 @@ table.table-apply th.required::after { content: '*'; display: inline-block; marg
     div.agenda-container { display: block; }
     div.form-container { display: block; }
     div.form-container form.enter-form { margin: 0 auto; }
+
+	/* label.conn-route-label { display: block; } */
 }
 
 /* 768~1200 -> 태블릿 */
@@ -199,18 +204,18 @@ table.table-apply th.required::after { content: '*'; display: inline-block; marg
 <?php
     if ($project['CONN_ROUTE_YN'] == 1) {
         echo '<tr>';
-        echo '	<th class="required">'.$project['ENT_INFO_EXTRA_1'].'</th>';
+        echo '	<th class="required tc">접속경로</th>';
         echo '	<td class="required">';
 
         if (isset($project['CONN_ROUTE_1']) && $project['CONN_ROUTE_1'] != '') {
             // <label><input type="checkbox" name="color" value="blue"> Blue</label>
-            echo '		<input type="checkbox" name="CONN_ROUTE_VAL" value="1" />';
+            echo '		<label class="conn-route-label"><input type="checkbox" name="CONN_ROUTE_VAL" value="1" />'.$project['CONN_ROUTE_1'].'</label>';
         }
         if (isset($project['CONN_ROUTE_2']) && $project['CONN_ROUTE_2'] != '') {
-            echo '		<input type="checkbox" name="CONN_ROUTE_VAL" value="2" />';
+            echo '		<label class="conn-route-label"><input type="checkbox" name="CONN_ROUTE_VAL" value="2" />'.$project['CONN_ROUTE_2'].'</label>';
         }
         if (isset($project['CONN_ROUTE_3']) && $project['CONN_ROUTE_3'] != '') {
-            echo '		<input type="checkbox" name="CONN_ROUTE_VAL" value="3" />';
+            echo '		<label class="conn-route-label"><input type="checkbox" name="CONN_ROUTE_VAL" value="3" />'.$project['CONN_ROUTE_3'].'</label>';
         }
 
         echo '	</td>';
@@ -296,6 +301,14 @@ function fnInit () {
     showSpinner(300);
 
     // modal1('타이틀', '메세지람시롱');
+
+	// 접속경로 checkbox라 하나 선택하면 나머지는 체크해제 (radio처럼)
+	$('body').on('change', 'input[name=CONN_ROUTE_VAL]', function(e) {
+		// console.log(e);
+
+		$('input[name=CONN_ROUTE_VAL]').attr('checked', false);
+		e.target.checked = true;
+	});
 }
 
 // 사전등록 창 열기
@@ -339,6 +352,18 @@ function apply () {
     }
 
 <?php
+	// 접속경로가 있으면
+    if ($project['CONN_ROUTE_YN'] == 1) {
+?>
+	if (isEmpty($('input[name=CONN_ROUTE_VAL]:checked').val())) {
+		alert('접속경로를 선택해주세요.');
+		return;
+	}
+<?php
+	}
+?>
+
+<?php
     // 추가항목이 필수이면
     if (isset($project['ENT_INFO_EXTRA_1']) && $project['ENT_INFO_EXTRA_1'] != '' && $project['ENT_INFO_EXTRA_REQUIRED_1'] == 1) {
 ?>
@@ -370,7 +395,7 @@ function apply () {
         REQR_NM: $('#REQR_NM').val(),
         MBILNO: simplifyMobile($('#MBILNO').val()),
         HSPTL_NM: $('#HSPTL_NM').val(),
-        SBJ_NM: $('#SBJ_NM').val(),
+        SBJ_NM: $('#SBJ_NM').val()
     };
 
     // 추가항목 있으면 data에 설정
@@ -379,6 +404,9 @@ function apply () {
     }
     if ($('#ENT_INFO_EXTRA_VAL_2').val() && $('#ENT_INFO_EXTRA_VAL_2').val() !== '') {
         data.ENT_INFO_EXTRA_VAL_2 = $('#ENT_INFO_EXTRA_VAL_2').val();
+    }
+	if ($('input[name=CONN_ROUTE_VAL]:checked').val() && $('input[name=CONN_ROUTE_VAL]:checked').val() !== '') {
+        data.CONN_ROUTE_VAL = $('input[name=CONN_ROUTE_VAL]:checked').val();
     }
     console.log(`data - ${JSON.stringify(data)}`);
 

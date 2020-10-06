@@ -16,7 +16,7 @@
 /* global DOM */
 hr { color: #fff; background: #fff; border: 0; height: 1px; margin: 0 0.4rem 0.6rem 0.4rem; }
 /* 아이폰의 inner shadow 제거 */
-input, textarea { -webkit-appearance: none; -moz-appearance: none; appearance: none; -webkit-border-radius: 0; }
+input[type=text], input[type=password], input[type=number], textarea { -webkit-appearance: none; -moz-appearance: none; appearance: none; -webkit-border-radius: 0; }
 input, span { display: inline-block; }
 
 /* global components */
