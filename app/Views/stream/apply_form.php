@@ -196,12 +196,44 @@ table.table-apply th.required::after { content: '*'; display: inline-block; marg
 			<div class="modal-body">
 				<table class="table-apply">
                     <tbody>
+                        <tr>
+                        	<th class="required">성명</th>
+                        	<td class="required">
+                        		<input type="text" id="REQR_NM" name="REQR_NM" class="ent-info common-input w100" placeholder="" value="" />
+                        	</td>
+                        </tr>
+                        <tr>
+                        	<th class="required">연락처</th>
+                        	<td class="required">
+                        		<input type="text" id="MBILNO" name="MBILNO" class="ent-info common-input w100" placeholder="-는 제외하고 입력해주세요." value="" />
+                        	</td>
+                        </tr>
+                        <tr>
+                        	<th class="required">병원명</th>
+                        	<td class="required">
+                        		<input type="text" id="HSPTL_NM" name="HSPTL_NM" class="ent-info common-input w100" placeholder="" value="" />
+                        	</td>
+                        </tr>
+                        <tr>
+                        	<th class="required">과명</th>
+                        	<td class="required">
+                        		<input type="text" id="SBJ_NM" name="SBJ_NM" class="ent-info common-input w100" placeholder="" value="" />
+                        	</td>
+                        </tr>
 <?php
-    foreach($entInfoList as $entInfoItem) {
-        echo '<tr PRJ_ENT_INFO_SEQ="'.$entInfoItem['PRJ_ENT_INFO_SEQ'].'" SERL_NO="'.$entInfoItem['SERL_NO'].'">';
-        echo '	<th '.($entInfoItem['REQUIRED_YN'] == 1 ? 'class="required"' : '').'>'.$entInfoItem['ENT_INFO_TITLE'].'</th>';
-        echo '	<td '.($entInfoItem['REQUIRED_YN'] == 1 ? 'class="required"' : '').'>';
-        echo '		<input type="text" class="ent-info common-input w100" placeholder="'.$entInfoItem['ENT_INFO_PHOLDR'].'" value="" />';
+    if (isset($project['ENT_INFO_EXTRA_1']) && $project['ENT_INFO_EXTRA_1'] != '') {
+        echo '<tr>';
+        echo '	<th '.($project['ENT_INFO_EXTRA_REQUIRED_1'] == 1 ? 'class="required"' : '').'>'.$project['ENT_INFO_EXTRA_1'].'</th>';
+        echo '	<td '.($project['ENT_INFO_EXTRA_REQUIRED_1'] == 1 ? 'class="required"' : '').'>';
+        echo '		<input type="text" id="ENT_INFO_EXTRA_VAL_1" name="ENT_INFO_EXTRA_VAL_1" class="ent-info common-input w100" placeholder="'.$project['ENT_INFO_EXTRA_PHOLDER_1'].'" value="" />';
+        echo '	</td>';
+        echo '</tr>';
+    }
+    if (isset($project['ENT_INFO_EXTRA_2']) && $project['ENT_INFO_EXTRA_2'] != '') {
+        echo '<tr>';
+        echo '	<th '.($project['ENT_INFO_EXTRA_REQUIRED_2'] == 1 ? 'class="required"' : '').'>'.$project['ENT_INFO_EXTRA_2'].'</th>';
+        echo '	<td '.($project['ENT_INFO_EXTRA_REQUIRED_2'] == 1 ? 'class="required"' : '').'>';
+        echo '		<input type="text" id="ENT_INFO_EXTRA_VAL_2" name="ENT_INFO_EXTRA_VAL_2" class="ent-info common-input w100" placeholder="'.$project['ENT_INFO_EXTRA_PHOLDER_2'].'" value="" />';
         echo '	</td>';
         echo '</tr>';
     }
@@ -252,21 +284,10 @@ function openApply () {
 
 // 사전등록 테스트용 데이터
 function test () {
-    $('.table-apply tbody tr').each(function() {
-        // validation
-        const _td = $(this).find('td:first');
-        const _input = $(_td).find('input:first');
-
-        if ($(this).attr('SERL_NO') == '1') {
-            $(_input).val('김성명');
-        } else if ($(this).attr('SERL_NO') == '2') {
-            $(_input).val('010-1111-2222');
-        } else if ($(this).attr('SERL_NO') == '3') {
-            $(_input).val('제주감귤대학병원');
-        } else if ($(this).attr('SERL_NO') == '4') {
-            $(_input).val('오징어감별과');
-        }
-    });
+    $('#REQR_NM').val('김성명');
+    $('#MBILNO').val('010-1111-2222');
+    $('#HSPTL_NM').val('우리병원');
+    $('#SBJ_NM').val('우리과');
 
     $('#reqrNm').val('김성명');
     $('#mbilno').val('010-1111-2222');
@@ -275,47 +296,77 @@ function test () {
 // 사전등록 신청
 function apply () {
     // validation
-    let msg = '';
-    const entInfoList = [];
-    $('.table-apply tbody tr').each(function() {
-        // validation
-        const _th = $(this).find('th:first');
-        const _td = $(this).find('td:first');
-        const _input = $(_td).find('input:first');
-        const _val = $(_input).val();
-        // alert('val : ' + _val);
-
-        // 필수인데 비어있으면 alert
-        if ($(_td).hasClass('required') && isEmpty(_val)) {
-            msg = (`${$(_th).text()} 항목은 필수입니다.`);
-        }
-
-        // 2번은 연락처 고정이므로 숫자만 return
-        entInfoList.push({
-            PRJ_SEQ: <?= $project['PRJ_SEQ'] ?>,
-            PRJ_ENT_INFO_SEQ: $(this).attr('PRJ_ENT_INFO_SEQ'),
-            SERL_NO: $(this).attr('SERL_NO'),
-            INPUT_VAL: parseInt($(this).attr('SERL_NO')) == 2 ? numberfy(_val) : _val
-        });
-    });
-    // console.log(`entInfoList - ${JSON.stringify(entInfoList)}`);
-
-    // validation에 걸린게 있으면
-    if (msg !== '') {
-        alert(msg);
+    if (isEmpty($('#REQR_NM').val())) {
+        alert('성명을 입력해주세요.');
+        $('#REQR_NM').focus();
+        return;
+    }
+    if (!checkMobile( simplifyMobile($('#MBILNO').val()) )) {
+        alert('연락처를 형식에 맞게 입력해주세요.(- 제외)');
+        $('#MBILNO').focus();
+        return;
+    }
+    if (isEmpty($('#HSPTL_NM').val())) {
+        alert('병원명을 입력해주세요.');
+        $('#HSPTL_NM').focus();
+        return;
+    }
+    if (isEmpty($('#SBJ_NM').val())) {
+        alert('과명을 입력해주세요.');
+        $('#SBJ_NM').focus();
         return;
     }
 
+<?php
+    // 추가항목이 필수이면
+    if (isset($project['ENT_INFO_EXTRA_1']) && $project['ENT_INFO_EXTRA_1'] != '' && $project['ENT_INFO_EXTRA_REQUIRED_1'] == 1) {
+?>
+        if (isEmpty($('#ENT_INFO_EXTRA_VAL_1').val())) {
+            alert('<?= $project['ENT_INFO_EXTRA_1'] ?>을(를) 입력해주세요.');
+            $('#ENT_INFO_EXTRA_VAL_1').focus();
+            return;
+        }
+<?php
+    }
+?>
+
+<?php
+    // 추가항목이 필수이면
+    if (isset($project['ENT_INFO_EXTRA_2']) && $project['ENT_INFO_EXTRA_2'] != '' && $project['ENT_INFO_EXTRA_REQUIRED_2'] == 1) {
+?>
+        if (isEmpty($('#ENT_INFO_EXTRA_VAL_2').val())) {
+            alert('<?= $project['ENT_INFO_EXTRA_2'] ?>을(를) 입력해주세요.');
+            $('#ENT_INFO_EXTRA_VAL_2').focus();
+            return;
+        }
+<?php
+    }
+?>
+
     showSpinner();
+
+    const data = {
+        REQR_NM: $('#REQR_NM').val(),
+        MBILNO: simplifyMobile($('#MBILNO').val()),
+        HSPTL_NM: $('#HSPTL_NM').val(),
+        SBJ_NM: $('#SBJ_NM').val(),
+    };
+
+    // 추가항목 있으면 data에 설정
+    if ($('#ENT_INFO_EXTRA_VAL_1').val() && $('#ENT_INFO_EXTRA_VAL_1').val() !== '') {
+        data.ENT_INFO_EXTRA_VAL_1 = $('#ENT_INFO_EXTRA_VAL_1').val();
+    }
+    if ($('#ENT_INFO_EXTRA_VAL_2').val() && $('#ENT_INFO_EXTRA_VAL_2').val() !== '') {
+        data.ENT_INFO_EXTRA_VAL_2 = $('#ENT_INFO_EXTRA_VAL_2').val();
+    }
+    console.log(`data - ${JSON.stringify(data)}`);
 
     $.ajax({
     	type: 'POST',
     	url: '/stream/save/<?= $project['PRJ_SEQ'] ?>',
     	dataType: 'json',
     	cache: false,
-    	data: {
-            entInfoList
-        },
+        data,
 
     	success: function(data) {
     		console.log(data)
@@ -325,15 +376,11 @@ function apply () {
     			// modal1('경고', '프로젝트 목록을 가져오는 도중 오류가 발생했습니다. 관리자에게 문의해주세요.<br><br>코드(resCode):'+data.resCode+'<br>메세지(resMsg):'+data.resMsg);
     			// centerModal1('경고', '프로젝트 목록을 가져오는 도중 오류가 발생했습니다. 관리자에게 문의해주세요.<br><br>코드(resCode):'+data.resCode+'<br>메세지(resMsg):'+data.resMsg);
     			alert('사전등록 신청 도중 오류가 발생했습니다.\n관리자에게 문의해주세요.\n\n코드(resCode):'+data.resCode+'\n메세지(resMsg):'+data.resMsg);
-    			// hideSpinner();
     		}
     	},
     	error: function (xhr, ajaxOptions, thrownError) {
     		console.error(xhr);
-    		// modal1('경고', '프로젝트 목록을 가져오는 도중 오류가 발생했습니다.\n관리자에게 문의해주세요.\n\n코드:'+xhr.status+'\n메세지:'+thrownError);
-    		// centerModal1('경고', '프로젝트 목록을 가져오는 도중 오류가 발생했습니다.\n관리자에게 문의해주세요.\n\n코드:'+xhr.status+'\n메세지:'+thrownError);
     		alert('사전등록 신청 도중 오류가 발생했습니다.\n관리자에게 문의해주세요.\n\n코드:'+xhr.status+'\n메세지:'+thrownError);
-    		// hideSpinner();
     	},
     	complete : function () {
     		hideSpinner();

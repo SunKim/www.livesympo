@@ -48,12 +48,10 @@ class Stream extends BaseController {
 
 		// 프로젝트 정보 가져오기
 		$prjItem = $this->projectModel->detail($prjUri);
-		$entInfoList = $this->projectModel->entInfoList($prjItem['PRJ_SEQ']);
 
 		// 정상 URI면 신청화면 불러오기. 비정상이면 wrongAccess
 		if (isset($prjItem)) {
 			$data['project'] = $prjItem;
-			$data['entInfoList'] = $entInfoList;
 
 			return view('stream/apply_form.php', $data);
 		} else {
@@ -93,12 +91,17 @@ class Stream extends BaseController {
 			return $this->response->setJSON($res);
 		}
 
-		$entInfoList = $this->request->getPost('entInfoList');
+		$data['REQR_NM'] = $this->request->getPost('REQR_NM');
+		$data['MBILNO'] = $this->request->getPost('MBILNO');
+		$data['HSPTL_NM'] = $this->request->getPost('HSPTL_NM');
+		$data['SBJ_NM'] = $this->request->getPost('SBJ_NM');
+		$data['ENT_INFO_EXTRA_VAL_1'] = $this->request->getPost('ENT_INFO_EXTRA_VAL_1');
+		$data['ENT_INFO_EXTRA_VAL_2'] = $this->request->getPost('ENT_INFO_EXTRA_VAL_2');
 
-		// 우선 신청자가 기존에 존재하는지 체크. post 데이터의 0은 무조건 성명, 1은 연락처
-		$reqrNm = $entInfoList[0]['INPUT_VAL'];
-		$mbilno = $entInfoList[1]['INPUT_VAL'];
-		$reqrSeq = $this->requestorModel->checkReqr($reqrNm, $mbilno);
+		$data['CONN_ROUTE_VAL'] = $this->request->getPost('CONN_ROUTE_VAL');
+
+		// 우선 신청자가 기존에 존재하는지 체크
+		$reqrSeq = $this->requestorModel->checkReqr($data['REQR_NM'], $data['MBILNO']);
 		// log_message('info', "Stream.php - save. reqrNm: $reqrNm, mbilno: $mbilno, reqrSeq: $reqrSeq");
 
 		/************************************
@@ -110,8 +113,8 @@ class Stream extends BaseController {
 		// 존재하지 않으면 신청자마스터 (TB_REQR_M) insert
 		if ($reqrSeq == 0) {
 			$reqrData = array(
-				'REQR_NM' => $reqrNm
-				, 'MBILNO' => $mbilno
+				'REQR_NM' => $data['REQR_NM']
+				, 'MBILNO' => $data['MBILNO']
 			);
 			$reqrSeq = $this->requestorModel->insertReqr($reqrData);
 			log_message('info', "Stream.php - save. 없어서 insert한 reqrSeq: $reqrSeq");
@@ -126,13 +129,12 @@ class Stream extends BaseController {
 			return $this->response->setJSON($res);
 		}
 
-		// 사전등록 신청정보 저장 (TB_PRJ_ENT_INFO_REQR_H)
-		foreach ($entInfoList as $entInfoItem) {
-			// front에서 PRJ_ENT_INFO_SEQ, INPUT_VAL 는 이미 넘어왔음
-			$entInfoItem['REQR_SEQ'] = $reqrSeq;
+		// 받아온 정보 외에 입력할 필수정보들
+		$data['PRJ_SEQ'] = $prjSeq;
+		$data['REQR_SEQ'] = $reqrSeq;
 
-			$prjEntInfoReqrSeq = $this->requestorModel->insertEntInfoReqr($entInfoItem);
-		}
+		// 사전등록 신청정보 저장 (TB_PRJ_ENT_INFO_REQR_H)
+		$prjEntInfoReqrSeq = $this->requestorModel->insertEntInfoReqr($data);
 
 		$db->transComplete();
 		/************************************
@@ -159,7 +161,7 @@ class Stream extends BaseController {
 		$prjItem = $this->projectModel->detail($prjUri);
 		$prjSeq = $prjItem['PRJ_SEQ'];
 
-		// 정상 URI면 신청화면 불러오기. 비정상이면 wrongAccess
+		// 비정상이면 error response
 		if (!isset($prjItem)) {
 			$errRes['resCode'] = '9998';
 			$errRes['resMsg'] = '프로젝트 URI가 올바르지 않습니다.';

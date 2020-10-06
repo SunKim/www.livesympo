@@ -38,7 +38,7 @@ class RequestorModel extends Model {
 	public function checkApplied ($prjSeq, $reqrSeq) {
 		$strQry  = "";
 
-		$strQry .= "SELECT COUNT(PRJ_ENT_INFO_REQR_SEQ) AS APPLIED_YN	\n";
+		$strQry .= "SELECT IFNULL(COUNT(1), 0) AS APPLIED_YN	\n";
 		$strQry .= "FROM TB_PRJ_ENT_INFO_REQR_H	\n";
 		$strQry .= "WHERE PRJ_SEQ = ".$this->db->escape($prjSeq)." 	\n";
 		$strQry .= "	AND REQR_SEQ = ".$this->db->escape($reqrSeq)."	\n";
