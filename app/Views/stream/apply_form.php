@@ -196,6 +196,27 @@ table.table-apply th.required::after { content: '*'; display: inline-block; marg
 			<div class="modal-body">
 				<table class="table-apply">
                     <tbody>
+<?php
+    if ($project['CONN_ROUTE_YN'] == 1) {
+        echo '<tr>';
+        echo '	<th class="required">'.$project['ENT_INFO_EXTRA_1'].'</th>';
+        echo '	<td class="required">';
+
+        if (isset($project['CONN_ROUTE_1']) && $project['CONN_ROUTE_1'] != '') {
+            // <label><input type="checkbox" name="color" value="blue"> Blue</label>
+            echo '		<input type="checkbox" name="CONN_ROUTE_VAL" value="1" />';
+        }
+        if (isset($project['CONN_ROUTE_2']) && $project['CONN_ROUTE_2'] != '') {
+            echo '		<input type="checkbox" name="CONN_ROUTE_VAL" value="2" />';
+        }
+        if (isset($project['CONN_ROUTE_3']) && $project['CONN_ROUTE_3'] != '') {
+            echo '		<input type="checkbox" name="CONN_ROUTE_VAL" value="3" />';
+        }
+
+        echo '	</td>';
+        echo '</tr>';
+    }
+?>
                         <tr>
                         	<th class="required">성명</th>
                         	<td class="required">

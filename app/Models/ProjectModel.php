@@ -24,6 +24,7 @@ class ProjectModel extends Model {
 
 		$strQry .= "SELECT	\n";
 		$strQry .= "	P.PRJ_SEQ, P.PRJ_TITLE, P.PRJ_TITLE_URI	\n";
+		$strQry .= "	, IF( (CONN_ROUTE_1 IS NOT NULL AND CONN_ROUTE_1 <> '') OR (CONN_ROUTE_2 IS NOT NULL AND CONN_ROUTE_2 <> '') OR (CONN_ROUTE_3 IS NOT NULL AND CONN_ROUTE_3 <> ''), 1, 0) AS CONN_ROUTE_YN	\n";
 		$strQry .= "	, P.STREAM_URL, P.MAIN_IMG_URI, P.AGENDA_IMG_URI, P.FOOTER_IMG_URI	\n";
         $strQry .= "	, CONCAT('".$_ENV['app.baseURL']."', P.MAIN_IMG_URI) AS MAIN_IMG_URL	\n";
         $strQry .= "	, CONCAT('".$_ENV['app.baseURL']."', P.AGENDA_IMG_URI) AS AGENDA_IMG_URL	\n";
