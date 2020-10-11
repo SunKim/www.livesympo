@@ -59,6 +59,18 @@ div.agenda-container { display: none; margin-bottom: 1rem; }
 button.agenda {}
 img.agenda-img { width: 100%; }
 
+/* 설문 영역 */
+input[type=checkbox], input[type=radio] { margin-right: 0.3rem; border: 1px solid #cacece; -ms-transform: scale(1.2); -moz-transform: scale(1.2); -webkit-transform: scale(1.2); transform: scale(1.2); }
+div.survey-container { padding: 1rem; display: none; }
+div.survey-container p { text-align: left !important; }
+div.survey-container li { text-align: left !important; }
+span.qst-no { width: 1.4rem; height: 1.4rem; line-height: 1.4rem; background: <?= $project['APPL_BTN_COLOR'] ?>; color: #fff; border: 1px solid <?= $project['APPL_BTN_COLOR'] ?>; border-radius: 4px; text-align: center; vertical-align: middle; font-weight: 700; }
+p.qst-title { line-height: 1.4rem; }
+li.survey-qst-item { margin-bottom: 1rem; }
+ul.qst-choice-list { margin-top: 0.6rem; }
+ul.qst-choice-list li { margin-top: 0.2rem; }
+label.choice-label input { margin-right: 0.4rem; }
+
 /* 768px 이하 -> 모바일 */
 @media (max-width: 768px) {
     div.logo-container { padding: 0 1rem; }
@@ -100,7 +112,10 @@ img.agenda-img { width: 100%; }
             <!-- <img class="logo" src="/images/logo/logo_type1.png" /> -->
             <span>&nbsp;</span>
 
-            <button type="button" class="btn-main agenda" style="background: <?= $project['APPL_BTN_COLOR'] ?>" onclick="toggleAgenda();">아젠다</button>
+			<div>
+				<button type="button" class="btn-main agenda" style="background: <?= $project['APPL_BTN_COLOR'] ?>" onclick="toggleAgenda();">아젠다확인</button>
+				<button type="button" class="btn-main agenda open-survey ml10" style="background: <?= $project['APPL_BTN_COLOR'] ?>" onclick="openSurvey();">설문조사</button>
+			</div>
         </div>
     </header>
     <section>
@@ -109,6 +124,15 @@ img.agenda-img { width: 100%; }
         </div>
         <div>
 			<?= $project['STREAM_URL'] ?>
+        </div>
+    </section>
+	<section>
+        <div class="survey-container">
+			<ul class="survey-qst-list mt20">
+			</ul>
+			<div class="tr">
+                <button type="button" class="btn-main" style="background: <?= $project['APPL_BTN_COLOR'] ?>" onclick="saveAnswer();">설문답변 저장</button>
+            </div>
         </div>
     </section>
     <hr class="mt20" style="background: #bbb;" />
@@ -143,11 +167,146 @@ img.agenda-img { width: 100%; }
 <!-- 메인 script -->
 <script language="javascript">
 
+let surveyQstList = [];
+let surveyQstChoiceList = [];
+
 // 초기화
 function fnInit () {
     showSpinner(300);
 
-    // modal1('타이틀', '메세지람시롱');
+	// modal1('타이틀', '메세지람시롱');
+	surveyQstList = <?php echo json_encode($surveyQstList) ?>;
+	surveyQstChoiceList = <?php echo json_encode($surveyQstChoiceList) ?>;
+	// console.log(`surveyQstList - ${JSON.stringify(surveyQstList)}`);
+	// console.log(`surveyQstChoiceList - ${JSON.stringify(surveyQstChoiceList)}`);
+
+	$('.survey-qst-list').empty();
+
+	surveyQstList.forEach(item => {
+		let html = '';
+
+		html += '<li QST_NO="'+item.QST_NO+'" QST_TP="'+item.QST_TP+'" QST_MULTI_YN="'+item.QST_MULTI_YN+'" class="survey-qst-item d-flex align-items-start justify-content-around">';
+		html += '	<div style="text-align: left !important; min-width: 2rem">';
+		html += '		<span class="qst-no">'+item.QST_NO+'</span>';
+		html += '	</div>';
+		html += '	<div class="w100">';
+		html += '		<p class="qst-title">'+item.QST_TITLE+'</p>';
+
+		if (item.QST_TP == '객관식') {
+			html += '		<ul class="qst-choice-list">';
+			html += '		</ul>';
+		} else if (item.QST_TP == '주관식') {
+			html += '		<textarea class="common-textarea w100 mt10 mb10" name="ASW_'+item.QST_NO+'" maxlength="100" rows="4"></textarea>';
+		}
+
+		html += '	</div>';
+		html += '</li>';
+
+		$('.survey-qst-list').append(html);
+	});
+
+	surveyQstChoiceList.forEach(item => {
+		let html = '';
+
+		html += '<li>';
+		html += '	<span class="choice">';
+		html += '		<label class="choice-label">';
+
+		if (item.QST_MULTI_YN == 1) {
+			html += '			<input type="checkbox" name="ASW_'+item.QST_NO+'" value="'+item.CHOICE_NO+'" />';
+		} else if (item.QST_MULTI_YN == 0) {
+			html += '			<input type="radio" name="ASW_'+item.QST_NO+'" value="'+item.CHOICE_NO+'" />';
+		}
+
+		html += '			'+item.CHOICE;
+		html += '		</label>';
+		html += '	</span>';
+		html += '</li>';
+
+		$('.survey-qst-list li[QST_NO='+item.QST_NO+'] ul.qst-choice-list').append(html);
+	});
+}
+
+// 설문목록 열기
+function openSurvey () {
+	$('.survey-container').slideToggle();
+}
+
+// 설문 답변 저장
+function saveAnswer () {
+	// validation 및 값 저장
+	const surveyAswItem = {
+		PRJ_SEQ: <?= $project['PRJ_SEQ'] ?>,
+		REQR_SEQ: <?= $reqrSeq ?>
+	};
+
+	let valMsg = '';
+	$('li.survey-qst-item').each(function () {
+		// 답변이 없는거 체크
+		const qstNo = $(this).attr('QST_NO');
+
+		if ($(this).attr('QST_TP') === '객관식') {
+			// console.log(`${qstNo} : ${$(this).find('input[name=ASW_'+qstNo+']:checked').val()}`);
+			// validation
+			if (isEmpty($(this).find('input[name=ASW_'+qstNo+']:checked').val())) {
+				valMsg += `${qstNo}번 질문에 답변을 입력해주세요.\n`;
+			}
+
+			// 값 설정 (checkbox인 경우 추가처리 필요)
+			if ($(this).attr('QST_MULTI_YN') == '0') {
+				surveyAswItem[`ASW_${qstNo}`] = $(this).find('input[name=ASW_'+qstNo+']:checked').val();
+			} else {
+				let aswArr = $(this).find('input[name=ASW_'+qstNo+']:checked').map(function () {return this.value;}).get().join(',');
+				surveyAswItem[`ASW_${qstNo}`] = aswArr;
+			}
+		} else {
+			// console.log(`${qstNo} : ${$(this).find('textarea[name=ASW_'+qstNo+']').val()}`);
+			// validation
+			if (isEmpty($(this).find('textarea[name=ASW_'+qstNo+']').val())) {
+				valMsg += `${qstNo}번 질문에 답변을 입력해주세요.\n`;
+			}
+
+			// 값 설정
+			surveyAswItem[`ASW_${qstNo}`] = $(this).find('textarea[name=ASW_'+qstNo+']').val();
+		}
+	});
+
+	if (valMsg !== '') {
+		alert(valMsg);
+		return;
+	}
+	console.log(`surveyAswItem - ${JSON.stringify(surveyAswItem)}`);
+
+    showSpinner();
+
+    $.ajax({
+    	type: 'POST',
+    	url: '/stream/surveyAsw',
+    	dataType: 'json',
+    	cache: false,
+    	data: {
+            surveyAswItem
+        },
+
+    	success: function(data) {
+    		// console.log(data)
+    		if ( data.resCode == '0000' ) {
+                alert('설문 답변이 등록되었습니다.\n참여해주셔서 대단히 감사합니다.');
+
+				$('div.survey-container').hide();
+				$('button.open-survey').hide();
+    		} else {
+    			alert('설문 답변 등록 도중 오류가 발생했습니다.\n관리자에게 문의해주세요.\n\n코드(resCode) : '+data.resCode+'\n메세지(resMsg) : '+data.resMsg);
+    		}
+    	},
+    	error: function (xhr, ajaxOptions, thrownError) {
+    		console.error(xhr);
+    		alert('설문 답변 등록 도중 오류가 발생했습니다.\n관리자에게 문의해주세요.\n\n코드 : '+xhr.status+'\n메세지 : '+thrownError);
+    	},
+    	complete : function () {
+    		hideSpinner();
+    	}
+    });
 }
 
 // agenda toggle
@@ -155,6 +314,7 @@ function toggleAgenda () {
     $('.agenda-container').slideToggle();
 }
 
+// 질문 저장
 function saveQuest () {
     // validation
     if (isEmpty($('#qstDesc').val())) {

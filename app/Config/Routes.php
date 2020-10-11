@@ -38,6 +38,7 @@ $routes->get('/', 'Home::index');
 $routes->add('home', 'Home');
 $routes->add('stream/save/(:segment)', 'Stream::save/$1');
 $routes->add('stream/quest', 'Stream::quest');
+$routes->add('stream/surveyAsw', 'Stream::surveyAsw');
 
 // livesympo.kr/agenda/xxxx => Stream controller의 agenda로 연결 => agenda 별도페이지는 없애기로함.
 // $routes->add('agenda/(:segment)', 'Stream::agenda/$1');

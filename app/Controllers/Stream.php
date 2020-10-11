@@ -19,6 +19,7 @@ namespace App\Controllers;
 use App\Models\ProjectModel;
 use App\Models\RequestorModel;
 use App\Models\QuestionModel;
+use App\Models\SurveyModel;
 use App\Models\TestModel;
 
 class Stream extends BaseController {
@@ -26,6 +27,7 @@ class Stream extends BaseController {
     	$this->projectModel = new ProjectModel();
 		$this->requestorModel = new RequestorModel();
 		$this->questionModel = new QuestionModel();
+		$this->surveyModel = new SurveyModel();
 		$this->testModel = new TestModel();
   	}
 
@@ -69,9 +71,11 @@ class Stream extends BaseController {
 		// 프로젝트 정보 가져오기
 		$prjItem = $this->projectModel->detail($prjUri);
 
-		// 정상 URI면 신청화면 불러오기. 비정상이면 wrongAccess
+		// 정상 URI면 시청화면 불러오기. 비정상이면 wrongAccess
 		if (isset($prjItem)) {
 			$data['project'] = $prjItem;
+			$data['surveyQstList'] = $this->surveyModel->surveyQstList($prjItem['PRJ_SEQ']);
+			$data['surveyQstChoiceList'] = $this->surveyModel->surveyQstChoiceList($prjItem['PRJ_SEQ']);
 
 			// 세션정보 가져오기
 			$data['session'] = $this->session->get();
@@ -236,6 +240,32 @@ class Stream extends BaseController {
 		} else {
 			$res['resCode'] = '7001';
 			$res['resMsg'] = '질문 저장 도중 DB 에러가 발생했습니다.';
+		}
+		return $this->response->setJSON($res);
+	}
+
+	// ajax - 설문답변 저장
+	public function surveyAsw () {
+		$data = $this->request->getPost('surveyAswItem');
+		// log_message('info', "Stream.php - surveyAsw. prjSeq: ".$data['PRJ_SEQ'].", reqrSeq: ".$data['REQR_SEQ'].", ASW_1: ".$data['ASW_1']);
+
+		// 이미 참여했는지 체크
+		$surveyedYn = $this->surveyModel->checkSurveyd($data['PRJ_SEQ'], $data['REQR_SEQ']);
+		if ($surveyedYn > 0) {
+			$res['resCode'] = '9997';
+			$res['resMsg'] = '이미 설문조사에 참여하셨습니다.';
+
+			return $this->response->setJSON($res);
+		}
+
+		$surveyAswSeq = $this->surveyModel->insertSurveyAswReqr($data);
+
+		if ($surveyAswSeq > 0) {
+			$res['resCode'] = '0000';
+			$res['resMsg'] = '정상적으로 처리되었습니다.';
+		} else {
+			$res['resCode'] = '6001';
+			$res['resMsg'] = '설문답변 저장 도중 DB 에러가 발생했습니다.';
 		}
 		return $this->response->setJSON($res);
 	}
