@@ -269,7 +269,9 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-                <button type="button" class="btn btn-info" onclick="test();">테스트</button>
+                <?php
+                    // <button type="button" class="btn btn-info" onclick="test();">테스트</button>
+                ?>
 				<button type="button" class="btn btn-primary" onclick="apply();">확인</button>
 			</div>
 		</div>
