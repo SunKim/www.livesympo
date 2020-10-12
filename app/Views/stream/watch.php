@@ -114,7 +114,7 @@ label.choice-label input { margin-right: 0.4rem; }
 
 			<div>
 				<button type="button" class="btn-main agenda" style="background: <?= $project['APPL_BTN_COLOR'] ?>" onclick="toggleAgenda();">아젠다확인</button>
-				<button type="button" class="btn-main agenda open-survey ml10" style="background: <?= $project['APPL_BTN_COLOR'] ?>" onclick="openSurvey();">설문조사</button>
+				<button type="button" class="btn-main agenda open-survey ml10" style="background: <?= $project['APPL_BTN_COLOR'] ?>; display: none;" onclick="openSurvey();">설문조사</button>
 			</div>
         </div>
     </header>
@@ -181,6 +181,11 @@ function fnInit () {
 	// console.log(`surveyQstChoiceList - ${JSON.stringify(surveyQstChoiceList)}`);
 
 	$('.survey-qst-list').empty();
+
+    // 설문이 있으면 설문조사 버튼 보이도록
+    if (surveyQstList.length > 0) {
+        $('button.open-survey').show();
+    }
 
 	surveyQstList.forEach(item => {
 		let html = '';
