@@ -54,6 +54,8 @@ div.container { padding-left: 0 !important; padding-right: 0 !important;}
 /* 로고 영역 */
 div.logo-container { display: flex; justify-content: space-between; align-items: center; }
 
+button.btn-main { background: <?= $project['STREAM_BTN_BG_COLR'] ?>; color: <?= $project['STREAM_BTN_FONT_COLR'] ?>; }
+
 /* 어젠다 영역 */
 div.agenda-container { display: none; margin-bottom: 1rem; }
 button.agenda {}
@@ -64,7 +66,7 @@ input[type=checkbox], input[type=radio] { margin-right: 0.3rem; border: 1px soli
 div.survey-container { padding: 1rem; display: none; }
 div.survey-container p { text-align: left !important; }
 div.survey-container li { text-align: left !important; }
-span.qst-no { width: 1.4rem; height: 1.4rem; line-height: 1.4rem; background: <?= $project['APPL_BTN_COLR'] ?>; color: #fff; border: 1px solid <?= $project['APPL_BTN_COLR'] ?>; border-radius: 4px; text-align: center; vertical-align: middle; font-weight: 700; }
+span.qst-no { width: 1.4rem; height: 1.4rem; line-height: 1.4rem; background: <?= $project['STREAM_BTN_BG_COLR'] ?>; color: #fff; border: 1px solid <?= $project['STREAM_BTN_BG_COLR'] ?>; border-radius: 4px; text-align: center; vertical-align: middle; font-weight: 700; }
 p.qst-title { line-height: 1.4rem; }
 li.survey-qst-item { margin-bottom: 1rem; }
 ul.qst-choice-list { margin-top: 0.6rem; }
@@ -94,7 +96,7 @@ label.choice-label input { margin-right: 0.4rem; }
 
 </head>
 
-<body>
+<body style="background: <?= $project['STREAM_BODY_COLR'] ?>">
 
 <!-- 세션체크 -->
 <?php include_once APPPATH.'Views/template/check_session.php'; ?>
@@ -108,15 +110,15 @@ label.choice-label input { margin-right: 0.4rem; }
 
 <div class="container">
     <header>
-        <div class="logo-container">
-            <!-- <img class="logo" src="/images/logo/logo_type1.png" /> -->
+        <!-- <div class="logo-container">
+            <img class="logo" src="/images/logo/logo_type1.png" />
             <span>&nbsp;</span>
 
 			<div>
-				<button type="button" class="btn-main agenda" style="background: <?= $project['APPL_BTN_COLR'] ?>" onclick="toggleAgenda();">아젠다확인</button>
-				<button type="button" class="btn-main agenda open-survey ml10" style="background: <?= $project['APPL_BTN_COLR'] ?>; display: none;" onclick="openSurvey();">설문조사</button>
+				<button type="button" class="btn-main agenda" onclick="toggleAgenda();"><?= $project['AGENDA_BTN_TEXT'] ?></button>
+				<button type="button" class="btn-main agenda open-survey ml10" style="display: none;" onclick="openSurvey();"><?= $project['SURVEY_BTN_TEXT'] ?></button>
 			</div>
-        </div>
+        </div> -->
     </header>
     <section>
         <div class="agenda-container">
@@ -131,17 +133,21 @@ label.choice-label input { margin-right: 0.4rem; }
 			<ul class="survey-qst-list mt20">
 			</ul>
 			<div class="tr">
-                <button type="button" class="btn-main" style="background: <?= $project['APPL_BTN_COLR'] ?>" onclick="saveAnswer();">설문답변 저장</button>
+                <button type="button" class="btn-main" onclick="saveAnswer();">저장하기</button>
             </div>
         </div>
     </section>
+	<div class="tr pa10">
+		<button type="button" class="btn-main agenda" onclick="toggleAgenda();"><?= $project['AGENDA_BTN_TEXT'] ?></button>
+		<button type="button" class="btn-main agenda open-survey ml10" style="display: none;" onclick="openSurvey();"><?= $project['SURVEY_BTN_TEXT'] ?></button>
+	</div>
     <hr class="mt20" style="background: #bbb;" />
     <section>
         <div class="quest-container">
             <p class="tl">* Q&A - 질문을 남겨주시면 강의 후 답변드립니다.</p>
-            <textarea id="qstDesc" maxlength="400" rows="4" class="common-textarea w100 mt10 mb10" style="padding: 4px;"></textarea>
+            <textarea id="qstDesc" maxlength="400" rows="4" class="common-textarea w100 mt10 mb10" style="padding: 4px; background: <?= $project['STREAM_QA_BG_COLR'] ?>; color:<?= $project['STREAM_QA_FONT_COLR']; ?>"></textarea>
             <div class="tr">
-                <button type="button" class="btn-main" style="background: <?= $project['APPL_BTN_COLR'] ?>" onclick="saveQuest();">질문등록</button>
+                <button type="button" class="btn-main" onclick="saveQuest();"><?= $project['QST_BTN_TEXT'] ?></button>
             </div>
         </div>
     </section>
