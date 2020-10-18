@@ -29,7 +29,7 @@ class ProjectModel extends Model {
         $strQry .= "	, CONCAT('".$_ENV['app.baseURL']."', P.MAIN_IMG_URI) AS MAIN_IMG_URL	\n";
         $strQry .= "	, CONCAT('".$_ENV['app.baseURL']."', P.AGENDA_IMG_URI) AS AGENDA_IMG_URL	\n";
         $strQry .= "	, CONCAT('".$_ENV['app.baseURL']."', P.FOOTER_IMG_URI) AS FOOTER_IMG_URL	\n";
-		$strQry .= "	, P.APPL_BTN_COLOR, P.ENT_THME_COLOR, P.AGENDA_PAGE_YN	\n";
+		$strQry .= "	, P.APPL_BTN_COLR, P.ENT_THME_COLR, P.AGENDA_PAGE_YN	\n";
 		$strQry .= "	, P.ST_DTTM, P.ED_DTTM	\n";
 		$strQry .= "	, DATE_FORMAT(P.ST_DTTM, '%Y-%m-%d') AS ST_DATE	\n";
         $strQry .= "	, DATE_FORMAT(P.ST_DTTM, '%H:%i') AS ST_TIME	\n";
@@ -47,4 +47,21 @@ class ProjectModel extends Model {
 
 		return $this->db->query($strQry)->getRowArray();
 	}
+
+	// 프로젝트 입장가이드 목록
+public function enterGuideList ($prjSeq) {
+	$strQry    = "";
+
+	$strQry .= "SELECT *	\n";
+	$strQry .= "FROM TB_PRJ_ENT_GUIDE_M AS EG	\n";
+	$strQry .= "WHERE 1=1	\n";
+	$strQry .= "	AND EG.DEL_YN = 0	\n";
+	$strQry .= "	AND EG.PRJ_SEQ = ".$this->db->escape($prjSeq)."	\n";
+	$strQry .= "ORDER BY SERL_NO	\n";
+
+	$strQry .= ";";
+
+	// log_message('info', "ProjectModel - checkTitleUri. Qry - \n$strQry");
+	return $this->db->query($strQry)->getResultArray();
+}
 }

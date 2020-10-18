@@ -50,10 +50,12 @@ class Stream extends BaseController {
 
 		// 프로젝트 정보 가져오기
 		$prjItem = $this->projectModel->detail($prjUri);
+		$entGuideList = $this->projectModel->enterGuideList($prjItem['PRJ_SEQ']);
 
 		// 정상 URI면 신청화면 불러오기. 비정상이면 wrongAccess
 		if (isset($prjItem)) {
 			$data['project'] = $prjItem;
+			$data['entGuideList'] = $entGuideList;
 
 			return view('stream/apply_form.php', $data);
 		} else {
