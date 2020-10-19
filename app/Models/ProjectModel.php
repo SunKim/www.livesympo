@@ -29,13 +29,15 @@ class ProjectModel extends Model {
         $strQry .= "	, CONCAT('".$_ENV['app.baseURL']."', P.MAIN_IMG_URI) AS MAIN_IMG_URL	\n";
         $strQry .= "	, CONCAT('".$_ENV['app.baseURL']."', P.AGENDA_IMG_URI) AS AGENDA_IMG_URL	\n";
         $strQry .= "	, CONCAT('".$_ENV['app.baseURL']."', P.FOOTER_IMG_URI) AS FOOTER_IMG_URL	\n";
-		$strQry .= "	, P.APPL_BTN_COLOR, P.ENT_THME_COLOR, P.AGENDA_PAGE_YN	\n";
 		$strQry .= "	, P.ST_DTTM, P.ED_DTTM	\n";
 		$strQry .= "	, DATE_FORMAT(P.ST_DTTM, '%Y-%m-%d') AS ST_DATE	\n";
         $strQry .= "	, DATE_FORMAT(P.ST_DTTM, '%H:%i') AS ST_TIME	\n";
 		$strQry .= "	, DATE_FORMAT(P.ED_DTTM, '%Y-%m-%d') AS ED_DATE	\n";
         $strQry .= "	, DATE_FORMAT(P.ED_DTTM, '%H:%i') AS ED_TIME	\n";
 		$strQry .= "	, CONN_ROUTE_1, CONN_ROUTE_2, CONN_ROUTE_3	\n";
+		$strQry .= "	, P.AGENDA_BTN_TEXT, P.SURVEY_BTN_TEXT, P.QST_BTN_TEXT	\n";
+		$strQry .= "	, P.APPL_BODY_COLR, P.APPL_BTN_BG_COLR, P.APPL_BTN_FONT_COLR, P.APPL_BTN_ALIGN, P.ENT_THME_COLR, P.ENT_THME_HEIGHT	\n";
+		$strQry .= "	, P.STREAM_BODY_COLR, P.STREAM_BTN_BG_COLR, P.STREAM_BTN_FONT_COLR, P.STREAM_QA_BG_COLR, P.STREAM_QA_FONT_COLR	\n";
         $strQry .= "	, ENT_INFO_EXTRA_1, ENT_INFO_EXTRA_PHOLDER_1, ENT_INFO_EXTRA_REQUIRED_1	\n";
         $strQry .= "	, ENT_INFO_EXTRA_2, ENT_INFO_EXTRA_PHOLDER_2, ENT_INFO_EXTRA_REQUIRED_2	\n";
 		$strQry .= "FROM TB_PRJ_M AS P	\n";
@@ -47,4 +49,21 @@ class ProjectModel extends Model {
 
 		return $this->db->query($strQry)->getRowArray();
 	}
+
+	// 프로젝트 입장가이드 목록
+public function enterGuideList ($prjSeq) {
+	$strQry    = "";
+
+	$strQry .= "SELECT *	\n";
+	$strQry .= "FROM TB_PRJ_ENT_GUIDE_M AS EG	\n";
+	$strQry .= "WHERE 1=1	\n";
+	$strQry .= "	AND EG.DEL_YN = 0	\n";
+	$strQry .= "	AND EG.PRJ_SEQ = ".$this->db->escape($prjSeq)."	\n";
+	$strQry .= "ORDER BY SERL_NO	\n";
+
+	$strQry .= ";";
+
+	// log_message('info', "ProjectModel - checkTitleUri. Qry - \n$strQry");
+	return $this->db->query($strQry)->getResultArray();
+}
 }

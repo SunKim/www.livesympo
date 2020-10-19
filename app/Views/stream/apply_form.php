@@ -117,15 +117,16 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
     button.btn-apply { width: 28rem; height: 3.4rem; font-size: 1.2rem; padding: 0.2rem; }
 
     section.form { display: flex; align-items: stretch; justify-content: space-between; }
-    div.agenda-container { display: inline-block; width: 50%; }
-    div.form-container { display: inline-block; width: 50%; }
+    div.agenda-container { display: inline-block; width: 50%; height: <?= $project['ENT_THME_HEIGHT'] ?>px; }
+	div.agenda-container img.agenda-img { height: <?= $project['ENT_THME_HEIGHT'] ?>px; }
+    div.form-container { display: inline-block; width: 50%; height: <?= $project['ENT_THME_HEIGHT'] ?>px; }
 }
 </style>
 <!-- END) 메인 css -->
 
 </head>
 
-<body>
+<body style="background: <?= $project['APPL_BODY_COLR'] ?>">
 
 <div class="container">
     <!-- <header>
@@ -137,15 +138,15 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
         <div class="main-img-container">
             <img class="main-img" src="<?= $project['MAIN_IMG_URL'] ?>" />
         </div>
-        <div class="apply-btn-container">
-            <button class="btn-apply" style="background: <?= $project['APPL_BTN_COLOR'] ?>" onclick="openApply();">사전등록</button>
+        <div class="apply-btn-container" style="text-align: <?= $project['APPL_BTN_ALIGN'] ?> !important;">
+            <button class="btn-apply" style="background: <?= $project['APPL_BTN_BG_COLR'] ?>; color: <?= $project['APPL_BTN_FONT_COLR'] ?>;" onclick="openApply();">사전등록</button>
         </div>
     </section>
     <section class="form">
         <div class="agenda-container">
             <img class="agenda-img" src="<?= $project['AGENDA_IMG_URL'] ?>" />
         </div>
-        <div class="form-container" style="background: <?= $project['ENT_THME_COLOR'] ?>">
+        <div class="form-container" style="background: <?= $project['ENT_THME_COLR'] ?>;">
             <form class="enter-form" method="post">
                 <table>
                     <tr>
@@ -160,14 +161,21 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
                             </p>
                         </td>
                         <td class="td-btn">
-                            <button type="button" class="btn-enter" style="font-size: 1.1rem; background: <?= $project['APPL_BTN_COLOR'] ?>" onclick="enter();">심포지엄<br />입장</button>
+                            <button type="button" class="btn-enter" style="font-size: 1.1rem; background: <?= $project['APPL_BTN_BG_COLR'] ?>" onclick="enter();">심포지엄<br />입장</button>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2" class="tl">
                             <ul class="enter-guide">
-                                <li>사전등록시 입력하신 선생님의 성명과 연락처를 입력해주세요.</li>
-                                <li>현장등록시 사전등록이 안되신 분은 사전등록 후 이용해주세요.</li>
+<?php
+	for($i = 0; $i < count($entGuideList); $i++) {
+		$entGuideItem = $entGuideList[$i];
+
+		echo '<li>'.$entGuideItem['GUIDE_DESC'].'</li>';
+	}
+?>
+                                <!-- <li>사전등록시 입력하신 선생님의 성명과 연락처를 입력해주세요.</li>
+                                <li>현장등록시 사전등록이 안되신 분은 사전등록 후 이용해주세요.</li> -->
                             </ul>
                         </td>
                     </tr>
