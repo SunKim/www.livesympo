@@ -271,6 +271,38 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
         echo '	</td>';
         echo '</tr>';
     }
+    if (isset($project['ENT_INFO_EXTRA_3']) && $project['ENT_INFO_EXTRA_3'] != '') {
+    	echo '<tr>';
+    	echo '	<th '.($project['ENT_INFO_EXTRA_REQUIRED_3'] == 1 ? 'class="required"' : '').'>'.$project['ENT_INFO_EXTRA_3'].'</th>';
+    	echo '	<td '.($project['ENT_INFO_EXTRA_REQUIRED_3'] == 1 ? 'class="required"' : '').'>';
+    	echo '		<input type="text" id="ENT_INFO_EXTRA_VAL_3" name="ENT_INFO_EXTRA_VAL_3" class="ent-info common-input w100" placeholder="'.$project['ENT_INFO_EXTRA_PHOLDER_3'].'" value="" />';
+    	echo '	</td>';
+    	echo '</tr>';
+    }
+    if (isset($project['ENT_INFO_EXTRA_4']) && $project['ENT_INFO_EXTRA_4'] != '') {
+    	echo '<tr>';
+    	echo '	<th '.($project['ENT_INFO_EXTRA_REQUIRED_4'] == 1 ? 'class="required"' : '').'>'.$project['ENT_INFO_EXTRA_4'].'</th>';
+    	echo '	<td '.($project['ENT_INFO_EXTRA_REQUIRED_4'] == 1 ? 'class="required"' : '').'>';
+    	echo '		<input type="text" id="ENT_INFO_EXTRA_VAL_4" name="ENT_INFO_EXTRA_VAL_4" class="ent-info common-input w100" placeholder="'.$project['ENT_INFO_EXTRA_PHOLDER_4'].'" value="" />';
+    	echo '	</td>';
+    	echo '</tr>';
+    }
+    if (isset($project['ENT_INFO_EXTRA_5']) && $project['ENT_INFO_EXTRA_5'] != '') {
+    	echo '<tr>';
+    	echo '	<th '.($project['ENT_INFO_EXTRA_REQUIRED_5'] == 1 ? 'class="required"' : '').'>'.$project['ENT_INFO_EXTRA_5'].'</th>';
+    	echo '	<td '.($project['ENT_INFO_EXTRA_REQUIRED_5'] == 1 ? 'class="required"' : '').'>';
+    	echo '		<input type="text" id="ENT_INFO_EXTRA_VAL_5" name="ENT_INFO_EXTRA_VAL_5" class="ent-info common-input w100" placeholder="'.$project['ENT_INFO_EXTRA_PHOLDER_5'].'" value="" />';
+    	echo '	</td>';
+    	echo '</tr>';
+    }
+    if (isset($project['ENT_INFO_EXTRA_6']) && $project['ENT_INFO_EXTRA_6'] != '') {
+    	echo '<tr>';
+    	echo '	<th '.($project['ENT_INFO_EXTRA_REQUIRED_6'] == 1 ? 'class="required"' : '').'>'.$project['ENT_INFO_EXTRA_6'].'</th>';
+    	echo '	<td '.($project['ENT_INFO_EXTRA_REQUIRED_6'] == 1 ? 'class="required"' : '').'>';
+    	echo '		<input type="text" id="ENT_INFO_EXTRA_VAL_6" name="ENT_INFO_EXTRA_VAL_6" class="ent-info common-input w100" placeholder="'.$project['ENT_INFO_EXTRA_PHOLDER_6'].'" value="" />';
+    	echo '	</td>';
+    	echo '</tr>';
+    }
 ?>
                     </tbody>
                 </table>
@@ -385,7 +417,6 @@ function apply () {
 <?php
     }
 ?>
-
 <?php
     // 추가항목이 필수이면
     if (isset($project['ENT_INFO_EXTRA_2']) && $project['ENT_INFO_EXTRA_2'] != '' && $project['ENT_INFO_EXTRA_REQUIRED_2'] == 1) {
@@ -393,6 +424,54 @@ function apply () {
         if (isEmpty($('#ENT_INFO_EXTRA_VAL_2').val())) {
             alert('<?= $project['ENT_INFO_EXTRA_2'] ?>을(를) 입력해주세요.');
             $('#ENT_INFO_EXTRA_VAL_2').focus();
+            return;
+        }
+<?php
+    }
+?>
+<?php
+    // 추가항목이 필수이면
+    if (isset($project['ENT_INFO_EXTRA_3']) && $project['ENT_INFO_EXTRA_3'] != '' && $project['ENT_INFO_EXTRA_REQUIRED_3'] == 1) {
+?>
+        if (isEmpty($('#ENT_INFO_EXTRA_VAL_3').val())) {
+            alert('<?= $project['ENT_INFO_EXTRA_3'] ?>을(를) 입력해주세요.');
+            $('#ENT_INFO_EXTRA_VAL_3').focus();
+            return;
+        }
+<?php
+    }
+?>
+<?php
+    // 추가항목이 필수이면
+    if (isset($project['ENT_INFO_EXTRA_4']) && $project['ENT_INFO_EXTRA_4'] != '' && $project['ENT_INFO_EXTRA_REQUIRED_4'] == 1) {
+?>
+        if (isEmpty($('#ENT_INFO_EXTRA_VAL_4').val())) {
+            alert('<?= $project['ENT_INFO_EXTRA_4'] ?>을(를) 입력해주세요.');
+            $('#ENT_INFO_EXTRA_VAL_4').focus();
+            return;
+        }
+<?php
+    }
+?>
+<?php
+    // 추가항목이 필수이면
+    if (isset($project['ENT_INFO_EXTRA_5']) && $project['ENT_INFO_EXTRA_5'] != '' && $project['ENT_INFO_EXTRA_REQUIRED_5'] == 1) {
+?>
+        if (isEmpty($('#ENT_INFO_EXTRA_VAL_5').val())) {
+            alert('<?= $project['ENT_INFO_EXTRA_5'] ?>을(를) 입력해주세요.');
+            $('#ENT_INFO_EXTRA_VAL_5').focus();
+            return;
+        }
+<?php
+    }
+?>
+<?php
+    // 추가항목이 필수이면
+    if (isset($project['ENT_INFO_EXTRA_6']) && $project['ENT_INFO_EXTRA_6'] != '' && $project['ENT_INFO_EXTRA_REQUIRED_6'] == 1) {
+?>
+        if (isEmpty($('#ENT_INFO_EXTRA_VAL_6').val())) {
+            alert('<?= $project['ENT_INFO_EXTRA_6'] ?>을(를) 입력해주세요.');
+            $('#ENT_INFO_EXTRA_VAL_6').focus();
             return;
         }
 <?php
@@ -415,6 +494,19 @@ function apply () {
     if ($('#ENT_INFO_EXTRA_VAL_2').val() && $('#ENT_INFO_EXTRA_VAL_2').val() !== '') {
         data.ENT_INFO_EXTRA_VAL_2 = $('#ENT_INFO_EXTRA_VAL_2').val();
     }
+    if ($('#ENT_INFO_EXTRA_VAL_3').val() && $('#ENT_INFO_EXTRA_VAL_3').val() !== '') {
+    	data.ENT_INFO_EXTRA_VAL_3 = $('#ENT_INFO_EXTRA_VAL_3').val();
+    }
+    if ($('#ENT_INFO_EXTRA_VAL_4').val() && $('#ENT_INFO_EXTRA_VAL_4').val() !== '') {
+    	data.ENT_INFO_EXTRA_VAL_4 = $('#ENT_INFO_EXTRA_VAL_4').val();
+    }
+    if ($('#ENT_INFO_EXTRA_VAL_5').val() && $('#ENT_INFO_EXTRA_VAL_5').val() !== '') {
+    	data.ENT_INFO_EXTRA_VAL_5 = $('#ENT_INFO_EXTRA_VAL_5').val();
+    }
+    if ($('#ENT_INFO_EXTRA_VAL_6').val() && $('#ENT_INFO_EXTRA_VAL_6').val() !== '') {
+    	data.ENT_INFO_EXTRA_VAL_6 = $('#ENT_INFO_EXTRA_VAL_6').val();
+    }
+    
 	if ($('input[name=CONN_ROUTE_VAL]:checked').val() && $('input[name=CONN_ROUTE_VAL]:checked').val() !== '') {
         data.CONN_ROUTE_VAL = $('input[name=CONN_ROUTE_VAL]:checked').val();
     }
