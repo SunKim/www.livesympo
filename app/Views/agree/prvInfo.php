@@ -70,7 +70,7 @@ section.content p.copyright { color: #4e73df; margin-top: 1rem; font-size: 1.2re
 		<h2>개인정보 수집/이용 동의</h2>
     </section>
     <section class="content">
-		<p class="intro">영상기획 위드 (이하 ‘회사’라 한다)는 스트리밍 서비스 제공에 필요한 최소한의 개인정보를 아래와 같이 수집 및 이용합니다.</p>
+		<p class="intro">영상기획 위드(이하 ‘회사’라 한다)는 스트리밍 서비스 제공에 필요한 최소한의 개인정보를 아래와 같이 수집 및 이용합니다.</p>
 
 		<h4>1. 개인정보 수집 및 이용목적</h4>
 		<p class="sentence">(회원가입 및 본인확인) 회원제 서비스에 따른 본인확인 및 회원관리</p>
