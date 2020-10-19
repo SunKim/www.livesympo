@@ -1,6 +1,6 @@
 <?php
  /**
-  * ProjectModel.php
+  * RequestorModel.php
   *
   * @package	App
   * @subpackage Models

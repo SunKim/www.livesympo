@@ -109,8 +109,8 @@ class Stream extends BaseController {
 
 		$data['REQR_NM'] = $this->request->getPost('REQR_NM');
 		$data['MBILNO'] = $this->request->getPost('MBILNO');
-		$data['HSPTL_NM'] = $this->request->getPost('HSPTL_NM');
-		$data['SBJ_NM'] = $this->request->getPost('SBJ_NM');
+		// $data['HSPTL_NM'] = $this->request->getPost('HSPTL_NM');
+		// $data['SBJ_NM'] = $this->request->getPost('SBJ_NM');
 		$data['ENT_INFO_EXTRA_VAL_1'] = $this->request->getPost('ENT_INFO_EXTRA_VAL_1');
 		$data['ENT_INFO_EXTRA_VAL_2'] = $this->request->getPost('ENT_INFO_EXTRA_VAL_2');
 		$data['ENT_INFO_EXTRA_VAL_3'] = $this->request->getPost('ENT_INFO_EXTRA_VAL_3');

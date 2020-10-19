@@ -161,7 +161,7 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
                             </p>
                         </td>
                         <td class="td-btn">
-                            <button type="button" class="btn-enter" style="font-size: 1.1rem; background: <?= $project['APPL_BTN_BG_COLR'] ?>" onclick="enter();">심포지엄<br />입장</button>
+                            <button type="button" class="btn-enter" style="font-size: 1.1rem; background: <?= $project['APPL_BTN_BG_COLR'] ?>; color: <?= $project['APPL_BTN_FONT_COLR'] ?>;" onclick="enter();">심포지엄<br />입장</button>
                         </td>
                     </tr>
                     <tr>
@@ -242,7 +242,7 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
                         		<input type="text" id="MBILNO" name="MBILNO" class="ent-info common-input w100" placeholder="-는 제외하고 입력해주세요." value="" />
                         	</td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                         	<th class="required">병원명</th>
                         	<td class="required">
                         		<input type="text" id="HSPTL_NM" name="HSPTL_NM" class="ent-info common-input w100" placeholder="" value="" />
@@ -253,7 +253,7 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
                         	<td class="required">
                         		<input type="text" id="SBJ_NM" name="SBJ_NM" class="ent-info common-input w100" placeholder="" value="" />
                         	</td>
-                        </tr>
+                        </tr> -->
 <?php
     if (isset($project['ENT_INFO_EXTRA_1']) && $project['ENT_INFO_EXTRA_1'] != '') {
         echo '<tr>';
@@ -303,6 +303,22 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
     	echo '	</td>';
     	echo '</tr>';
     }
+	if (isset($project['ENT_INFO_EXTRA_7']) && $project['ENT_INFO_EXTRA_7'] != '') {
+		echo '<tr>';
+		echo '	<th '.($project['ENT_INFO_EXTRA_REQUIRED_7'] == 1 ? 'class="required"' : '').'>'.$project['ENT_INFO_EXTRA_7'].'</th>';
+		echo '	<td '.($project['ENT_INFO_EXTRA_REQUIRED_7'] == 1 ? 'class="required"' : '').'>';
+		echo '		<input type="text" id="ENT_INFO_EXTRA_VAL_7" name="ENT_INFO_EXTRA_VAL_7" class="ent-info common-input w100" placeholder="'.$project['ENT_INFO_EXTRA_PHOLDER_7'].'" value="" />';
+		echo '	</td>';
+		echo '</tr>';
+	}
+	if (isset($project['ENT_INFO_EXTRA_8']) && $project['ENT_INFO_EXTRA_8'] != '') {
+		echo '<tr>';
+		echo '	<th '.($project['ENT_INFO_EXTRA_REQUIRED_8'] == 1 ? 'class="required"' : '').'>'.$project['ENT_INFO_EXTRA_8'].'</th>';
+		echo '	<td '.($project['ENT_INFO_EXTRA_REQUIRED_8'] == 1 ? 'class="required"' : '').'>';
+		echo '		<input type="text" id="ENT_INFO_EXTRA_VAL_8" name="ENT_INFO_EXTRA_VAL_8" class="ent-info common-input w100" placeholder="'.$project['ENT_INFO_EXTRA_PHOLDER_8'].'" value="" />';
+		echo '	</td>';
+		echo '</tr>';
+	}
 ?>
                     </tbody>
                 </table>
@@ -370,8 +386,8 @@ function openApply () {
 function test () {
     $('#REQR_NM').val('김성명');
     $('#MBILNO').val('010-1111-2222');
-    $('#HSPTL_NM').val('우리병원');
-    $('#SBJ_NM').val('우리과');
+    $('#ENT_INFO_EXTRA_1').val('우리병원');
+    $('#ENT_INFO_EXTRA_2').val('우리과');
 
     $('#reqrNm').val('김성명');
     $('#mbilno').val('010-1111-2222');
@@ -390,16 +406,16 @@ function apply () {
         $('#MBILNO').focus();
         return;
     }
-    if (isEmpty($('#HSPTL_NM').val())) {
-        alert('병원명을 입력해주세요.');
-        $('#HSPTL_NM').focus();
-        return;
-    }
-    if (isEmpty($('#SBJ_NM').val())) {
-        alert('과명을 입력해주세요.');
-        $('#SBJ_NM').focus();
-        return;
-    }
+    // if (isEmpty($('#HSPTL_NM').val())) {
+    //     alert('병원명을 입력해주세요.');
+    //     $('#HSPTL_NM').focus();
+    //     return;
+    // }
+    // if (isEmpty($('#SBJ_NM').val())) {
+    //     alert('과명을 입력해주세요.');
+    //     $('#SBJ_NM').focus();
+    //     return;
+    // }
 
 <?php
 	// 접속경로가 있으면
@@ -485,14 +501,38 @@ function apply () {
 <?php
     }
 ?>
+<?php
+    // 추가항목이 필수이면
+    if (isset($project['ENT_INFO_EXTRA_7']) && $project['ENT_INFO_EXTRA_7'] != '' && $project['ENT_INFO_EXTRA_REQUIRED_7'] == 1) {
+?>
+        if (isEmpty($('#ENT_INFO_EXTRA_VAL_7').val())) {
+            alert('<?= $project['ENT_INFO_EXTRA_7'] ?>을(를) 입력해주세요.');
+            $('#ENT_INFO_EXTRA_VAL_7').focus();
+            return;
+        }
+<?php
+    }
+?>
+<?php
+    // 추가항목이 필수이면
+    if (isset($project['ENT_INFO_EXTRA_8']) && $project['ENT_INFO_EXTRA_8'] != '' && $project['ENT_INFO_EXTRA_REQUIRED_8'] == 1) {
+?>
+        if (isEmpty($('#ENT_INFO_EXTRA_VAL_8').val())) {
+            alert('<?= $project['ENT_INFO_EXTRA_8'] ?>을(를) 입력해주세요.');
+            $('#ENT_INFO_EXTRA_VAL_8').focus();
+            return;
+        }
+<?php
+    }
+?>
 
     showSpinner();
 
     const data = {
         REQR_NM: $('#REQR_NM').val(),
         MBILNO: simplifyMobile($('#MBILNO').val()),
-        HSPTL_NM: $('#HSPTL_NM').val(),
-        SBJ_NM: $('#SBJ_NM').val()
+        // HSPTL_NM: $('#HSPTL_NM').val(),
+        // SBJ_NM: $('#SBJ_NM').val()
     };
 
     // 추가항목 있으면 data에 설정
@@ -514,6 +554,12 @@ function apply () {
     if ($('#ENT_INFO_EXTRA_VAL_6').val() && $('#ENT_INFO_EXTRA_VAL_6').val() !== '') {
     	data.ENT_INFO_EXTRA_VAL_6 = $('#ENT_INFO_EXTRA_VAL_6').val();
     }
+	if ($('#ENT_INFO_EXTRA_VAL_7').val() && $('#ENT_INFO_EXTRA_VAL_7').val() !== '') {
+		data.ENT_INFO_EXTRA_VAL_7 = $('#ENT_INFO_EXTRA_VAL_7').val();
+	}
+	if ($('#ENT_INFO_EXTRA_VAL_8').val() && $('#ENT_INFO_EXTRA_VAL_8').val() !== '') {
+		data.ENT_INFO_EXTRA_VAL_8 = $('#ENT_INFO_EXTRA_VAL_8').val();
+	}
 
 	if ($('input[name=CONN_ROUTE_VAL]:checked').val() && $('input[name=CONN_ROUTE_VAL]:checked').val() !== '') {
         data.CONN_ROUTE_VAL = $('input[name=CONN_ROUTE_VAL]:checked').val();
