@@ -56,6 +56,12 @@ div.logo-container { display: flex; justify-content: space-between; align-items:
 
 button.btn-main { background: <?= $project['STREAM_BTN_BG_COLR'] ?>; color: <?= $project['STREAM_BTN_FONT_COLR'] ?>; }
 
+/* 버튼(아젠다, 설문참여) 영역 */
+div.btn-container { text-align: right; padding: 10px; }
+
+/* 질문 영역 */
+div.quest-container { padding: 10px; }
+
 /* 어젠다 영역 */
 div.agenda-container { display: none; margin-bottom: 1rem; }
 button.agenda {}
@@ -78,8 +84,6 @@ label.choice-label input { margin-right: 0.4rem; }
     div.logo-container { padding: 0 1rem; }
     img.logo { width: 40%; }
     button.agenda { width: 6rem; }
-
-    div.quest-container { padding: 10px; }
 }
 
 /* 768~1200 -> 태블릿 */
@@ -90,6 +94,12 @@ label.choice-label input { margin-right: 0.4rem; }
 /* 1200px 이상 -> PC */
 @media (min-width: 1200px) {
     img.logo { width: 20%; }
+
+    section.ex-stream { display: flex; justify-content: space-between !important; align-items: flex-start !important; }
+    div.btn-container { display: inline-block; width: 140px; }
+    div.btn-container button { display: block; margin: 0; }
+    div.btn-container button:first-child { margin-top: 30px; margin-bottom: 20px; }
+    div.quest-container { display: inline-block; width: calc(100% - 150px); }
 }
 </style>
 <!-- END) 메인 css -->
@@ -137,12 +147,12 @@ label.choice-label input { margin-right: 0.4rem; }
             </div>
         </div>
     </section>
-	<div class="tr pa10">
-		<button type="button" class="btn-main agenda" onclick="toggleAgenda();"><?= $project['AGENDA_BTN_TEXT'] ?></button>
-		<button type="button" class="btn-main agenda open-survey ml10" style="display: none;" onclick="openSurvey();"><?= $project['SURVEY_BTN_TEXT'] ?></button>
-	</div>
     <hr class="mt20" style="background: #bbb;" />
-    <section>
+    <section class="ex-stream">
+        <div class="btn-container">
+            <button type="button" class="btn-main agenda" onclick="toggleAgenda();"><?= $project['AGENDA_BTN_TEXT'] ?></button>
+            <button type="button" class="btn-main agenda open-survey ml10" style="display: none;" onclick="openSurvey();"><?= $project['SURVEY_BTN_TEXT'] ?></button>
+        </div>
         <div class="quest-container">
             <p class="tl">* Q&A - 질문을 남겨주시면 강의 후 답변드립니다.</p>
             <textarea id="qstDesc" maxlength="400" rows="4" class="common-textarea w100 mt10 mb10" style="padding: 4px; background: <?= $project['STREAM_QA_BG_COLR'] ?>; color:<?= $project['STREAM_QA_FONT_COLR']; ?>"></textarea>
