@@ -88,6 +88,16 @@ class Stream extends BaseController {
 		}
 	}
 
+	// 개인정보 동의 상세내용 화면
+	public function agreePrvInfo () {
+		return view('agree/prvInfo.php');
+	}
+
+	// 마케팅 동의 상세내용 화면
+	public function agreeMarketing () {
+		return view('agree/marketing.php');
+	}
+
 	// ajax - 신청 저장
 	public function save ($prjSeq = 0) {
 		if ($prjSeq === 0) {

@@ -306,6 +306,14 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
 ?>
                     </tbody>
                 </table>
+
+				<hr />
+
+				<div class="mt20">
+					<p style="letter-spacing: -1px;">
+						사전등록시 <a href="/agree/prvInfo" target="prv_info">개인정보 수집/이용</a> 및 <a href="/agree/marketing" target="marketing">마케팅 정보 제공</a>에 동의합니다.
+					</p>
+				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
@@ -506,7 +514,7 @@ function apply () {
     if ($('#ENT_INFO_EXTRA_VAL_6').val() && $('#ENT_INFO_EXTRA_VAL_6').val() !== '') {
     	data.ENT_INFO_EXTRA_VAL_6 = $('#ENT_INFO_EXTRA_VAL_6').val();
     }
-    
+
 	if ($('input[name=CONN_ROUTE_VAL]:checked').val() && $('input[name=CONN_ROUTE_VAL]:checked').val() !== '') {
         data.CONN_ROUTE_VAL = $('input[name=CONN_ROUTE_VAL]:checked').val();
     }
