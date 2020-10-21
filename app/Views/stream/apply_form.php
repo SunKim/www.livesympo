@@ -161,7 +161,7 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
                             </p>
                         </td>
                         <td class="td-btn">
-                            <button type="button" class="btn-enter" style="font-size: 1.1rem; background: <?= $project['APPL_BTN_BG_COLR'] ?>; color: <?= $project['APPL_BTN_FONT_COLR'] ?>;" onclick="enter();">심포지엄<br />입장</button>
+                            <button type="button" class="btn-enter" style="font-size: 1.1rem; background: <?= $project['ENT_BTN_BG_COLR'] ?>; color: <?= $project['ENT_BTN_FONT_COLR'] ?>;" onclick="enter();">심포지엄<br />입장</button>
                         </td>
                     </tr>
                     <tr>
