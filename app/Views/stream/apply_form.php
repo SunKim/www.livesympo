@@ -192,6 +192,7 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
         </div>
     </section>
 </div>
+
 <div class="container">
     <footer>
         <img class="footer-img" src="<?= $project['FOOTER_IMG_URL'] ?>" />
