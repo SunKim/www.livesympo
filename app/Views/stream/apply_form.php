@@ -62,6 +62,8 @@ img.agenda-img { width: 100%; }
 section.form { margin-top: 0.6rem; }
 div.form-container { color: #fff; padding: 0.6rem; }
 
+button.round { border-radius: 0.5rem; }
+
 form.enter-form table { width: 100%; }
 form.enter-form td { padding: 0.6rem; }
 form.enter-form td.td-input { width: 70%; }
@@ -139,7 +141,7 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
             <img class="main-img" src="<?= $project['MAIN_IMG_URL'] ?>" />
         </div>
         <div class="apply-btn-container" style="text-align: <?= $project['APPL_BTN_ALIGN'] ?> !important;">
-            <button class="btn-apply" style="background: <?= $project['APPL_BTN_BG_COLR'] ?>; color: <?= $project['APPL_BTN_FONT_COLR'] ?>;" onclick="openApply();">사전등록</button>
+            <button class="btn-apply <?= $project['APPL_BTN_ROUND_YN'] == 1 ? 'round'  : '' ?>" style="background: <?= $project['APPL_BTN_BG_COLR'] ?>; color: <?= $project['APPL_BTN_FONT_COLR'] ?>;" onclick="openApply();">사전등록</button>
         </div>
     </section>
     <section class="form">
@@ -161,7 +163,7 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
                             </p>
                         </td>
                         <td class="td-btn">
-                            <button type="button" class="btn-enter" style="font-size: 1.1rem; background: <?= $project['ENT_BTN_BG_COLR'] ?>; color: <?= $project['ENT_BTN_FONT_COLR'] ?>;" onclick="enter();">심포지엄<br />입장</button>
+                            <button type="button" class="btn-enter <?= $project['ENT_BTN_ROUND_YN'] == 1 ? 'round'  : '' ?>" style="font-size: 1.1rem; background: <?= $project['ENT_BTN_BG_COLR'] ?>; color: <?= $project['ENT_BTN_FONT_COLR'] ?>;" onclick="enter();">심포지엄<br />입장</button>
                         </td>
                     </tr>
                     <tr>
