@@ -46,6 +46,7 @@ class ProjectModel extends Model {
 		$strQry .= "	, ENT_INFO_EXTRA_6, ENT_INFO_EXTRA_PHOLDER_6, ENT_INFO_EXTRA_REQUIRED_6	\n";
 		$strQry .= "FROM TB_PRJ_M AS P	\n";
 		$strQry .= "WHERE 1=1	\n";
+		$strQry .= "	AND P.DEL_YN = 0	\n";
 		$strQry .= "	AND P.PRJ_TITLE_URI = ".$this->db->escape($prjUri)."	\n";
 
 		$strQry .= ";";
