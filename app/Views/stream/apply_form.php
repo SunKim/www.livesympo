@@ -236,13 +236,13 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
                         <tr>
                         	<th class="required">성명</th>
                         	<td class="required">
-                        		<input type="text" id="REQR_NM" name="REQR_NM" class="ent-info common-input w100" placeholder="" value="" />
+                        		<input type="text" id="REQR_NM" name="REQR_NM" class="ent-info common-input w100" ent-info-title="성명" placeholder="" value="" />
                         	</td>
                         </tr>
                         <tr>
                         	<th class="required">연락처</th>
                         	<td class="required">
-                        		<input type="text" id="MBILNO" name="MBILNO" class="ent-info common-input w100" placeholder="-는 제외하고 입력해주세요." value="" />
+                        		<input type="text" id="MBILNO" name="MBILNO" class="ent-info common-input w100" ent-info-title="연락처" placeholder="-는 제외하고 입력해주세요." value="" />
                         	</td>
                         </tr>
                         <!-- <tr>
@@ -262,7 +262,7 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
         echo '<tr>';
         echo '	<th '.($project['ENT_INFO_EXTRA_REQUIRED_1'] == 1 ? 'class="required"' : '').'>'.$project['ENT_INFO_EXTRA_1'].'</th>';
         echo '	<td '.($project['ENT_INFO_EXTRA_REQUIRED_1'] == 1 ? 'class="required"' : '').'>';
-        echo '		<input type="text" id="ENT_INFO_EXTRA_VAL_1" name="ENT_INFO_EXTRA_VAL_1" class="ent-info common-input w100" placeholder="'.$project['ENT_INFO_EXTRA_PHOLDER_1'].'" value="" />';
+        echo '		<input type="text" id="ENT_INFO_EXTRA_VAL_1" name="ENT_INFO_EXTRA_VAL_1" class="ent-info common-input w100" ent-info-title="'.$project['ENT_INFO_EXTRA_1'].'" placeholder="'.$project['ENT_INFO_EXTRA_PHOLDER_1'].'" value="" />';
         echo '	</td>';
         echo '</tr>';
     }
@@ -270,7 +270,7 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
         echo '<tr>';
         echo '	<th '.($project['ENT_INFO_EXTRA_REQUIRED_2'] == 1 ? 'class="required"' : '').'>'.$project['ENT_INFO_EXTRA_2'].'</th>';
         echo '	<td '.($project['ENT_INFO_EXTRA_REQUIRED_2'] == 1 ? 'class="required"' : '').'>';
-        echo '		<input type="text" id="ENT_INFO_EXTRA_VAL_2" name="ENT_INFO_EXTRA_VAL_2" class="ent-info common-input w100" placeholder="'.$project['ENT_INFO_EXTRA_PHOLDER_2'].'" value="" />';
+        echo '		<input type="text" id="ENT_INFO_EXTRA_VAL_2" name="ENT_INFO_EXTRA_VAL_2" class="ent-info common-input w100" ent-info-title="'.$project['ENT_INFO_EXTRA_2'].'" placeholder="'.$project['ENT_INFO_EXTRA_PHOLDER_2'].'" value="" />';
         echo '	</td>';
         echo '</tr>';
     }
@@ -278,7 +278,7 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
     	echo '<tr>';
     	echo '	<th '.($project['ENT_INFO_EXTRA_REQUIRED_3'] == 1 ? 'class="required"' : '').'>'.$project['ENT_INFO_EXTRA_3'].'</th>';
     	echo '	<td '.($project['ENT_INFO_EXTRA_REQUIRED_3'] == 1 ? 'class="required"' : '').'>';
-    	echo '		<input type="text" id="ENT_INFO_EXTRA_VAL_3" name="ENT_INFO_EXTRA_VAL_3" class="ent-info common-input w100" placeholder="'.$project['ENT_INFO_EXTRA_PHOLDER_3'].'" value="" />';
+    	echo '		<input type="text" id="ENT_INFO_EXTRA_VAL_3" name="ENT_INFO_EXTRA_VAL_3" class="ent-info common-input w100" ent-info-title="'.$project['ENT_INFO_EXTRA_3'].'" placeholder="'.$project['ENT_INFO_EXTRA_PHOLDER_3'].'" value="" />';
     	echo '	</td>';
     	echo '</tr>';
     }
@@ -286,7 +286,7 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
     	echo '<tr>';
     	echo '	<th '.($project['ENT_INFO_EXTRA_REQUIRED_4'] == 1 ? 'class="required"' : '').'>'.$project['ENT_INFO_EXTRA_4'].'</th>';
     	echo '	<td '.($project['ENT_INFO_EXTRA_REQUIRED_4'] == 1 ? 'class="required"' : '').'>';
-    	echo '		<input type="text" id="ENT_INFO_EXTRA_VAL_4" name="ENT_INFO_EXTRA_VAL_4" class="ent-info common-input w100" placeholder="'.$project['ENT_INFO_EXTRA_PHOLDER_4'].'" value="" />';
+    	echo '		<input type="text" id="ENT_INFO_EXTRA_VAL_4" name="ENT_INFO_EXTRA_VAL_4" class="ent-info common-input w100" ent-info-title="'.$project['ENT_INFO_EXTRA_4'].'" placeholder="'.$project['ENT_INFO_EXTRA_PHOLDER_4'].'" value="" />';
     	echo '	</td>';
     	echo '</tr>';
     }
@@ -294,7 +294,7 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
     	echo '<tr>';
     	echo '	<th '.($project['ENT_INFO_EXTRA_REQUIRED_5'] == 1 ? 'class="required"' : '').'>'.$project['ENT_INFO_EXTRA_5'].'</th>';
     	echo '	<td '.($project['ENT_INFO_EXTRA_REQUIRED_5'] == 1 ? 'class="required"' : '').'>';
-    	echo '		<input type="text" id="ENT_INFO_EXTRA_VAL_5" name="ENT_INFO_EXTRA_VAL_5" class="ent-info common-input w100" placeholder="'.$project['ENT_INFO_EXTRA_PHOLDER_5'].'" value="" />';
+    	echo '		<input type="text" id="ENT_INFO_EXTRA_VAL_5" name="ENT_INFO_EXTRA_VAL_5" class="ent-info common-input w100" ent-info-title="'.$project['ENT_INFO_EXTRA_5'].'" placeholder="'.$project['ENT_INFO_EXTRA_PHOLDER_5'].'" value="" />';
     	echo '	</td>';
     	echo '</tr>';
     }
@@ -302,7 +302,7 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
     	echo '<tr>';
     	echo '	<th '.($project['ENT_INFO_EXTRA_REQUIRED_6'] == 1 ? 'class="required"' : '').'>'.$project['ENT_INFO_EXTRA_6'].'</th>';
     	echo '	<td '.($project['ENT_INFO_EXTRA_REQUIRED_6'] == 1 ? 'class="required"' : '').'>';
-    	echo '		<input type="text" id="ENT_INFO_EXTRA_VAL_6" name="ENT_INFO_EXTRA_VAL_6" class="ent-info common-input w100" placeholder="'.$project['ENT_INFO_EXTRA_PHOLDER_6'].'" value="" />';
+    	echo '		<input type="text" id="ENT_INFO_EXTRA_VAL_6" name="ENT_INFO_EXTRA_VAL_6" class="ent-info common-input w100" ent-info-title="'.$project['ENT_INFO_EXTRA_6'].'" placeholder="'.$project['ENT_INFO_EXTRA_PHOLDER_6'].'" value="" />';
     	echo '	</td>';
     	echo '</tr>';
     }
@@ -310,7 +310,7 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
 		echo '<tr>';
 		echo '	<th '.($project['ENT_INFO_EXTRA_REQUIRED_7'] == 1 ? 'class="required"' : '').'>'.$project['ENT_INFO_EXTRA_7'].'</th>';
 		echo '	<td '.($project['ENT_INFO_EXTRA_REQUIRED_7'] == 1 ? 'class="required"' : '').'>';
-		echo '		<input type="text" id="ENT_INFO_EXTRA_VAL_7" name="ENT_INFO_EXTRA_VAL_7" class="ent-info common-input w100" placeholder="'.$project['ENT_INFO_EXTRA_PHOLDER_7'].'" value="" />';
+		echo '		<input type="text" id="ENT_INFO_EXTRA_VAL_7" name="ENT_INFO_EXTRA_VAL_7" class="ent-info common-input w100" ent-info-title="'.$project['ENT_INFO_EXTRA_7'].'" placeholder="'.$project['ENT_INFO_EXTRA_PHOLDER_7'].'" value="" />';
 		echo '	</td>';
 		echo '</tr>';
 	}
@@ -318,7 +318,7 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
 		echo '<tr>';
 		echo '	<th '.($project['ENT_INFO_EXTRA_REQUIRED_8'] == 1 ? 'class="required"' : '').'>'.$project['ENT_INFO_EXTRA_8'].'</th>';
 		echo '	<td '.($project['ENT_INFO_EXTRA_REQUIRED_8'] == 1 ? 'class="required"' : '').'>';
-		echo '		<input type="text" id="ENT_INFO_EXTRA_VAL_8" name="ENT_INFO_EXTRA_VAL_8" class="ent-info common-input w100" placeholder="'.$project['ENT_INFO_EXTRA_PHOLDER_8'].'" value="" />';
+		echo '		<input type="text" id="ENT_INFO_EXTRA_VAL_8" name="ENT_INFO_EXTRA_VAL_8" class="ent-info common-input w100" ent-info-title="'.$project['ENT_INFO_EXTRA_8'].'" placeholder="'.$project['ENT_INFO_EXTRA_PHOLDER_8'].'" value="" />';
 		echo '	</td>';
 		echo '</tr>';
 	}
@@ -529,6 +529,23 @@ function apply () {
     }
 ?>
 
+
+// 추가항목중 이메일/email이 있으면 이메일 형식 체크
+    let emailVerified = true
+    $('input.ent-info').each(function() {
+        // console.log($(this).attr('ent-info-title'));
+        if ($(this).attr('ent-info-title') == '이메일' || $(this).attr('ent-info-title') == 'email') {
+            if(!checkEmail($(this).val())) {
+                emailVerified = false;
+                return;
+            }
+        }
+    });
+    if (!emailVerified) {
+        alert('이메일을 형식에 맞게 입력해주세요.');
+        return;
+    }
+
     showSpinner();
 
     const data = {
@@ -567,7 +584,7 @@ function apply () {
 	if ($('input[name=CONN_ROUTE_VAL]:checked').val() && $('input[name=CONN_ROUTE_VAL]:checked').val() !== '') {
         data.CONN_ROUTE_VAL = $('input[name=CONN_ROUTE_VAL]:checked').val();
     }
-    console.log(`data - ${JSON.stringify(data)}`);
+    // console.log(`data - ${JSON.stringify(data)}`);
 
     $.ajax({
     	type: 'POST',
