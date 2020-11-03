@@ -83,6 +83,9 @@ table.table-apply th { text-align: center; }
 table.table-apply th.required::after { content: '*'; display: inline-block; margin-left: 3px; font-size: 15px; color: #E12222; }
 label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
 
+/* 관리자로그인 모달 영역 */
+#admLoginModal th { font-size: 14px; }
+
 /* 768px 이하 -> 모바일 */
 @media (max-width: 768px) {
 
@@ -188,6 +191,7 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
                     <p>인터넷 익스플로러에서는 동영상재생이 원활하지 않을 수 있습니다. 가급적 크롬을 이용하여 시청해주세요.</p>
                     <p>
                         <a href="https://www.google.co.kr/chrome" target="_chrome">[크롬 브라우저 설치]</a>
+                        <a class="ml10" href="javascript: openAdminLogin();">관리자 로그인</a>
                     </p>
                 </div>
             </form>
@@ -344,6 +348,48 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
 		</div>
 	</div>
 </div>
+
+
+<!-- 관리자 로그인 Modal-->
+<div class="modal fade" id="admLoginModal" tabindex="-1" role="dialog" aria-labelledby="admLoginModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="admLoginModalLabel">관리자 로그인</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table-admin-reg">
+                    <colgroup>
+                        <col style="width: 30%;" />
+                        <col style="width: 70%;" />
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <th>이메일</th>
+                            <td>
+                                <input type="text" id="admEmail" class="common-input w100" autocomplete="none" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>패스워드</th>
+                            <td>
+                                <input type="password" id="admPwd" class="common-input w100 mt20" autocomplete="none" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+                <a class="btn btn-primary" href="javascript: enterAdmin();">확인</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 관리자 로그인 Modal-->
 
 <!-- 공통모달 -->
 <?php include_once APPPATH.'Views/template/common_modal.php'; ?>
@@ -660,6 +706,57 @@ function enter () {
     	}
     });
 }
+
+// 관리자 로그인 모달 오픈
+function openAdminLogin () {
+    $('#admLoginModal').modal();
+}
+
+// 관리자 로그인
+function enterAdmin () {
+    // admEmail, admPwd
+    // validation
+    if (isEmpty($('#admEmail').val())) {
+        alert('관리자 이메일을 입력해주세요.');
+        $('#admEmail').focus();
+        return;
+    }
+    if (isEmpty($('#admPwd').val())) {
+        alert('관리자 패스워드를 입력해주세요.');
+        $('#admPwd').focus();
+        return;
+    }
+
+    showSpinner();
+
+    $.ajax({
+    	type: 'POST',
+    	url: '/stream/enterAdmin/<?= $project['PRJ_TITLE_URI'] ?>',
+    	dataType: 'json',
+    	cache: false,
+    	data: {
+            admEmail: $('#admEmail').val(),
+            admPwd: $('#admPwd').val()
+        },
+
+    	success: function(data) {
+    		console.log(data)
+    		if ( data.resCode == '0000' ) {
+                location.href = '/stream/<?= $project['PRJ_TITLE_URI'] ?>';
+    		} else {
+    			alert('관리자 입장이 불가합니다.\n관리자에게 문의해주세요.\n\n코드(resCode) : '+data.resCode+'\n메세지(resMsg) : '+data.resMsg);
+    		}
+    	},
+    	error: function (xhr, ajaxOptions, thrownError) {
+    		console.error(xhr);
+    		alert('관리자 입장이 불가합니다.\n관리자에게 문의해주세요.\n\n코드 : '+xhr.status+'\n메세지 : '+thrownError);
+    	},
+    	complete : function () {
+    		hideSpinner();
+    	}
+    });
+}
+
 
 $(document).ready(function () {
     fnInit();

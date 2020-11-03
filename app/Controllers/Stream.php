@@ -21,6 +21,7 @@ use App\Models\RequestorModel;
 use App\Models\QuestionModel;
 use App\Models\SurveyModel;
 use App\Models\TestModel;
+use App\Models\AdminModel;
 
 class Stream extends BaseController {
 	public function __construct() {
@@ -29,6 +30,7 @@ class Stream extends BaseController {
 		$this->questionModel = new QuestionModel();
 		$this->surveyModel = new SurveyModel();
 		$this->testModel = new TestModel();
+		$this->adminModel = new AdminModel();
   	}
 
 	public function index () {
@@ -235,11 +237,64 @@ class Stream extends BaseController {
 				, 'reqrNm' => $reqrNm
 				, 'mbilno' => $mbilno
 				, 'entDttm' => $now
+				, 'adminSeq' => 0
 			);
 
 			$this->session->set($sessData);
 		}
 		return $this->response->setJSON($res);
+	}
+
+	// 관리자 입장
+	public function enterAdmin ($prjUri = '') {
+		// 프로젝트 정보 가져오기
+		$prjItem = $this->projectModel->detail($prjUri);
+		$prjSeq = $prjItem['PRJ_SEQ'];
+
+		// 비정상이면 error response
+		if (!isset($prjItem)) {
+			$errRes['resCode'] = '9998';
+			$errRes['resMsg'] = '프로젝트 URI가 올바르지 않습니다.';
+			return $this->response->setJSON($errRes);
+		}
+
+		// 정상적인 관리자인지 체크 (lvl 관계없이 모든 관리자 입장 가능)
+		$email = $this->request->getPost('admEmail');
+		$pwd = $this->request->getPost('admPwd');
+
+		//ID, PWD 체크 로직
+		$adminData = $this->adminModel->checkLogin($email);
+		$now = date('Y-m-d H:i:s');
+
+		//정상이면 세션처리 하고 ok
+		if (isset($adminData)) {
+			if ( $adminData['DEL_YN'] == 1 ) {
+				$resData['resCode'] = '1020';
+				$resData['resMsg'] = '삭제된 사용자입니다.';
+			} else if (!password_verify($pwd, $adminData['PWD'])) {
+				$resData['resCode'] = '1030';
+				$resData['resMsg'] = '패스워드가 맞지 않습니다.';
+			} else {
+				// 세션 처리
+				$sessData = array(
+					'reqrSeq' => 0
+					, 'reqrNm' => $adminData['ADM_NM']
+					, 'mbilno' => '01000000000'
+					, 'entDttm' => $now
+					, 'adminSeq' => $adminData['ADM_SEQ']
+				);
+
+				$this->session->set($sessData);
+
+				$resData['resCode'] = '0000';
+				$resData['resMsg'] = '정상적으로 처리되었습니다.';
+			}
+		} else {
+			$resData['resCode'] = '1010';
+			$resData['resMsg'] = '이메일(아이디)가 존재하지 않습니다.';
+		}
+
+		return $this->response->setJSON($resData);
 	}
 
 	// ajax - 질문저장
