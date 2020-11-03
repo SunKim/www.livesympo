@@ -600,12 +600,12 @@ function apply () {
     		} else {
     			// modal1('경고', '프로젝트 목록을 가져오는 도중 오류가 발생했습니다. 관리자에게 문의해주세요.<br><br>코드(resCode):'+data.resCode+'<br>메세지(resMsg):'+data.resMsg);
     			// centerModal1('경고', '프로젝트 목록을 가져오는 도중 오류가 발생했습니다. 관리자에게 문의해주세요.<br><br>코드(resCode):'+data.resCode+'<br>메세지(resMsg):'+data.resMsg);
-    			alert('사전등록 신청 도중 오류가 발생했습니다.\n관리자에게 문의해주세요.\n\n코드(resCode):'+data.resCode+'\n메세지(resMsg):'+data.resMsg);
+    			alert('사전등록 신청이 불가합니다.\n관리자에게 문의해주세요.\n\n코드(resCode):'+data.resCode+'\n메세지(resMsg):'+data.resMsg);
     		}
     	},
     	error: function (xhr, ajaxOptions, thrownError) {
     		console.error(xhr);
-    		alert('사전등록 신청 도중 오류가 발생했습니다.\n관리자에게 문의해주세요.\n\n코드:'+xhr.status+'\n메세지:'+thrownError);
+    		alert('사전등록 신청이 불가합니다.\n관리자에게 문의해주세요.\n\n코드:'+xhr.status+'\n메세지:'+thrownError);
     	},
     	complete : function () {
     		hideSpinner();
@@ -644,13 +644,16 @@ function enter () {
     		console.log(data)
     		if ( data.resCode == '0000' ) {
                 location.href = '/stream/<?= $project['PRJ_TITLE_URI'] ?>';
+            } else if ( data.resCode == '8001' ) {
+                // 온에어가 활성화되어있으면 10분전부터 입장 가능.
+                alert('행사시작 10분전부터 방송 참여가 가능합니다.');
     		} else {
-    			alert('심포지엄 입장 도중 오류가 발생했습니다.\n관리자에게 문의해주세요.\n\n코드(resCode) : '+data.resCode+'\n메세지(resMsg) : '+data.resMsg);
+    			alert('심포지엄 입장이 불가합니다.\n관리자에게 문의해주세요.\n\n코드(resCode) : '+data.resCode+'\n메세지(resMsg) : '+data.resMsg);
     		}
     	},
     	error: function (xhr, ajaxOptions, thrownError) {
     		console.error(xhr);
-    		alert('심포지엄 입장 도중 오류가 발생했습니다.\n관리자에게 문의해주세요.\n\n코드 : '+xhr.status+'\n메세지 : '+thrownError);
+    		alert('심포지엄 입장이 불가합니다.\n관리자에게 문의해주세요.\n\n코드 : '+xhr.status+'\n메세지 : '+thrownError);
     	},
     	complete : function () {
     		hideSpinner();

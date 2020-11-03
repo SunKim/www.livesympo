@@ -215,11 +215,13 @@ class Stream extends BaseController {
 
 		// 프로젝트 시작/종료시간 맞는지 체크
 		$now = date('Y-m-d H:i:s');
-		// 아직 시작 안한 경우
-		if ($prjItem['ST_DTTM'] > $now) {
-			log_message('info', "Stream.php - enter. prjSeq: $prjSeq, ST_DTTM: ".$prjItem['ST_DTTM']. ", now : $now");
+		$now10mins = date('Y-m-d H:i:s', strtotime("+10 minutes"));
+
+		// 온에어가 설정되어있고 아직 시간이 안된 경우
+		if ($prjItem['ONAIR_YN'] == 1 && $prjItem['ST_DTTM'] > $now10mins) {
+			// log_message('info', "Stream.php - enter. prjSeq: $prjSeq, ST_DTTM: ".$prjItem['ST_DTTM']. ", now : $now");
 			$res['resCode'] = '8001';
-			$res['resMsg'] = '스트리밍 상영시간은 '.$prjItem['ST_DTTM'].' 부터 시작합니다.';
+			$res['resMsg'] = '행사시작 10분전부터 방송 참여가 가능합니다.';
 		} else if ($prjItem['ED_DTTM'] < $now) {
 			$res['resCode'] = '8002';
 			$res['resMsg'] = '스트리밍 종료시간이 이미 지났습니다. ('.$prjItem['ED_DTTM'].' 까지)';
