@@ -119,6 +119,8 @@ class Stream extends BaseController {
 		$data['ENT_INFO_EXTRA_VAL_4'] = $this->request->getPost('ENT_INFO_EXTRA_VAL_4');
 		$data['ENT_INFO_EXTRA_VAL_5'] = $this->request->getPost('ENT_INFO_EXTRA_VAL_5');
 		$data['ENT_INFO_EXTRA_VAL_6'] = $this->request->getPost('ENT_INFO_EXTRA_VAL_6');
+		$data['ENT_INFO_EXTRA_VAL_7'] = $this->request->getPost('ENT_INFO_EXTRA_VAL_7');
+		$data['ENT_INFO_EXTRA_VAL_8'] = $this->request->getPost('ENT_INFO_EXTRA_VAL_8');
 
 		$data['CONN_ROUTE_VAL'] = $this->request->getPost('CONN_ROUTE_VAL');
 
