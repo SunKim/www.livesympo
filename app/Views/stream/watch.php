@@ -406,6 +406,11 @@ function logReqrAction (logGb) {
     });
     */
 
+    // 관리자 입장시 $reqrSeq가 0. 이때는 로그기록 안함.
+    if (<?= $reqrSeq ?> == 0) {
+        return;
+    }
+
     // 페이지를 닫을때 브라우저가 async한 ajax 요청을 처리 안하므로 navigator.sendBeacon로 변경
     // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/sendBeacon
     if (!navigator.sendBeacon) return;
