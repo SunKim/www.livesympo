@@ -350,9 +350,9 @@ class Stream extends BaseController {
 		$data['PRJ_SEQ'] = $this->request->getPost('prjSeq');
 		$data['REQR_SEQ'] = $this->request->getPost('reqrSeq');
 		$data['LOG_GB'] = $this->request->getPost('logGb');
-		log_message('info', "Stream.php - logReqrAction. prjSeq: ".$data['PRJ_SEQ'].", reqrSeq: ".$data['REQR_SEQ'].", logGb: ".$data['LOG_GB']);
+		$data['DVC_GB'] = $this->request->getPost('dvcGb');
+		// log_message('info', "Stream.php - logReqrAction. prjSeq: ".$data['PRJ_SEQ'].", reqrSeq: ".$data['REQR_SEQ'].", logGb: ".$data['LOG_GB']);
 
-		// 로그는 response 없음
 		$reqrLogSeq = $this->requestorModel->insertReqrLog($data);
 
 		$res['resCode'] = '0000';

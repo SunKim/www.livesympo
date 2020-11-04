@@ -411,6 +411,13 @@ function logReqrAction (logGb) {
         return;
     }
 
+    let dvcGb = 'WEB';
+    if (/Android/i.test(navigator.userAgent)) {
+        dvcGb = 'ANDROID';
+    } else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        dvcGb = 'IOS';
+    }
+
     // 페이지를 닫을때 브라우저가 async한 ajax 요청을 처리 안하므로 navigator.sendBeacon로 변경
     // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/sendBeacon
     if (!navigator.sendBeacon) return;
@@ -419,6 +426,7 @@ function logReqrAction (logGb) {
     data.append('prjSeq', <?= $project['PRJ_SEQ'] ?>);
     data.append('reqrSeq', <?= $reqrSeq ?>);
     data.append('logGb', logGb);
+    data.append('dvcGb', dvcGb);
 
     navigator.sendBeacon(url, data);
 }
