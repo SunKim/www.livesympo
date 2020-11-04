@@ -188,6 +188,9 @@ let surveyQstChoiceList = [];
 
 // 초기화
 function fnInit () {
+    // 신청자 입장/퇴장 로그 기록
+    logReqrAction('ENTER');
+
     showSpinner(300);
 
 	// modal1('타이틀', '메세지람시롱');
@@ -376,8 +379,51 @@ function saveQuest () {
     });
 }
 
+// 신청자 입장/퇴장 로그 기록
+function logReqrAction (logGb) {
+    /*
+    alert('logReqrAction - ' + logGb);
+    $.ajax({
+    	type: 'POST',
+    	url: '/stream/logReqrAction',
+    	dataType: 'json',
+    	cache: false,
+    	data: {
+            prjSeq: <?= $project['PRJ_SEQ'] ?>,
+            reqrSeq: <?= $reqrSeq ?>,
+            logGb
+        },
+    	success: function(data) {
+            console.log('log success');
+            console.log(data);
+    	},
+    	error: function (xhr, ajaxOptions, thrownError) {
+            console.log('log error');
+            console.error(xhr);
+    	},
+    	complete : function () {
+    	}
+    });
+    */
+
+    // 페이지를 닫을때 브라우저가 async한 ajax 요청을 처리 안하므로 navigator.sendBeacon로 변경
+    // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/sendBeacon
+    if (!navigator.sendBeacon) return;
+    let url = '/stream/logReqrAction';
+    let data = new FormData();
+    data.append('prjSeq', <?= $project['PRJ_SEQ'] ?>);
+    data.append('reqrSeq', <?= $reqrSeq ?>);
+    data.append('logGb', logGb);
+
+    navigator.sendBeacon(url, data);
+}
+
 $(document).ready(function () {
     fnInit();
+
+    window.addEventListener('beforeunload', (e) => {
+        logReqrAction('LEAVE');
+    });
 });
 
 </script>

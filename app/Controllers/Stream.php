@@ -345,6 +345,21 @@ class Stream extends BaseController {
 		return $this->response->setJSON($res);
 	}
 
+	// ajax - 신청자 입장/퇴장 로그 기록
+	public function logReqrAction () {
+		$data['PRJ_SEQ'] = $this->request->getPost('prjSeq');
+		$data['REQR_SEQ'] = $this->request->getPost('reqrSeq');
+		$data['LOG_GB'] = $this->request->getPost('logGb');
+		log_message('info', "Stream.php - logReqrAction. prjSeq: ".$data['PRJ_SEQ'].", reqrSeq: ".$data['REQR_SEQ'].", logGb: ".$data['LOG_GB']);
+
+		// 로그는 response 없음
+		$reqrLogSeq = $this->requestorModel->insertReqrLog($data);
+
+		$res['resCode'] = '0000';
+		$res['resMsg'] = '정상적으로 처리되었습니다.';
+		return $this->response->setJSON($res);
+	}
+
 	// 잘못된 접근
 	public function wrongAccess () {
 		$data['errTitle'] = '잘못된 접근';

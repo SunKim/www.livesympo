@@ -60,4 +60,10 @@ class RequestorModel extends Model {
 		$this->db->table('TB_PRJ_ENT_INFO_REQR_H')->insert($data);
         return $this->db->insertID();
 	}
+
+	// 신청자로그이력 (TB_REQR_LOG_H) insert
+    public function insertReqrLog ($data) {
+		$this->db->table('TB_REQR_LOG_H')->insert($data);
+        return $this->db->insertID();
+	}
 }
