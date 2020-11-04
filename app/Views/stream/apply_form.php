@@ -742,6 +742,7 @@ function enterAdmin () {
     	success: function(data) {
     		console.log(data)
     		if ( data.resCode == '0000' ) {
+                alert('관리자로 입장 후 질문 또는 설문에 답변을 하면 데이터 정합성에 문제가 생기므로 질문/설문답변 자제 바랍니다.');
                 location.href = '/stream/<?= $project['PRJ_TITLE_URI'] ?>';
     		} else {
     			alert('관리자 입장이 불가합니다.\n관리자에게 문의해주세요.\n\n코드(resCode) : '+data.resCode+'\n메세지(resMsg) : '+data.resMsg);
