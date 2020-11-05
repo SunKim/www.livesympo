@@ -26,6 +26,11 @@ function numberfy (num) {
   return num.replace(/[^0-9.]/g, '')
 }
 
+// 범위 내의 숫자 생성
+function generateInt (start, end) {
+  return Array(end - start + 1).fill().map((_, idx) => start + idx)
+}
+
 // validation 관련
 // 숫자 체크
 function checkInt (num, min, max) {
@@ -73,7 +78,7 @@ function checkMobile (mobile) {
 }
 
 // 계좌번호 형식 체크
-function checkAcnutNo (acnutNo) {
+function checkAcntNo (acnutNo) {
   /* eslint-disable-next-line */
   const re = /^(\d+-?)+\d+$/
 
@@ -86,6 +91,15 @@ function checkEmail (email) {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   // const re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
   return re.test(String(email).toLowerCase())
+}
+
+// URL 체크
+function checkUrl(url) {
+  /* eslint-disable-next-line */
+  // const re = /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/
+  const re = /^(ftp|http|https):\/\/[^ "]+$/
+
+  return re.test(url);
 }
 
 // 퍼센트인지 체크. 소수점 1자리 (0.0 ~ 100.0)
@@ -250,5 +264,57 @@ function emptyNumberInput (e) {
   // 입력된 데이터 타입이 숫자이고 0일 때
   if (typeof e.target.value === 'number' && e.target.value === 0) {
     e.target.value = null
+  }
+}
+
+// 테이블내용 .csv 파일 다운로드
+// ex) downloadTableToCsv('tbl-xxx-list', '회원목록')
+function downloadTableToCsv(tableId, fileName) {
+  //참고) https://codepen.io/kostas-krevatas/pen/mJyBwp
+
+  const _tableToCSV = function(table) {
+    // We'll be co-opting `slice` to create arrays
+    const slice = Array.prototype.slice;
+
+    return slice
+      .call(table.rows)
+      .map(function(row) {
+        return slice
+          .call(row.cells)
+          .map(function(cell) {
+            return '"t"'.replace("t", cell.textContent);
+          })
+          .join(",");
+      })
+      .join("\r\n");
+  };
+
+  const _downloadAnchor = function(content, ext) {
+    const anchor = document.createElement("a");
+    anchor.style = "display:none !important";
+    anchor.id = "downloadanchor";
+    document.body.appendChild(anchor);
+
+    // If the [download] attribute is supported, try to use it
+
+    if ("download" in anchor) {
+      anchor.download = fileName + "." + ext;
+    }
+    anchor.href = content;
+    anchor.click();
+    anchor.remove();
+  }
+
+  // Generate our CSV string from out HTML Table
+  const csv = _tableToCSV(document.getElementById(tableId));
+  // Create a CSV Blob
+  const blob = new Blob(['\ufeff', csv], { type: "text/csv" });
+
+  // Determine which approach to take for the download
+  if (navigator.msSaveOrOpenBlob) {
+    // Works for Internet Explorer and Microsoft Edge
+    navigator.msSaveOrOpenBlob(blob, fileName + ".csv");
+  } else {
+    _downloadAnchor(URL.createObjectURL(blob), 'csv');
   }
 }

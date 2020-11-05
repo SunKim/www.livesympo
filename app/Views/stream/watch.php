@@ -61,6 +61,7 @@ div.btn-container { text-align: right; padding: 10px; }
 
 /* 질문 영역 */
 div.quest-container { padding: 10px; }
+pre { width: 100%; padding: 0; border: 0; background: #fff0; font-size: 1rem; }
 
 /* 어젠다 영역 */
 div.agenda-container { display: none; margin-bottom: 1rem; }
@@ -153,9 +154,10 @@ label.choice-label input { margin-right: 0.4rem; }
             <button type="button" class="btn-main agenda" onclick="toggleAgenda();"><?= $project['AGENDA_BTN_TEXT'] ?></button>
             <button type="button" class="btn-main agenda open-survey ml10" style="display: none;" onclick="openSurvey();"><?= $project['SURVEY_BTN_TEXT'] ?></button>
         </div>
-        <div class="quest-container">
-            <p class="tl">* Q&A - 질문을 남겨주시면 강의 후 답변드립니다.</p>
-            <textarea id="qstDesc" maxlength="400" rows="4" class="common-textarea w100 mt10 mb10" style="padding: 4px; background: <?= $project['STREAM_QA_BG_COLR'] ?>; color:<?= $project['STREAM_QA_FONT_COLR']; ?>"></textarea>
+        <div class="quest-container tl">
+			<p class="tl"><pre><?= $project['NTC_DESC'] ?></pre></p>
+            <p class="tl"><?= $project['QNA_TEXT'] ?></p>
+            <textarea id="qstDesc" maxlength="400" rows="4" class="common-textarea w100 mt10 mb10" style="padding: 4px; background: <?= $project['STREAM_QA_BG_COLR'] ?>; color:<?= $project['STREAM_QA_FONT_COLR'] ?>"></textarea>
             <div class="tr">
                 <button type="button" class="btn-main" onclick="saveQuest();"><?= $project['QST_BTN_TEXT'] ?></button>
             </div>
@@ -201,8 +203,8 @@ function fnInit () {
 
 	$('.survey-qst-list').empty();
 
-    // 설문이 있으면 설문조사 버튼 보이도록
-    if (surveyQstList.length > 0) {
+    // 설문이 있거나 외부설문 활성화면 설문조사 버튼 보이도록
+    if (surveyQstList.length > 0 || <?= $project['EXT_SURVEY_YN'] ?> == 1) {
         $('button.open-survey').show();
     }
 
@@ -253,7 +255,11 @@ function fnInit () {
 
 // 설문목록 열기
 function openSurvey () {
-	$('.survey-container').slideToggle();
+	if (<?= $project['EXT_SURVEY_YN'] ?> == 1) {
+		window.open('<?= $project['EXT_SURVEY_URL'] ?>', '_survey');
+	} else {
+		$('.survey-container').slideToggle();
+	}
 }
 
 // 설문 답변 저장
@@ -299,7 +305,7 @@ function saveAnswer () {
 		alert(valMsg);
 		return;
 	}
-	console.log(`surveyAswItem - ${JSON.stringify(surveyAswItem)}`);
+	// console.log(`surveyAswItem - ${JSON.stringify(surveyAswItem)}`);
 
     showSpinner();
 
