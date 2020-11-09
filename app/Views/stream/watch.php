@@ -156,8 +156,7 @@ label.choice-label input { margin-right: 0.4rem; }
         </div>
         <div class="quest-container tl">
 			<p class="tl"><pre><?= $project['NTC_DESC'] ?></pre></p>
-            <p class="tl"><?= $project['QNA_TEXT'] ?></p>
-            <textarea id="qstDesc" maxlength="400" rows="4" class="common-textarea w100 mt10 mb10" style="padding: 4px; background: <?= $project['STREAM_QA_BG_COLR'] ?>; color:<?= $project['STREAM_QA_FONT_COLR'] ?>"></textarea>
+            <textarea id="qstDesc" maxlength="400" rows="4" class="common-textarea w100 mt10 mb10" style="padding: 4px; background: <?= $project['STREAM_QA_BG_COLR'] ?>; color:<?= $project['STREAM_QA_FONT_COLR'] ?>" placeholder="<?= $project['QNA_TEXT'] ?>"></textarea>
             <div class="tr">
                 <button type="button" class="btn-main" onclick="saveQuest();"><?= $project['QST_BTN_TEXT'] ?></button>
             </div>
