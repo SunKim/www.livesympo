@@ -59,13 +59,17 @@ area { cursor: pointer; }
 
 <div class="container">
     <section class="header">
-		<h2>제목영역</h2>
+		<h2>동화제약 심포지엄</h2>
     </section>
     <section class="content">
         <img src="/images/dongwha/livesympo_dongwha_20201203.jpeg" usemap="#imgmap" style="width: 100%;" />
 
         <map name="imgmap">
-            <area shape="rect" coords="210,324,320,350" onclick="openLecture('a')">
+            <!-- 버튼영역 : 가로 90px, 세로 25px -->
+            <area shape="rect" coords="210,325,320,350" onclick="openLecture('lec1.pdf')">
+            <area shape="rect" coords="210,365,320,390" onclick="openLecture('lec2.pdf')">
+            <area shape="rect" coords="210,405,320,430" onclick="openLecture('lec3.pdf')">
+            <area shape="rect" coords="210,657,320,682" onclick="openLecture('lec1.pdf')">
         </map>
     </section>
 </div>
@@ -84,8 +88,8 @@ area { cursor: pointer; }
 function fnInit () {
 }
 
-function openLecture (lectureId) {
-    alert('openLecture')
+function openLecture (fileNm) {
+    window.open(`/etc/dongwha_202012/${fileNm}`, '_blank');
 }
 
 $(document).ready(function () {
