@@ -38,6 +38,7 @@
 body { background: #000; }
 section.header { margin: 1rem 0; color: #5B4AFF; font-weight: 700; }
 area { cursor: pointer; }
+img#img-agenda { width: 100%; height: 100%; }
 
 /* 768px 이하 -> 모바일 */
 @media (max-width: 768px) {
@@ -62,10 +63,18 @@ area { cursor: pointer; }
 		<h2>동화제약 심포지엄</h2>
     </section>
     <section class="content">
-        <img src="/images/dongwha/livesympo_dongwha_20201203.jpeg" usemap="#imgmap" style="width: 100%;" />
+        <!-- <img src="/images/dongwha/livesympo_dongwha_20201203.jpeg" usemap="#imgmap" style="width: 100%;" />
 
         <map name="imgmap">
-            <!-- 버튼영역 : 가로 90px, 세로 25px -->
+            <area shape="rect" coords="210,325,320,350" onclick="openLecture('lec1.pdf')">
+            <area shape="rect" coords="210,365,320,390" onclick="openLecture('lec2.pdf')">
+            <area shape="rect" coords="210,405,320,430" onclick="openLecture('lec3.pdf')">
+            <area shape="rect" coords="210,657,320,682" onclick="openLecture('lec1.pdf')">
+        </map> -->
+
+        <img id="my_image" style="display: none;" src="/images/dongwha/livesympo_dongwha_20201203.jpeg" width="1140" height="859" border="0" usemap="#map" />
+
+        <map name="map" id="map">
             <area shape="rect" coords="210,325,320,350" onclick="openLecture('lec1.pdf')">
             <area shape="rect" coords="210,365,320,390" onclick="openLecture('lec2.pdf')">
             <area shape="rect" coords="210,405,320,430" onclick="openLecture('lec3.pdf')">
@@ -78,7 +87,6 @@ area { cursor: pointer; }
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="/js/bootstrap.min.js"></script>
-
 <script src="/js/sun.common.20200914.js"></script>
 
 <!-- 메인 script -->
@@ -94,6 +102,44 @@ function openLecture (fileNm) {
 
 $(document).ready(function () {
     fnInit();
+});
+
+// cf) https://stackoverflow.com/a/23929444/796772
+$(function(){
+    var image_is_loaded = false;
+    $("#my_image").on('load',function() {
+        $(this).data('width', $(this).attr('width')).data('height', $(this).attr('height'));
+        $($(this).attr('usemap')+" area").each(function(){
+            $(this).data('coords', $(this).attr('coords'));
+        });
+
+        $(this).css('width', '100%').css('height','auto').show();
+
+        image_is_loaded = true;
+        $(window).trigger('resize');
+    });
+
+
+    function ratioCoords (coords, ratio) {
+        coord_arr = coords.split(",");
+
+        for(i=0; i < coord_arr.length; i++) {
+            coord_arr[i] = Math.round(ratio * coord_arr[i]);
+        }
+
+        return coord_arr.join(',');
+    }
+    $(window).on('resize', function(){
+        if (image_is_loaded) {
+            var img = $("#my_image");
+            var ratio = img.width()/img.data('width');
+
+            $(img.attr('usemap')+" area").each(function(){
+                console.log('1: '+$(this).attr('coords'));
+                $(this).attr('coords', ratioCoords($(this).data('coords'), ratio));
+            });
+        }
+    });
 });
 
 </script>
