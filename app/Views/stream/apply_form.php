@@ -691,8 +691,8 @@ function enter () {
     		if ( data.resCode == '0000' ) {
                 location.href = '/stream/<?= $project['PRJ_TITLE_URI'] ?>';
             } else if ( data.resCode == '8001' ) {
-                // 온에어가 활성화되어있으면 10분전부터 입장 가능.
-                alert('행사시작 10분전부터 방송 참여가 가능합니다.');
+                // 온에어가 활성화되어있으면 XX(ONAIR_ENT_TRM)분전부터 입장 가능.
+                alert(data.resMsg);
     		} else {
     			alert('심포지엄 입장이 불가합니다.\n관리자에게 문의해주세요.\n\n코드(resCode) : '+data.resCode+'\n메세지(resMsg) : '+data.resMsg);
     		}
