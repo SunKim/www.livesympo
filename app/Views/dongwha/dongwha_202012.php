@@ -14,8 +14,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 
-<meta name="subject" content="동화제약 - LiveSympo">
-<meta name="title" content="동화제약 - LiveSympo">
+<meta name="subject" content="동화약품 - LiveSympo">
+<meta name="title" content="동화약품 - LiveSympo">
 <meta name="description" content="Live Sympo 개인정보 수집/이용 동의" />
 <meta name="keywords" content="실시간, 심포지엄" />
 <meta name="author" content="Sun Kim">
@@ -26,7 +26,7 @@
 <meta name="robots" content="noindex,nofollow">
 <!-- meta name="robots" content="all" -->
 
-<title>동화제약</title>
+<title>동화약품</title>
 
 <!-- stylesheets -->
 <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -60,7 +60,7 @@ img#img-agenda { width: 100%; height: 100%; }
 
 <div class="container">
     <section class="header">
-		<h2>동화제약 심포지엄</h2>
+		<h2>동화약품 심포지엄</h2>
     </section>
     <section class="content">
         <!-- <img src="/images/dongwha/livesympo_dongwha_20201203.jpeg" usemap="#imgmap" style="width: 100%;" />
@@ -97,7 +97,8 @@ function fnInit () {
 }
 
 function openLecture (fileNm) {
-    window.open(`/etc/dongwha_202012/${fileNm}`, '_blank');
+    // window.open(`/etc/dongwha_202012/${fileNm}`, '_blank');
+    window.open(`/uploads/etc/dongwha_202012/${fileNm}`, '_blank');
 }
 
 $(document).ready(function () {
