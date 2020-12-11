@@ -72,7 +72,8 @@ img#img-agenda { width: 100%; height: 100%; }
             <area shape="rect" coords="210,657,320,682" onclick="openLecture('lec1.pdf')">
         </map> -->
 
-        <img id="my_image" style="display: none;" src="/images/dongwha/livesympo_dongwha_20201203.jpeg" width="1140" height="859" border="0" usemap="#map" />
+        <!-- <img id="my_image" style="display: none;" src="/images/dongwha/livesympo_dongwha_20201203.jpeg" width="1140" height="859" border="0" usemap="#map" /> -->
+        <img id="my_image" style="display: none;" src="/images/dongwha/livesympo_dongwha_20201203_resized.jpg" width="1140" height="859" border="0" usemap="#map" />
 
         <map name="map" id="map">
             <area shape="rect" coords="210,325,320,350" onclick="openLecture('lec1.pdf', '<?= $DONGWHA_202012_LEC1_READY_YN ?>')">
