@@ -73,13 +73,13 @@ img#img-agenda { width: 100%; height: 100%; }
         </map> -->
 
         <!-- <img id="my_image" style="display: none;" src="/images/dongwha/livesympo_dongwha_20201203.jpeg" width="1140" height="859" border="0" usemap="#map" /> -->
-        <img id="my_image" src="/images/dongwha/livesympo_dongwha_20201203_resized.jpg" width="1140" height="859" border="0" usemap="#map" />
+        <img id="my_image" src="/images/dongwha/livesympo_dongwha_20201211.jpeg" width="1140" height="859" border="0" usemap="#map" />
 
         <map name="map" id="map">
-            <area shape="rect" coords="210,325,320,350" onclick="openLecture('lec1.pdf', '<?= $DONGWHA_202012_LEC1_READY_YN ?>')">
-            <area shape="rect" coords="210,365,320,390" onclick="openLecture('lec2.pdf', '<?= $DONGWHA_202012_LEC2_READY_YN ?>')">
-            <area shape="rect" coords="210,405,320,430" onclick="openLecture('lec3.pdf', '<?= $DONGWHA_202012_LEC3_READY_YN ?>')">
-            <area shape="rect" coords="210,657,320,682" onclick="openLecture('lec1.pdf', '<?= $DONGWHA_202012_LEC4_READY_YN ?>')">
+            <area shape="rect" coords="210,325,320,350" onclick="openLecture('<?= $DONGWHA_202012_LEC1_FILE_NM ?>', '<?= $DONGWHA_202012_LEC1_READY_YN ?>')">
+            <area shape="rect" coords="210,365,320,390" onclick="openLecture('<?= $DONGWHA_202012_LEC2_FILE_NM ?>', '<?= $DONGWHA_202012_LEC2_READY_YN ?>')">
+            <area shape="rect" coords="210,405,320,430" onclick="openLecture('<?= $DONGWHA_202012_LEC3_FILE_NM ?>', '<?= $DONGWHA_202012_LEC3_READY_YN ?>')">
+            <area shape="rect" coords="210,657,320,682" onclick="openLecture('<?= $DONGWHA_202012_LEC4_FILE_NM ?>', '<?= $DONGWHA_202012_LEC4_READY_YN ?>')">
         </map>
     </section>
 </div>
