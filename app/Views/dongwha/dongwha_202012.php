@@ -73,7 +73,7 @@ img#img-agenda { width: 100%; height: 100%; }
         </map> -->
 
         <!-- <img id="my_image" style="display: none;" src="/images/dongwha/livesympo_dongwha_20201203.jpeg" width="1140" height="859" border="0" usemap="#map" /> -->
-        <img id="my_image" style="display: none;" src="/images/dongwha/livesympo_dongwha_20201203_resized.jpg" width="1140" height="859" border="0" usemap="#map" />
+        <img id="my_image" src="/images/dongwha/livesympo_dongwha_20201203_resized.jpg" width="1140" height="859" border="0" usemap="#map" />
 
         <map name="map" id="map">
             <area shape="rect" coords="210,325,320,350" onclick="openLecture('lec1.pdf', '<?= $DONGWHA_202012_LEC1_READY_YN ?>')">
@@ -92,9 +92,22 @@ img#img-agenda { width: 100%; height: 100%; }
 
 <!-- 메인 script -->
 <script language="javascript">
+var image_is_loaded = false;
 
 // 초기화
 function fnInit () {
+    // cf) https://stackoverflow.com/a/23929444/796772
+    $("#my_image").on('load',function() {
+        $(this).data('width', $(this).attr('width')).data('height', $(this).attr('height'));
+        $($(this).attr('usemap')+" area").each(function(){
+            $(this).data('coords', $(this).attr('coords'));
+        });
+
+        $(this).css('width', '100%').css('height','auto').show();
+
+        image_is_loaded = true;
+        $(window).trigger('resize');
+    });
 }
 
 function openLecture (fileNm, isReady) {
@@ -111,43 +124,27 @@ $(document).ready(function () {
     fnInit();
 });
 
-// cf) https://stackoverflow.com/a/23929444/796772
-$(function(){
-    var image_is_loaded = false;
-    $("#my_image").on('load',function() {
-        $(this).data('width', $(this).attr('width')).data('height', $(this).attr('height'));
-        $($(this).attr('usemap')+" area").each(function(){
-            $(this).data('coords', $(this).attr('coords'));
+$(window).on('resize', function(){
+    if (image_is_loaded) {
+        var img = $("#my_image");
+        var ratio = img.width()/img.data('width');
+
+        $(img.attr('usemap')+" area").each(function(){
+            // console.log('1: '+$(this).attr('coords'));
+            $(this).attr('coords', ratioCoords($(this).data('coords'), ratio));
         });
-
-        $(this).css('width', '100%').css('height','auto').show();
-
-        image_is_loaded = true;
-        $(window).trigger('resize');
-    });
-
-
-    function ratioCoords (coords, ratio) {
-        coord_arr = coords.split(",");
-
-        for(i=0; i < coord_arr.length; i++) {
-            coord_arr[i] = Math.round(ratio * coord_arr[i]);
-        }
-
-        return coord_arr.join(',');
     }
-    $(window).on('resize', function(){
-        if (image_is_loaded) {
-            var img = $("#my_image");
-            var ratio = img.width()/img.data('width');
-
-            $(img.attr('usemap')+" area").each(function(){
-                console.log('1: '+$(this).attr('coords'));
-                $(this).attr('coords', ratioCoords($(this).data('coords'), ratio));
-            });
-        }
-    });
 });
+
+function ratioCoords (coords, ratio) {
+    coord_arr = coords.split(",");
+
+    for(i=0; i < coord_arr.length; i++) {
+        coord_arr[i] = Math.round(ratio * coord_arr[i]);
+    }
+
+    return coord_arr.join(',');
+}
 
 </script>
 
