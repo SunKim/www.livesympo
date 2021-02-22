@@ -151,7 +151,7 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
         <div class="agenda-container">
             <img class="agenda-img" src="<?= $project['AGENDA_IMG_URL'] ?>" />
         </div>
-        <div class="form-container" style="background: <?= $project['ENT_THME_COLR'] ?>;">
+        <div class="form-container" style="background: <?= $project['ENT_THME_COLR'] ?>; color: <?= $project['ENT_THME_FONT_COLR'] ?>">
             <form class="enter-form" method="post">
                 <table>
                     <tr>
