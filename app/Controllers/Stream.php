@@ -75,9 +75,14 @@ class Stream extends BaseController {
 		// 프로젝트 정보 가져오기
 		$prjItem = $this->projectModel->detail($prjUri);
 
+		// client의 IP주소
+		// $ipAddr = $_SERVER["REMOTE_ADDR"];
+		$ipAddr = isset($_SERVER['HTTP_CLIENT_IP']) ? $_SERVER['HTTP_CLIENT_IP'] : isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR'];
+
 		// 정상 URI면 시청화면 불러오기. 비정상이면 wrongAccess
 		if (isset($prjItem)) {
 			$data['project'] = $prjItem;
+			$data['project']['IP_ADDR'] = $ipAddr;
 			$data['surveyQstList'] = $this->surveyModel->surveyQstList($prjItem['PRJ_SEQ']);
 			$data['surveyQstChoiceList'] = $this->surveyModel->surveyQstChoiceList($prjItem['PRJ_SEQ']);
 
@@ -236,6 +241,7 @@ class Stream extends BaseController {
 			// 세션 처리
 			$sessData = array(
 				'reqrSeq' => $reqrSeq
+				, 'anonymYn' => 0
 				, 'reqrNm' => $reqrNm
 				, 'mbilno' => $mbilno
 				, 'entDttm' => $now
@@ -280,6 +286,7 @@ class Stream extends BaseController {
 				// 세션 처리
 				$sessData = array(
 					'reqrSeq' => 0
+					, 'anonymYn' => 0
 					, 'reqrNm' => $adminData['ADM_NM']
 					, 'mbilno' => '01000000000'
 					, 'entDttm' => $now
@@ -297,6 +304,62 @@ class Stream extends BaseController {
 		}
 
 		return $this->response->setJSON($resData);
+	}
+
+	// ajax - 익명입장(비사전등록) 입장 시도
+	public function enterAnonym ($prjUri = '') {
+		// 프로젝트 정보 가져오기
+		$prjItem = $this->projectModel->detail($prjUri);
+		$prjSeq = $prjItem['PRJ_SEQ'];
+
+		// 비정상이면 error response
+		if (!isset($prjItem)) {
+			$errRes['resCode'] = '9998';
+			$errRes['resMsg'] = '프로젝트 URI가 올바르지 않습니다.';
+			return $this->response->setJSON($errRes);
+		}
+
+		// 익명입장은 무조건 anonym으로 REQR_M에 insert
+		$reqrData = array(
+			'ANONYM_YN' => 1
+		);
+		$reqrSeq = $this->requestorModel->insertReqr($reqrData);
+
+		// 익명입장(비사전등록입장)은 입장시도시 TB_PRJ_ENT_INFO_REQR_H에 insert
+		$entInfoData = array(
+			'PRJ_SEQ' => $prjSeq
+			, 'REQR_SEQ' => $reqrSeq
+			, 'ANONYM_YN' => 1
+		);
+		$prjEntInfoReqrSeq = $this->requestorModel->insertEntInfoReqr($entInfoData);
+
+		// 프로젝트 시작/종료시간 맞는지 체크
+		$now = date('Y-m-d H:i:s');
+		$onairEntTerm = date('Y-m-d H:i:s', strtotime("+".$prjItem['ONAIR_ENT_TRM']." minutes"));
+
+		// 온에어가 설정되어있고 아직 시간이 안된 경우
+		if ($prjItem['ONAIR_YN'] == 1 && $prjItem['ST_DTTM'] > $onairEntTerm) {
+			// log_message('info', "Stream.php - enter. prjSeq: $prjSeq, ST_DTTM: ".$prjItem['ST_DTTM']. ", now : $now");
+			$res['resCode'] = '8001';
+			$res['resMsg'] = '행사시작 '.$prjItem['ONAIR_ENT_TRM'].'분전부터 방송 참여가 가능합니다.';
+		} else if ($prjItem['ED_DTTM'] < $now) {
+			$res['resCode'] = '8002';
+			$res['resMsg'] = '스트리밍 종료시간이 이미 지났습니다. ('.$prjItem['ED_DTTM'].' 까지)';
+		} else {
+			$res['resCode'] = '0000';
+			$res['resMsg'] = '정상적으로 처리되었습니다.';
+
+			// 세션 처리
+			$sessData = array(
+				'reqrSeq' => $reqrSeq
+				, 'anonymYn' => 1
+				, 'entDttm' => $now
+				, 'adminSeq' => 0
+			);
+
+			$this->session->set($sessData);
+		}
+		return $this->response->setJSON($res);
 	}
 
 	// ajax - 질문저장
@@ -351,6 +414,7 @@ class Stream extends BaseController {
 		$data['REQR_SEQ'] = $this->request->getPost('reqrSeq');
 		$data['LOG_GB'] = $this->request->getPost('logGb');
 		$data['DVC_GB'] = $this->request->getPost('dvcGb');
+		$data['IP_ADDR'] = $this->request->getPost('ipAddr');
 		// log_message('info', "Stream.php - logReqrAction. prjSeq: ".$data['PRJ_SEQ'].", reqrSeq: ".$data['REQR_SEQ'].", logGb: ".$data['LOG_GB']);
 
 		$reqrLogSeq = $this->requestorModel->insertReqrLog($data);
