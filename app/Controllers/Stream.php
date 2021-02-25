@@ -75,9 +75,14 @@ class Stream extends BaseController {
 		// 프로젝트 정보 가져오기
 		$prjItem = $this->projectModel->detail($prjUri);
 
+		// client의 IP주소
+		// $ipAddr = $_SERVER["REMOTE_ADDR"];
+		$ipAddr = isset($_SERVER['HTTP_CLIENT_IP']) ? $_SERVER['HTTP_CLIENT_IP'] : isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR'];
+
 		// 정상 URI면 시청화면 불러오기. 비정상이면 wrongAccess
 		if (isset($prjItem)) {
 			$data['project'] = $prjItem;
+			$data['project']['IP_ADDR'] = $ipAddr;
 			$data['surveyQstList'] = $this->surveyModel->surveyQstList($prjItem['PRJ_SEQ']);
 			$data['surveyQstChoiceList'] = $this->surveyModel->surveyQstChoiceList($prjItem['PRJ_SEQ']);
 
@@ -409,6 +414,7 @@ class Stream extends BaseController {
 		$data['REQR_SEQ'] = $this->request->getPost('reqrSeq');
 		$data['LOG_GB'] = $this->request->getPost('logGb');
 		$data['DVC_GB'] = $this->request->getPost('dvcGb');
+		$data['IP_ADDR'] = $this->request->getPost('ipAddr');
 		// log_message('info', "Stream.php - logReqrAction. prjSeq: ".$data['PRJ_SEQ'].", reqrSeq: ".$data['REQR_SEQ'].", logGb: ".$data['LOG_GB']);
 
 		$reqrLogSeq = $this->requestorModel->insertReqrLog($data);

@@ -386,8 +386,9 @@ function saveQuest () {
 
 // 신청자 입장/퇴장 로그 기록
 function logReqrAction (logGb) {
+    // alert('logReqrAction - ' + logGb);
+
     /*
-    alert('logReqrAction - ' + logGb);
     $.ajax({
     	type: 'POST',
     	url: '/stream/logReqrAction',
@@ -432,6 +433,7 @@ function logReqrAction (logGb) {
     data.append('reqrSeq', <?= $reqrSeq ?>);
     data.append('logGb', logGb);
     data.append('dvcGb', dvcGb);
+    data.append('ipAddr', '<?= $project['IP_ADDR'] ?>');
 
     navigator.sendBeacon(url, data);
 }
