@@ -63,6 +63,11 @@ writable/uploads/*
 writable/debugbar/*
 
 public/uploads
+public/uploads/*
+!public/uploads/index.html
+
+public/dbmyadmin
+public/dbmyadmin/*
 
 php_errors.log
 
