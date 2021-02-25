@@ -56,6 +56,7 @@ div.main-img-container { }
 img.main-img { display: block; width: 100%; }
 button.btn-apply { display: inline-block; font-weight: 700; color: #FFF; border: 0; }
 button.btn-enter { border: 0; font-size: 1.2rem; font-weight: 600; }
+button.btn-enter-anonym { width: 100%; padding: 1rem; border: 0; font-size: 1.2rem; font-weight: 600; }
 
 /* 입장폼 및 어젠다 영역 */
 img.agenda-img { width: 100%; }
@@ -143,9 +144,15 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
         <div class="main-img-container">
             <img class="main-img" src="<?= $project['MAIN_IMG_URL'] ?>" />
         </div>
+<?php
+    if ($project['ANONYM_USE_YN'] == 0) {
+?>
         <div class="apply-btn-container" style="text-align: <?= $project['APPL_BTN_ALIGN'] ?> !important;">
             <button class="btn-apply <?= $project['APPL_BTN_ROUND_YN'] == 1 ? 'round'  : '' ?>" style="background: <?= $project['APPL_BTN_BG_COLR'] ?>; color: <?= $project['APPL_BTN_FONT_COLR'] ?>;" onclick="openApply();">사전등록</button>
         </div>
+<?php
+    }
+?>
     </section>
     <section class="form">
         <div class="agenda-container">
@@ -155,6 +162,15 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
             <form class="enter-form" method="post">
                 <table>
                     <tr>
+<?php
+    if ($project['ANONYM_USE_YN'] == 1) {
+?>
+                        <td class="td-btn">
+                            <button type="button" class="btn-enter-anonym <?= $project['ENT_BTN_ROUND_YN'] == 1 ? 'round'  : '' ?>" style="font-size: 1.1rem; background: <?= $project['ENT_BTN_BG_COLR'] ?>; color: <?= $project['ENT_BTN_FONT_COLR'] ?>;" onclick="enter();">심포지엄 입장</button>
+                        </td>
+<?php
+    } else {
+?>
                         <td class="td-input">
                             <p>
                                 <span style="font-size: 1.1rem">성&nbsp;&nbsp;&nbsp;명</span>
@@ -168,6 +184,9 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
                         <td class="td-btn">
                             <button type="button" class="btn-enter <?= $project['ENT_BTN_ROUND_YN'] == 1 ? 'round'  : '' ?>" style="font-size: 1.1rem; background: <?= $project['ENT_BTN_BG_COLR'] ?>; color: <?= $project['ENT_BTN_FONT_COLR'] ?>;" onclick="enter();">심포지엄<br />입장</button>
                         </td>
+<?php
+    }
+?>
                     </tr>
                     <tr>
                         <td colspan="2" class="tl">
@@ -410,6 +429,7 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
 
 <!-- 메인 script -->
 <script language="javascript">
+var anonymUseYn = <?= $project['ANONYM_USE_YN'] ?>
 
 // 초기화
 function fnInit () {
@@ -428,7 +448,10 @@ function fnInit () {
 
 // 사전등록 창 열기
 function openApply () {
-    $('#applyModal').modal('show');
+    // 익명입장이 아닐때만
+    if (anonymUseYn == 0) {
+        $('#applyModal').modal('show');
+    }
 }
 
 // 사전등록 테스트용 데이터
@@ -445,6 +468,10 @@ function test () {
 // 사전등록 신청
 function apply () {
     // validation
+    if (anonymUseYn == 1) {
+        alert('익명입장은 사전등록이 불가합니다.')
+        return
+    }
     if (isEmpty($('#REQR_NM').val())) {
         alert('성명을 입력해주세요.');
         $('#REQR_NM').focus();
@@ -665,29 +692,33 @@ function apply () {
 
 // 입장버튼 클릭
 function enter () {
-    // validation
-    if (isEmpty($('#reqrNm').val())) {
-        alert('성명을 입력해주세요.');
-        $('#reqrNm').focus();
-        return;
-    }
-    if (!checkMobile( simplifyMobile($('#mbilno').val()) )) {
-        alert('연락처를 형식에 맞게 입력해주세요.(- 제외)');
-        $('#mbilno').focus();
-        return;
+    const data = {}
+
+    // 비사전등록이 아닐때만 validation
+    if (anonymUseYn == 0) {
+        if (isEmpty($('#reqrNm').val())) {
+            alert('성명을 입력해주세요.');
+            $('#reqrNm').focus();
+            return;
+        }
+        if (!checkMobile( simplifyMobile($('#mbilno').val()) )) {
+            alert('연락처를 형식에 맞게 입력해주세요.(- 제외)');
+            $('#mbilno').focus();
+            return;
+        }
+
+        data.reqrNm = $('#reqrNm').val()
+        data.mbilno = simplifyMobile($('#mbilno').val())
     }
 
     showSpinner();
 
     $.ajax({
     	type: 'POST',
-    	url: '/stream/enter/<?= $project['PRJ_TITLE_URI'] ?>',
+    	url: anonymUseYn == 0 ? '/stream/enter/<?= $project['PRJ_TITLE_URI'] ?>' : '/stream/enterAnonym/<?= $project['PRJ_TITLE_URI'] ?>',
     	dataType: 'json',
     	cache: false,
-    	data: {
-            reqrNm: $('#reqrNm').val(),
-            mbilno: simplifyMobile($('#mbilno').val())
-        },
+    	data,
 
     	success: function(data) {
     		console.log(data)
