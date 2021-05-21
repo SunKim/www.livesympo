@@ -3,7 +3,7 @@ namespace App\Controllers;
 
 use App\Models\SettingModel;
 
-class Dongwha extends BaseController {
+class Dongwha_Agenda extends BaseController {
 	public function __construct() {
 		$this->settingModel = new SettingModel();
   	}
