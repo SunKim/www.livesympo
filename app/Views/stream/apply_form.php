@@ -166,7 +166,7 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
     if ($project['ANONYM_USE_YN'] == 1) {
 ?>
                         <td class="td-btn">
-                            <button type="button" class="btn-enter-anonym <?= $project['ENT_BTN_ROUND_YN'] == 1 ? 'round'  : '' ?>" style="font-size: 1.1rem; background: <?= $project['ENT_BTN_BG_COLR'] ?>; color: <?= $project['ENT_BTN_FONT_COLR'] ?>;" onclick="enter();">심포지엄 입장</button>
+                            <button type="button" class="btn-enter-anonym <?= $project['ENT_BTN_ROUND_YN'] == 1 ? 'round'  : '' ?>" style="font-size: 1.1rem; background: <?= $project['ENT_BTN_BG_COLR'] ?>; color: <?= $project['ENT_BTN_FONT_COLR'] ?>;" onclick="enter();"><?= $project['ENT_BTN_TEXT'] ?></button>
                         </td>
 <?php
     } else {
@@ -182,7 +182,7 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
                             </p>
                         </td>
                         <td class="td-btn">
-                            <button type="button" class="btn-enter <?= $project['ENT_BTN_ROUND_YN'] == 1 ? 'round'  : '' ?>" style="font-size: 1.1rem; background: <?= $project['ENT_BTN_BG_COLR'] ?>; color: <?= $project['ENT_BTN_FONT_COLR'] ?>;" onclick="enter();">심포지엄<br />입장</button>
+                            <button type="button" class="btn-enter <?= $project['ENT_BTN_ROUND_YN'] == 1 ? 'round'  : '' ?>" style="font-size: 1.1rem; background: <?= $project['ENT_BTN_BG_COLR'] ?>; color: <?= $project['ENT_BTN_FONT_COLR'] ?>;" onclick="enter();"><?= $project['ENT_BTN_TEXT'] ?></button>
                         </td>
 <?php
     }
