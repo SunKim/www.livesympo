@@ -60,7 +60,7 @@ img#img-agenda { width: 100%; height: 100%; }
 
 <div class="container">
     <section class="header">
-		<h2>동화약품 심포지엄</h2>
+		<!-- <h2>동화약품 심포지엄</h2> -->
     </section>
     <section class="content">
         <!-- <img src="/images/dongwha/livesympo_dongwha_20210503.jpeg" usemap="#imgmap" style="width: 100%;" />
