@@ -121,6 +121,10 @@ function openLecture (fileNm, isReady) {
     }
 }
 
+function goToStream () {
+	window.open(`https://livesympo.kr/DONGWHA`, '_stream');
+}
+
 $(document).ready(function () {
     fnInit();
 });
