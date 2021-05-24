@@ -50,8 +50,8 @@ $routes->add('stream/(:segment)', 'Stream::watch/$1');
 $routes->add('agree/prvInfo', 'Stream::agreePrvInfo');
 $routes->add('agree/marketing', 'Stream::agreeMarketing');
 
-$routes->add('dongwha', 'Dongwha::index');
-$routes->add('DONGWHA/AGENDA', 'Dongwha_Agenda::index');
+// $routes->add('dongwha', 'Dongwha::index');
+$routes->add('dongwha', 'Dongwha_Agenda::index');
 
 // 그 외 livesympo.kr/xxxx 형태는 모두 => Stream controller의 apply로 연결
 $routes->add('(:segment)', 'Stream::apply/$1');
