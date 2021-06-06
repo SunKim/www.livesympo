@@ -633,7 +633,7 @@ function apply () {
         return;
     }
 
-	// 추가항목중 의사면허번호가 있으면 형식 체크 (숫자만 6~7자리)
+	// 추가항목중 의사면허번호가 있으면 형식 체크 (숫자만 5~6자리)
     let licenseVerified = true
     $('input.ent-info').each(function() {
         // console.log($(this).attr('ent-info-title'));
@@ -648,7 +648,7 @@ function apply () {
         }
     });
     if (!licenseVerified) {
-        alert('의사면허번호를 형식에 맞게 입력해주세요.(숫자 6~7자리)');
+        alert('의사면허번호를 형식에 맞게 입력해주세요.(숫자 5~6자리)');
         return;
     }
 
