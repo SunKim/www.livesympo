@@ -150,6 +150,9 @@ function replaceNullToDash (text) {
 
 // 전화번호/휴대폰번호에 숫자 외의 다른 문자가 들어가있으면 제거 (이렇게 하고 다시 -를 넣으려고)
 function simplifyMobile (mobile) {
+  if (!mobile) {
+    return ''
+  }
   return mobile.replace(/[^0-9.]/g, '')
 }
 

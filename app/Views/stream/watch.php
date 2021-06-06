@@ -67,6 +67,7 @@ pre { width: 100%; padding: 0; border: 0; background: #fff0; font-size: 1rem; }
 div.agenda-container { display: none; margin-bottom: 1rem; }
 button.agenda {}
 img.agenda-img { width: 100%; }
+.clickable { cursor: pointer; }
 
 /* 설문 영역 */
 input[type=checkbox], input[type=radio] { margin-right: 0.3rem; border: 1px solid #cacece; -ms-transform: scale(1.2); -moz-transform: scale(1.2); -webkit-transform: scale(1.2); transform: scale(1.2); }
@@ -133,7 +134,13 @@ label.choice-label input { margin-right: 0.4rem; }
     </header>
     <section>
         <div class="agenda-container">
-            <img class="agenda-img" src="<?= $project['AGENDA_IMG_URL'] ?>" />
+<?php
+	$agendaLinkClass = '';
+	if (isset($project['STREAM_AGENDA_LINK_URL']) && strpos($project['STREAM_AGENDA_LINK_URL'], 'http') !== false) {
+		 $agendaLinkClass = 'clickable';
+	}
+?>
+            <img class="agenda-img <?= $agendaLinkClass ?>" src="<?= $project['STREAM_AGENDA_IMG_URL'] ?>" onclick="openAgendaImgLink('<?= $project['STREAM_AGENDA_LINK_URL'] ?>')" />
         </div>
         <div>
 			<?= $project['STREAM_URL'] ?>
@@ -436,6 +443,13 @@ function logReqrAction (logGb) {
     data.append('ipAddr', '<?= $project['IP_ADDR'] ?>');
 
     navigator.sendBeacon(url, data);
+}
+
+// 아젠다 이미지 클릭시 링크 열기
+function openAgendaImgLink(linkUrl) {
+	if (linkUrl && linkUrl !== '' && linkUrl.includes('http')) {
+		window.open(linkUrl, '_stream_agenda');
+	}
 }
 
 $(document).ready(function () {

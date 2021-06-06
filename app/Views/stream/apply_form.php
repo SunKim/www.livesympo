@@ -145,7 +145,8 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
             <img class="main-img" src="<?= $project['MAIN_IMG_URL'] ?>" />
         </div>
 <?php
-    if ($project['ANONYM_USE_YN'] == 0) {
+	// 사전등록 입장일 경우 + 등록버튼숨김여부가 0일 경우(사전등록 마감이 아닐 경우)만 사전등록 버튼 보임
+    if ($project['ANONYM_USE_YN'] == 0 && $project['APPL_BTN_HIDE_YN'] == 0) {
 ?>
         <div class="apply-btn-container" style="text-align: <?= $project['APPL_BTN_ALIGN'] ?> !important;">
             <button class="btn-apply <?= $project['APPL_BTN_ROUND_YN'] == 1 ? 'round'  : '' ?>" style="background: <?= $project['APPL_BTN_BG_COLR'] ?>; color: <?= $project['APPL_BTN_FONT_COLR'] ?>;" onclick="openApply();">사전등록</button>
@@ -163,6 +164,7 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
                 <table>
                     <tr>
 <?php
+	// 비사전등록 입장일 경우
     if ($project['ANONYM_USE_YN'] == 1) {
 ?>
                         <td class="td-btn">
@@ -238,7 +240,7 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
 <?php
     if ($project['CONN_ROUTE_YN'] == 1) {
         echo '<tr>';
-        echo '	<th class="required tc">접속경로</th>';
+        echo '	<th class="required tc">'.$project['CONN_ROUTE_TEXT'].'</th>';
         echo '	<td class="required">';
 
         if (isset($project['CONN_ROUTE_1']) && $project['CONN_ROUTE_1'] != '') {
@@ -250,6 +252,15 @@ label.conn-route-label { font-weight: 500; padding: 0 0.5rem; }
         }
         if (isset($project['CONN_ROUTE_3']) && $project['CONN_ROUTE_3'] != '') {
             echo '		<label class="conn-route-label"><input type="checkbox" name="CONN_ROUTE_VAL" value="3" />'.$project['CONN_ROUTE_3'].'</label>';
+        }
+		if (isset($project['CONN_ROUTE_4']) && $project['CONN_ROUTE_4'] != '') {
+            echo '		<label class="conn-route-label"><input type="checkbox" name="CONN_ROUTE_VAL" value="4" />'.$project['CONN_ROUTE_4'].'</label>';
+        }
+		if (isset($project['CONN_ROUTE_5']) && $project['CONN_ROUTE_5'] != '') {
+            echo '		<label class="conn-route-label"><input type="checkbox" name="CONN_ROUTE_VAL" value="5" />'.$project['CONN_ROUTE_5'].'</label>';
+        }
+		if (isset($project['CONN_ROUTE_6']) && $project['CONN_ROUTE_6'] != '') {
+            echo '		<label class="conn-route-label"><input type="checkbox" name="CONN_ROUTE_VAL" value="6" />'.$project['CONN_ROUTE_6'].'</label>';
         }
 
         echo '	</td>';
@@ -603,7 +614,7 @@ function apply () {
 ?>
 
 
-// 추가항목중 이메일/email이 있으면 이메일 형식 체크
+	// 추가항목중 이메일/email이 있으면 이메일 형식 체크
     let emailVerified = true
     $('input.ent-info').each(function() {
         // console.log($(this).attr('ent-info-title'));
@@ -619,6 +630,25 @@ function apply () {
     });
     if (!emailVerified) {
         alert('이메일을 형식에 맞게 입력해주세요.');
+        return;
+    }
+
+	// 추가항목중 의사면허번호가 있으면 형식 체크 (숫자만 6~7자리)
+    let licenseVerified = true
+    $('input.ent-info').each(function() {
+        // console.log($(this).attr('ent-info-title'));
+        if ($(this).attr('ent-info-title') == '의사면허번호' || $(this).attr('ent-info-title') == '등록번호' || $(this).attr('ent-info-title') == '면허번호' || $(this).attr('ent-info-title') == '생년월일') {
+			// 필수일 경우만 체크
+			if ($(this).hasClass('required')) {
+				if(!checkDoctorLicense($(this).val())) {
+					licenseVerified = false;
+					return;
+				}
+			}
+        }
+    });
+    if (!licenseVerified) {
+        alert('의사면허번호를 형식에 맞게 입력해주세요.(숫자 6~7자리)');
         return;
     }
 
@@ -792,6 +822,12 @@ function enterAdmin () {
     });
 }
 
+// 의사면허번호 validation
+function checkDoctorLicense(licenseNo) {
+	/* eslint-disable-next-line */
+	const re = /^\d{6,7}$/
+	return re.test(licenseNo)
+}
 
 $(document).ready(function () {
     fnInit();
