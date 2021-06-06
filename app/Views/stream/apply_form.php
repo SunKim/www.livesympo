@@ -825,7 +825,7 @@ function enterAdmin () {
 // 의사면허번호 validation
 function checkDoctorLicense(licenseNo) {
 	/* eslint-disable-next-line */
-	const re = /^\d{6,7}$/
+	const re = /^\d{5,6}$/
 	return re.test(licenseNo)
 }
 
