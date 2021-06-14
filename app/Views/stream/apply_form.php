@@ -509,7 +509,8 @@ function apply () {
     if ($project['CONN_ROUTE_YN'] == 1) {
 ?>
 	if (isEmpty($('input[name=CONN_ROUTE_VAL]:checked').val())) {
-		alert('접속경로를 선택해주세요.');
+		// alert('접속경로를 선택해주세요.');
+        alert('<?= $project['CONN_ROUTE_TEXT'] ?>을/를 선택해주세요.');
 		return;
 	}
 <?php
