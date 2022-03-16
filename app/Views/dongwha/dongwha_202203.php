@@ -74,7 +74,7 @@ img#img-agenda { width: 100%; height: 100%; }
 
         <!-- <img id="my_image" style="display: none;" src="/images/dongwha/livesympo_dongwha_20210503.jpeg" width="1140" height="859" border="0" usemap="#map" /> -->
         <img id="my_image" src="/images/dongwha/livesympo_dongwha_202203_01.jpg" width="1140" height="855" border="0" usemap="#map" />
-		<img id="my_image" src="/images/dongwha/livesympo_dongwha_202203_02.jpg" width="1140" height="855" border="0" usemap="#map2" style="margin-top: 40px;margin-bottom: 40px;" />
+		<!-- <img id="my_image" src="/images/dongwha/livesympo_dongwha_202203_02.jpg" width="1140" height="855" border="0" usemap="#map2" style="margin-top: 40px;margin-bottom: 40px;" /> -->
 
         <map name="map" id="map">
             <!-- <area shape="rect" coords="310,84,552,150" onclick="goToStream()"> -->
@@ -85,9 +85,9 @@ img#img-agenda { width: 100%; height: 100%; }
 			<area shape="rect" coords="186,600,270,624" onclick="openLecture('<?= $DONGWHA_202203_LEC5_FILE_NM ?>', '<?= $DONGWHA_202203_LEC5_READY_YN ?>')">
 			<area shape="rect" coords="186,680,270,704" onclick="openLecture('<?= $DONGWHA_202203_LEC6_FILE_NM ?>', '<?= $DONGWHA_202203_LEC6_READY_YN ?>')">
         </map>
-		<map name="map2" id="map2">
+		<!-- <map name="map2" id="map2">
             <area shape="rect" coords="380,560,1060,640" onclick="goToStream()">
-        </map>
+        </map> -->
     </section>
 </div>
 
