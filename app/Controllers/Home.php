@@ -2,6 +2,7 @@
 
 class Home extends BaseController {
 	public function index () {
-		return view('home.php');
+		// return view('under_construction.php');
+		return view('main_video.php');
 	}
 }
