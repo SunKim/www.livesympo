@@ -52,7 +52,7 @@ video { width: 100%; }
 <body>
 	<div>
 		<video class="main-video-bg" width="100%" height="auto" preload="metadata" loop autoplay muted playsinline>
-			<source src="/videos/with_main.mp4" type="video/mp4">
+			<source src="/videos/with_main2_20221007.mp4" type="video/mp4">
 			<!-- <source src="./with_main.mp4" type="video/mp4"> -->
 		</video>
 	</div>
