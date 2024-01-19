@@ -39,57 +39,44 @@
 	*,
 	::before,
 	::after {
-		box-sizing: border-box;
+		/* box-sizing: border-box; */
 		margin: 0;
 		padding: 0;
 	}
 
-	body {
-		font-family: roboto, sans-serif;
-	}
-
-	.home {
-		height: 100vh;
-		position: relative;
-	}
-
-	video {
+	video.fullscreen {
 		position: absolute;
+		z-index: 0;
+		object-fit: cover;
 		width: 100%;
 		height: 100%;
-		object-fit: cover;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+
+		&::-webkit-media-controls {
+			display: none !important;
+		}
 	}
 
-	.home-content {
+	.container {
 		position: relative;
-		padding-top: 150px;
-		color: #fff;
-		text-align: center;
+		display: grid;
+		place-items: center;
+		height: 100vh;
+		width: 100vw;
+		margin: 0 auto;
+		background: #ccc;
 	}
 
-	h1 {
-		font-family: Playfair Display, serif;
-		font-size: clamp(45px, 7vw, 130px);
-		line-height: 1.1;
+	.content {
+		z-index: 1;
 	}
 
-	.home p {
-		font-size: clamp(25px, 4vw, 40px);
-		margin-top: 10px;
-	}
-
-	.home-content button,
-	.home-content a {
-		display: block;
-		font-size: clamp(14px, 1.5vw, 18px);
-		border: 1px solid #f1f1f1;
-		border-radius: 5px;
-		background: transparent;
-		color: #fff;
-		margin: 50px auto 0;
-		padding: 12px 20px;
-		cursor: pointer;
-		max-width: 40%;
+	body {
+		height: 100vh;
+		display: grid;
+		place-items: center;
 	}
 
 	/* 768px 이하 -> 모바일 */
@@ -106,19 +93,16 @@
 </head>
 
 <body>
-	<div class="home">
-		<video id="videoPlayer" muted loop autoplay>
+	<section class="container">
+		<video id="videoPlayer" class="fullscreen" playsinline autoplay muted loop>
 			<source src="/videos/with_main3.mp4" type="video/mp4">
 		</video>
-		<!-- <div class="home-content">
-			<h1>WITH</h1>
-			<p>영상기획</p>
 
-			<!-- <button>nabdo@naver.com</button> --
-			<a href="mailto:nabdo@naver.com">nabdo@naver.com</a>
-			<a href="tel:010-4782-6737">010-4782-6737</a>
+		<!-- <div class="content">
+			<h1>Headline</h1>
 		</div> -->
-	</div>
+
+	</section>
 
 	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
 	<!-- <script src="/js/bootstrap.min.js"></script> -->
