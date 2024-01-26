@@ -63,8 +63,8 @@
 		position: relative;
 		display: grid;
 		place-items: center;
-		height: 100vh;
-		width: 100vw;
+		height: 100dvh;
+		width: 100dvw;
 		margin: 0 auto;
 		background: #ccc;
 	}
@@ -74,7 +74,7 @@
 	}
 
 	body {
-		height: 100vh;
+		height: 100dvh;
 		display: grid;
 		place-items: center;
 	}
