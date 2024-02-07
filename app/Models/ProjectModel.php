@@ -26,10 +26,10 @@ class ProjectModel extends Model {
 		$strQry .= "	P.PRJ_SEQ, P.PRJ_TITLE, P.PRJ_TITLE_URI	\n";
 		$strQry .= "	, IF( (CONN_ROUTE_1 IS NOT NULL AND CONN_ROUTE_1 <> '') OR (CONN_ROUTE_2 IS NOT NULL AND CONN_ROUTE_2 <> '') OR (CONN_ROUTE_3 IS NOT NULL AND CONN_ROUTE_3 <> '') OR (CONN_ROUTE_4 IS NOT NULL AND CONN_ROUTE_4 <> '') OR (CONN_ROUTE_5 IS NOT NULL AND CONN_ROUTE_5 <> '') OR (CONN_ROUTE_6 IS NOT NULL AND CONN_ROUTE_6 <> ''), 1, 0) AS CONN_ROUTE_YN	\n";
 		$strQry .= "	, P.STREAM_URL, P.ONAIR_YN, P.ONAIR_ENT_TRM, P.MAIN_IMG_URI, P.AGENDA_IMG_URI, P.STREAM_AGENDA_IMG_URI, P.STREAM_AGENDA_LINK_URL, P.FOOTER_IMG_URI	\n";
-        $strQry .= "	, CONCAT('".$_ENV['app.baseURL']."', P.MAIN_IMG_URI) AS MAIN_IMG_URL	\n";
-        $strQry .= "	, CONCAT('".$_ENV['app.baseURL']."', P.AGENDA_IMG_URI) AS AGENDA_IMG_URL	\n";
-		$strQry .= "	, CONCAT('".$_ENV['app.baseURL']."', P.STREAM_AGENDA_IMG_URI) AS STREAM_AGENDA_IMG_URL	\n";
-        $strQry .= "	, CONCAT('".$_ENV['app.baseURL']."', P.FOOTER_IMG_URI) AS FOOTER_IMG_URL	\n";
+        $strQry .= "	, CONCAT('".$_ENV['app.cmsURL']."', P.MAIN_IMG_URI) AS MAIN_IMG_URL	\n";
+        $strQry .= "	, CONCAT('".$_ENV['app.cmsURL']."', P.AGENDA_IMG_URI) AS AGENDA_IMG_URL	\n";
+		$strQry .= "	, CONCAT('".$_ENV['app.cmsURL']."', P.STREAM_AGENDA_IMG_URI) AS STREAM_AGENDA_IMG_URL	\n";
+        $strQry .= "	, CONCAT('".$_ENV['app.cmsURL']."', P.FOOTER_IMG_URI) AS FOOTER_IMG_URL	\n";
 		$strQry .= "	, P.ST_DTTM, P.ED_DTTM	\n";
 		$strQry .= "	, DATE_FORMAT(P.ST_DTTM, '%Y-%m-%d') AS ST_DATE	\n";
         $strQry .= "	, DATE_FORMAT(P.ST_DTTM, '%H:%i') AS ST_TIME	\n";
