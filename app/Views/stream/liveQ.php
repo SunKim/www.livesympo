@@ -267,8 +267,8 @@
 				<textarea id="qstDesc" maxlength="400" rows="6" class="common-textarea w100 mt10 mb10"
 					style="padding: 4px; background: <?= $project['STREAM_QA_BG_COLR'] ?>; color:<?= $project['STREAM_QA_FONT_COLR'] ?>"
 					placeholder="<?= $project['QNA_TEXT'] ?>"></textarea>
-				<div class="d-flex justify-content-between">
-					<button type="button" class="btn-main agenda open-survey" style="display: none;"
+				<div class="d-flex justify-center">
+					<button type="button" class="btn-main agenda open-survey mr10" style="display: none;"
 						onclick="openSurvey();"><?= $project['SURVEY_BTN_TEXT'] ?></button>
 					<button type="button" class="btn-main" onclick="saveQuest();"><?= $project['QST_BTN_TEXT'] ?></button>
 				</div>
