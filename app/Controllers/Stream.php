@@ -95,6 +95,49 @@ class Stream extends BaseController {
 		}
 	}
 
+	// 라이브큐 화면
+	public function liveQ ($prjUri = '') {
+		if ($prjUri == '') {
+			return $this->wrongAccess();
+			return false;
+		}
+
+		// 프로젝트 정보 가져오기
+		$prjItem = $this->projectModel->detail($prjUri);
+		// client의 IP주소
+		$ipAddr = isset($_SERVER['HTTP_CLIENT_IP']) ? $_SERVER['HTTP_CLIENT_IP'] : isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR'];
+
+		// 프로젝트 시작/종료시간 맞는지 체크
+		$now = date('Y-m-d H:i:s');
+		$onairEntTerm = date('Y-m-d H:i:s', strtotime("+".$prjItem['ONAIR_ENT_TRM']." minutes"));
+
+		// 정상 URI면 라이브큐 화면 불러오기. 비정상이면 wrongAccess
+		if (isset($prjItem)) {
+			// 온에어가 설정되어있고 아직 시간이 안된 경우
+			if ($prjItem['ONAIR_YN'] == 1 && $prjItem['ST_DTTM'] > $onairEntTerm) {
+				// log_message('info', "Stream.php - enter. prjSeq: $prjSeq, ST_DTTM: ".$prjItem['ST_DTTM']. ", now : $now");
+				// $res['resCode'] = '8001';
+				// $res['resMsg'] = '행사시작 '.$prjItem['ONAIR_ENT_TRM'].'분전부터 방송 참여가 가능합니다.';
+
+				return $this->wrongTimeAccess();
+			} else if ($prjItem['ED_DTTM'] < $now) {
+				// $res['resCode'] = '8002';
+				// $res['resMsg'] = '스트리밍 종료시간이 이미 지났습니다. ('.$prjItem['ED_DTTM'].' 까지)';
+				return $this->wrongTimeAccess();
+			} else {
+				$data['project'] = $prjItem;
+				$data['project']['IP_ADDR'] = $ipAddr;
+				$data['surveyQstList'] = $this->surveyModel->surveyQstList($prjItem['PRJ_SEQ']);
+				$data['surveyQstChoiceList'] = $this->surveyModel->surveyQstChoiceList($prjItem['PRJ_SEQ']);
+				
+				return view('stream/liveQ.php', $data);
+			}
+
+		} else {
+			return $this->wrongAccess();
+		}
+	}
+
 	// 개인정보 동의 상세내용 화면
 	public function agreePrvInfo () {
 		return view('agree/prvInfo.php');
@@ -440,6 +483,24 @@ class Stream extends BaseController {
 
 		$data['errHtml'] = $html;
 
+		return view('errors/common_error.php', $data);
+	}
+
+	// 잘못된 시간 접근
+	public function wrongTimeAccess () {
+		$data['errTitle'] = '잘못된 시간 접근';
+
+		$html = '';
+		$html .= '진행 시간이 아닙니다.';
+		$html .= '<br />';
+		$html .= '프로젝트 시작/종료시간을 확인해주세요.';
+		$html .= '<br />';
+		$html .= '<br />';
+		$html .= '문의 이메일 : <a href="mailto:nabdo@naver.com">nabdo@naver.com</a>';
+		$html .= '<br />';
+		$html .= '문의 휴대폰 : <a href="tel:nabdo@naver.com">+82-10-4782-6737</a>';
+
+		$data['errHtml'] = $html;
 		return view('errors/common_error.php', $data);
 	}
 }

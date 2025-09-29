@@ -30,6 +30,7 @@ class ProjectModel extends Model {
         $strQry .= "	, CONCAT('".$_ENV['app.cmsURL']."', P.AGENDA_IMG_URI) AS AGENDA_IMG_URL	\n";
 		$strQry .= "	, CONCAT('".$_ENV['app.cmsURL']."', P.STREAM_AGENDA_IMG_URI) AS STREAM_AGENDA_IMG_URL	\n";
         $strQry .= "	, CONCAT('".$_ENV['app.cmsURL']."', P.FOOTER_IMG_URI) AS FOOTER_IMG_URL	\n";
+		$strQry .= "	, CONCAT('".$_ENV['app.cmsPrdURL']."', P.MDRTOR_IMG_URI) AS MDRTOR_IMG_URL	\n";
 		$strQry .= "	, P.ST_DTTM, P.ED_DTTM	\n";
 		$strQry .= "	, DATE_FORMAT(P.ST_DTTM, '%Y-%m-%d') AS ST_DATE	\n";
         $strQry .= "	, DATE_FORMAT(P.ST_DTTM, '%H:%i') AS ST_TIME	\n";
